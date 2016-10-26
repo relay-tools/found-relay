@@ -1,0 +1,27 @@
+{
+  "name": "found-relay",
+  "version": "0.0.0",
+  "description": "Relay integration for found",
+  "files": [
+    "lib"
+  ],
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/4Catalyzer/found-relay.git"
+  },
+  "keywords": [
+    "router",
+    "relay",
+    "react"
+  ],
+  "author": "4Catalyzer",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/4Catalyzer/found-relay/issues"
+  },
+  "homepage": "https://github.com/4Catalyzer/found-relay#readme"
+}
