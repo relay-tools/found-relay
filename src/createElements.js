@@ -9,7 +9,7 @@ export default function createElements(
   Components,
   queryConfigs,
   readyStates,
-  matchRunQueries,
+  routeRunQueries,
 ) {
   return routeMatches.map((match, i) => {
     const { route } = match;
@@ -59,7 +59,7 @@ export default function createElements(
         environment={environment}
         queryConfig={queryConfig}
         readyState={readyState}
-        runQueries={matchRunQueries[i]} // Might be undefined.
+        runQueries={routeRunQueries && routeRunQueries[i]}
       />
     );
   });

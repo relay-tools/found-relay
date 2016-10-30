@@ -104,14 +104,14 @@ export default function createResolveElements(environment) {
         earlyComponents,
         queryConfigs,
         earlyReadyStates,
-        [], // No retry here, as these will never be in error.
+        null, // No retry here, as these will never be in error.
       );
     }
 
     const resolvedComponents = earlyComponents.every(isResolved) ?
       earlyComponents : await Promise.all(Components);
 
-    const matchRunQueries = resolvedComponents.map((Component, i) => {
+    const routeRunQueries = resolvedComponents.map((Component, i) => {
       const queryConfig = queryConfigs[i];
       if (!queryConfig) {
         return null;
@@ -127,7 +127,7 @@ export default function createResolveElements(environment) {
     });
 
     // TODO: What about deferred queries?
-    const resolvedReadyStates = await Promise.all(matchRunQueries.map(
+    const resolvedReadyStates = await Promise.all(routeRunQueries.map(
       (runQueries) => {
         if (!runQueries) {
           return null;
@@ -149,7 +149,7 @@ export default function createResolveElements(environment) {
       resolvedComponents,
       queryConfigs,
       resolvedReadyStates,
-      matchRunQueries,
+      routeRunQueries,
     );
   };
 }
