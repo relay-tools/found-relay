@@ -80,15 +80,15 @@ class RelayRouteRenderer extends React.Component {
   };
 
   render() {
-    // We need to explicitly pull out extraProps here to inject them into the
+    // We need to explicitly pull out ownProps here to inject them into the
     // actual Relay container rather than the Relay.ReadyStateRenderer, when
     // we get cloned with props like children.
     const {
-      match, Component, environment, queryConfig, ...extraProps
+      match, Component, environment, queryConfig, ...ownProps
     } = this.props;
 
-    delete extraProps.readyState;
-    delete extraProps.runQueries;
+    delete ownProps.readyState;
+    delete ownProps.runQueries;
 
     const { route } = match;
 
@@ -102,15 +102,15 @@ class RelayRouteRenderer extends React.Component {
           return undefined;
         }
 
-        return <Component {...match} {...extraProps} {...props} />;
+        return <Component {...match} {...ownProps} {...props} />;
       }
 
       return route.render({
         ...renderArgs,
         match,
         Component,
-        props: props && { ...match, ...extraProps, ...props },
-        extraProps,
+        props: props && { ...match, ...ownProps, ...props },
+        ownProps,
       });
     }
 
