@@ -36,13 +36,18 @@ export default function createResolveElements(environment) {
     // TODO: Close over and abort earlier requests?
 
     const routeMatches = getRouteMatches(match);
-    const { routeIndices, routes } = match;
+    const { routeIndices } = match;
 
     const Components = getComponents(routeMatches);
     const matchQueries = getRouteValues(
       routeMatches,
       route => route.getQueries,
       route => route.queries,
+    );
+    const forceFetches = getRouteValues(
+      routeMatches,
+      route => route.getForceFetch,
+      route => route.forceFetch,
     );
 
     let params = null;
@@ -94,7 +99,7 @@ export default function createResolveElements(environment) {
         return PENDING_READY_STATE;
       }
 
-      return routes[i].forceFetch ? STALE_READY_STATE : DONE_READY_STATE;
+      return forceFetches[i] ? STALE_READY_STATE : DONE_READY_STATE;
     });
 
     if (earlyReadyStates.some(readyState => readyState && !readyState.done)) {
@@ -120,7 +125,7 @@ export default function createResolveElements(environment) {
       return function runQueries(onReadyStateChange) {
         const querySet = Relay.getQueries(Component, queryConfig);
 
-        return routes[i].forceFetch ?
+        return forceFetches[i] ?
           environment.forceFetch(querySet, onReadyStateChange) :
           environment.primeCache(querySet, onReadyStateChange);
       };
