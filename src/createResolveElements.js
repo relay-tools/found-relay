@@ -145,7 +145,7 @@ export default function createResolveElements(environment) {
             }
           });
         });
-      }
+      },
     ));
 
     yield createElements(
