@@ -7,6 +7,8 @@ import checkRelayQueryData from 'react-relay/lib/checkRelayQueryData';
 
 import createElements from './createElements';
 
+const { hasOwnProperty } = Object.prototype;
+
 // TODO: Should we disable Relay query caching for SSR? If so, we should cache
 // query sets ourselves.
 
@@ -44,6 +46,11 @@ export default function createResolveElements(environment) {
       route => route.getQueries,
       route => route.queries,
     );
+    const extraQueryNodes = getRouteValues(
+      routeMatches,
+      route => route.getExtraQuery,
+      route => route.extraQuery,
+    );
     const forceFetches = getRouteValues(
       routeMatches,
       route => route.getForceFetch,
@@ -52,7 +59,7 @@ export default function createResolveElements(environment) {
 
     let params = null;
 
-    const queryConfigs = routeMatches.map((routeMatch, i) => {
+    const routeParams = routeMatches.map((routeMatch) => {
       const { route } = routeMatch;
 
       // We need to always run this to make sure we don't miss params.
@@ -61,13 +68,27 @@ export default function createResolveElements(environment) {
         params = route.prepareParams(params, routeMatch);
       }
 
-      const queries = matchQueries[i];
+      return params;
+    });
+
+    const queryConfigs = matchQueries.map((queries, i) => {
       if (!queries) {
         return null;
       }
 
-      const name = `__route_${i}_${routeIndices[i]}`;
-      return { name, queries, params };
+      return {
+        name: `__route_${i}_${routeIndices[i]}`,
+        queries,
+        params: routeParams[i],
+      };
+    });
+
+    const extraQueries = extraQueryNodes.map((extraQueryNode, i) => {
+      if (!extraQueryNode) {
+        return null;
+      }
+
+      return Relay.createQuery(extraQueryNode, routeParams[i]);
     });
 
     const earlyComponents = Components.some(isPromise) ?
@@ -77,7 +98,9 @@ export default function createResolveElements(environment) {
 
     const earlyReadyStates = earlyComponents.map((Component, i) => {
       const queryConfig = queryConfigs[i];
-      if (!queryConfig) {
+      const extraQuery = extraQueries[i];
+
+      if (!queryConfig && !extraQuery) {
         return null;
       }
 
@@ -90,17 +113,28 @@ export default function createResolveElements(environment) {
       // requests. We can send out requests for resolved components, but that
       // runs the risk of the data we request now being out-of-sync with the
       // data we request later.
-      const querySet = Relay.getQueries(Component, queryConfig);
-      const hasQueryData = Object.values(querySet).every(query => (
-        !query || checkRelayQueryData(recordStore, query)
-      ));
+      if (queryConfig) {
+        const querySet = Relay.getQueries(Component, queryConfig);
+        const hasQueryData = Object.values(querySet).every(query => (
+          !query || checkRelayQueryData(recordStore, query)
+        ));
 
-      if (!hasQueryData) {
+        if (!hasQueryData) {
+          return PENDING_READY_STATE;
+        }
+      }
+
+      if (extraQuery && !checkRelayQueryData(recordStore, extraQuery)) {
         return PENDING_READY_STATE;
       }
 
       return forceFetches[i] ? STALE_READY_STATE : DONE_READY_STATE;
     });
+
+    const earlyRouteExtraData = extraQueries.map((extraQuery, i) => (
+      extraQuery && earlyReadyStates[i].ready ?
+        environment.readQuery(extraQuery)[0] : null
+    ));
 
     if (earlyReadyStates.some(readyState => readyState && !readyState.done)) {
       yield createElements(
@@ -110,6 +144,7 @@ export default function createResolveElements(environment) {
         queryConfigs,
         earlyReadyStates,
         null, // No retry here, as these will never be in error.
+        earlyRouteExtraData,
       );
     }
 
@@ -118,13 +153,29 @@ export default function createResolveElements(environment) {
 
     const routeRunQueries = fetchedComponents.map((Component, i) => {
       const queryConfig = queryConfigs[i];
-      if (!queryConfig) {
+      const extraQuery = extraQueries[i];
+
+      if (!queryConfig && !extraQuery) {
         return null;
       }
 
-      return function runQueries(onReadyStateChange) {
-        const querySet = Relay.getQueries(Component, queryConfig);
+      let querySet;
+      if (queryConfig) {
+        querySet = Relay.getQueries(Component, queryConfig);
+      }
 
+      if (extraQuery) {
+        let extraQueryKey = '__extra';
+        while (hasOwnProperty.call(querySet, extraQueryKey)) {
+          extraQueryKey = `_${extraQueryKey}`;
+        }
+
+        // Relay caches query sets, so it's very important to not modify the
+        // query set in-place.
+        querySet = { ...querySet, [extraQueryKey]: extraQuery };
+      }
+
+      return function runQueries(onReadyStateChange) {
         return forceFetches[i] ?
           environment.forceFetch(querySet, onReadyStateChange) :
           environment.primeCache(querySet, onReadyStateChange);
@@ -148,6 +199,11 @@ export default function createResolveElements(environment) {
       },
     ));
 
+    const routeExtraData = extraQueries.map((extraQuery, i) => (
+      extraQuery && fetchedReadyStates[i].ready ?
+        environment.readQuery(extraQuery)[0] : null
+    ));
+
     yield createElements(
       environment,
       routeMatches,
@@ -155,6 +211,7 @@ export default function createResolveElements(environment) {
       queryConfigs,
       fetchedReadyStates,
       routeRunQueries,
+      routeExtraData,
     );
   };
 }
