@@ -34,6 +34,19 @@ const DONE_READY_STATE = {
 };
 
 export default function createResolveElements(environment) {
+  function getExtraData(extraQuery, readyState) {
+    if (!extraQuery || !readyState.ready) {
+      return null;
+    }
+
+    const identifyingArg = extraQuery.getIdentifyingArg();
+    const queryData = environment.readQuery(extraQuery);
+    const fieldData = identifyingArg && Array.isArray(identifyingArg.value) ?
+      queryData : queryData[0];
+
+    return { [extraQuery.getFieldName()]: fieldData };
+  }
+
   return async function* resolveElements(match) {
     // TODO: Close over and abort earlier requests?
 
@@ -132,8 +145,7 @@ export default function createResolveElements(environment) {
     });
 
     const earlyRouteExtraData = extraQueries.map((extraQuery, i) => (
-      extraQuery && earlyReadyStates[i].ready ?
-        environment.readQuery(extraQuery)[0] : null
+      getExtraData(extraQuery, earlyReadyStates[i])
     ));
 
     if (earlyReadyStates.some(readyState => readyState && !readyState.done)) {
@@ -200,8 +212,7 @@ export default function createResolveElements(environment) {
     ));
 
     const routeExtraData = extraQueries.map((extraQuery, i) => (
-      extraQuery && fetchedReadyStates[i].ready ?
-        environment.readQuery(extraQuery)[0] : null
+      getExtraData(extraQuery, fetchedReadyStates[i])
     ));
 
     yield createElements(
