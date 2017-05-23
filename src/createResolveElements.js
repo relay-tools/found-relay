@@ -178,7 +178,7 @@ export default function createResolveElements(environment) {
 
       if (extraQuery) {
         let extraQueryKey = '__extra';
-        while (hasOwnProperty.call(querySet, extraQueryKey)) {
+        while (querySet && hasOwnProperty.call(querySet, extraQueryKey)) {
           extraQueryKey = `_${extraQueryKey}`;
         }
 
