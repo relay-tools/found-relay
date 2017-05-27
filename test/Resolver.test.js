@@ -2,18 +2,18 @@ import queryMiddleware from 'farce/lib/queryMiddleware';
 import ServerProtocol from 'farce/lib/ServerProtocol';
 import createFarceRouter from 'found/lib/createFarceRouter';
 import createRender from 'found/lib/createRender';
-import makeRouteConfig from 'found/lib/jsx/makeRouteConfig';
-import Route from 'found/lib/jsx/Route';
+import makeRouteConfig from 'found/lib/makeRouteConfig';
+import Route from 'found/lib/Route';
 import React from 'react';
 import ReactTestUtils from 'react-dom/test-utils';
 import Relay from 'react-relay';
 import RelayLocalSchema from 'relay-local-schema';
 
-import createResolveElements from '../src/createResolveElements';
+import Resolver from '../src/Resolver';
 
 import schema from './fixtures/schema';
 
-describe('createResolveElements', () => {
+describe('Resolver', () => {
   let environment;
 
   beforeEach(() => {
@@ -136,15 +136,15 @@ describe('createResolveElements', () => {
         render: createRender({}),
       });
 
-      const resolveElementsBase = createResolveElements(environment);
-
-      async function* resolveElements(match) {
-        yield* resolveElementsBase(match);
-        done();
+      class InstrumentedResolver extends Resolver {
+        async * resolveElements(match) {
+          yield* super.resolveElements(match);
+          done();
+        }
       }
 
       instance = ReactTestUtils.renderIntoDocument(
-        <Router resolveElements={resolveElements} />,
+        <Router resolver={new InstrumentedResolver(environment)} />,
       );
     });
 
