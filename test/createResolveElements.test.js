@@ -5,7 +5,6 @@ import createRender from 'found/lib/createRender';
 import makeRouteConfig from 'found/lib/jsx/makeRouteConfig';
 import Route from 'found/lib/jsx/Route';
 import React from 'react';
-import ReactDOM from 'react-dom';
 import ReactTestUtils from 'react-dom/test-utils';
 import Relay from 'react-relay';
 import RelayLocalSchema from 'relay-local-schema';
@@ -16,21 +15,12 @@ import schema from './fixtures/schema';
 
 describe('createResolveElements', () => {
   let environment;
-  let container;
 
   beforeEach(() => {
     environment = new Relay.Environment();
     environment.injectNetworkLayer(
       new RelayLocalSchema.NetworkLayer({ schema }),
     );
-
-    container = document.createElement('div');
-    document.body.appendChild(container);
-  });
-
-  afterEach(() => {
-    ReactDOM.unmountComponentAtNode(container);
-    document.body.removeChild(container);
   });
 
   describe('kitchen sink', () => {
@@ -153,9 +143,8 @@ describe('createResolveElements', () => {
         done();
       }
 
-      instance = ReactDOM.render(
+      instance = ReactTestUtils.renderIntoDocument(
         <Router resolveElements={resolveElements} />,
-        container,
       );
     });
 
