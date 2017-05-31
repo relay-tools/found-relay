@@ -1,17 +1,18 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import Relay from 'react-relay';
 
 const propTypes = {
-  match: React.PropTypes.shape({
-    route: React.PropTypes.shape({
-      render: React.PropTypes.func,
+  match: PropTypes.shape({
+    route: PropTypes.shape({
+      render: PropTypes.func,
     }).isRequired,
   }).isRequired,
   Component: Relay.PropTypes.Container,
   environment: Relay.PropTypes.Environment,
   queryConfig: Relay.PropTypes.QueryConfig.isRequired,
-  readyState: React.PropTypes.object.isRequired,
-  runQueries: React.PropTypes.func,
+  readyState: PropTypes.object.isRequired,
+  runQueries: PropTypes.func,
 };
 
 class RelayRouteRenderer extends React.Component {

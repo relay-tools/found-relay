@@ -10,6 +10,7 @@ export default function createElements(
   queryConfigs,
   readyStates,
   routeRunQueries,
+  routeExtraData,
 ) {
   return routeMatches.map((match, i) => {
     const { route } = match;
@@ -17,11 +18,16 @@ export default function createElements(
     const Component = Components[i];
     const queryConfig = queryConfigs[i];
     const readyState = readyStates[i];
+    const extraData = routeExtraData[i];
 
     const isComponentResolved = isResolved(Component);
 
     // Handle non-Relay routes.
     if (!queryConfig) {
+      if (route.prerender) {
+        route.prerender({ ...readyState, match, extraData });
+      }
+
       if (route.render) {
         return route.render({
           match,
@@ -35,6 +41,10 @@ export default function createElements(
       }
 
       return Component ? <Component {...match} /> : null;
+    }
+
+    if (route.prerender) {
+      route.prerender({ ...readyState, match, extraData });
     }
 
     if (!isComponentResolved) {
