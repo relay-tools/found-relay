@@ -7,20 +7,16 @@ import Route from 'found/lib/Route';
 import React from 'react';
 import ReactTestUtils from 'react-dom/test-utils';
 import Relay from 'react-relay';
-import RelayLocalSchema from 'relay-local-schema';
 
 import Resolver from '../src/Resolver';
 
-import schema from './fixtures/schema';
+import { createEnvironment } from './helpers';
 
 describe('Resolver', () => {
   let environment;
 
   beforeEach(() => {
-    environment = new Relay.Environment();
-    environment.injectNetworkLayer(
-      new RelayLocalSchema.NetworkLayer({ schema }),
-    );
+    environment = createEnvironment();
   });
 
   describe('kitchen sink', () => {
