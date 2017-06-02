@@ -1,4 +1,5 @@
-sudo: false
+# We need sudo to properly install Watchman.
+sudo: required
 
 language: node_js
 node_js:
@@ -7,6 +8,15 @@ node_js:
 cache:
   directories:
     - node_modules
+
+before_install:
+  # Relay Compiler requires Watchman.
+  # TODO: Cache this? The Watchman build is pretty quick, though.
+  - git clone https://github.com/facebook/watchman.git ~/facebook/watchman
+  - pushd ~/facebook/watchman
+  - git checkout v4.7.0
+  - ./autogen.sh && ./configure && make && sudo make install
+  - popd
 
 branches:
   only:

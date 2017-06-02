@@ -1,9 +1,9 @@
-import isPromise from 'is-promise';
 import {
   checkResolved, getComponents, getRouteMatches, getRouteValues, isResolved,
 } from 'found/lib/ResolverUtils';
+import isPromise from 'is-promise';
 import React from 'react';
-import Relay from 'react-relay';
+import Relay from 'react-relay/classic';
 import checkRelayQueryData from 'react-relay/lib/checkRelayQueryData';
 
 import RelayRouteRenderer from './RelayRouteRenderer';
@@ -110,7 +110,7 @@ export default class Resolver {
     return routeMatches.map((routeMatch) => {
       const { route } = routeMatch;
 
-      // We need to always run this to make sure we don't miss params.
+      // We need to always run this to make sure we don't miss route params.
       params = { ...params, ...routeMatch.routeParams };
       if (route.prepareParams) {
         params = route.prepareParams(params, routeMatch);

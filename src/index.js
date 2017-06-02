@@ -1,2 +1,1 @@
-export RelayRouteRenderer from './RelayRouteRenderer';
-export Resolver from './Resolver';
+export { QuerySubscription, ReadyStateRenderer, Resolver } from './modern';

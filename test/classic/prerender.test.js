@@ -1,9 +1,9 @@
 import createRender from 'found/lib/createRender';
 import RedirectException from 'found/lib/RedirectException';
 import getFarceResult from 'found/lib/server/getFarceResult';
-import Relay from 'react-relay';
+import Relay from 'react-relay/classic';
 
-import Resolver from '../src/Resolver';
+import { Resolver } from '../../src/classic';
 
 import { createEnvironment } from './helpers';
 

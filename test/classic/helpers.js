@@ -1,7 +1,7 @@
-import Relay from 'react-relay';
-import RelayLocalSchema from 'relay-local-schema';
+import Relay from 'react-relay/classic';
+import RelayLocalSchema from 'relay-local-schema/lib/classic';
 
-import schema from './fixtures/schema';
+import schema from '../fixtures/schema';
 
 export function createEnvironment() {
   const environment = new Relay.Environment();
