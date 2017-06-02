@@ -41,7 +41,7 @@
     "prop-types": "^15.5.10"
   },
   "peerDependencies": {
-    "found": ">=0.3.0-0",
+    "found": ">=0.3.0",
     "react": "^0.14.9 || >=15.3.0",
     "react-relay": ">=0.6.0 <1.0.0"
   },
@@ -62,7 +62,7 @@
     "eslint-plugin-jsx-a11y": "^2.2.3",
     "eslint-plugin-react": "^6.10.3",
     "farce": "^0.2.1",
-    "found": "^0.3.0-alpha.1",
+    "found": "^0.3.0",
     "graphql": "^0.10.1",
     "jest": "^20.0.4",
     "react": "^15.5.4",
