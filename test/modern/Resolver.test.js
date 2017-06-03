@@ -6,9 +6,9 @@ import makeRouteConfig from 'found/lib/makeRouteConfig';
 import Route from 'found/lib/Route';
 import React from 'react';
 import ReactTestUtils from 'react-dom/test-utils';
-import Relay from 'react-relay';
+import { createFragmentContainer, graphql } from 'react-relay';
 
-import Resolver from '../src/Resolver';
+import { Resolver } from '../../src';
 
 import { createEnvironment } from './helpers';
 
@@ -32,14 +32,12 @@ describe('Resolver', () => {
       );
     }
 
-    const WidgetParentContainer = Relay.createContainer(WidgetParent, {
-      fragments: {
-        widget: () => Relay.QL`
-          fragment on Widget {
-            name
-          }
-        `,
-      },
+    const WidgetParentContainer = createFragmentContainer(WidgetParent, {
+      widget: graphql`
+        fragment Resolver_test_widget on Widget {
+          name
+        }
+      `,
     });
 
     function WidgetChildren({ first, second, third, route }) {
@@ -54,31 +52,23 @@ describe('Resolver', () => {
       );
     }
 
-    const WidgetChildrenContainer = Relay.createContainer(WidgetChildren, {
-      fragments: {
-        first: () => Relay.QL`
-          fragment on Widget {
-            name
-          }
-        `,
-        second: () => Relay.QL`
-          fragment on Widget {
-            name
-          }
-        `,
-        third: () => Relay.QL`
-          fragment on Widget {
-            name
-          }
-        `,
-      },
+    const WidgetChildrenContainer = createFragmentContainer(WidgetChildren, {
+      first: graphql`
+        fragment Resolver_test_first on Widget {
+          name
+        }
+      `,
+      second: graphql`
+        fragment Resolver_test_second on Widget {
+          name
+        }
+      `,
+      third: graphql`
+        fragment Resolver_test_third on Widget {
+          name
+        }
+      `,
     });
-
-    const WidgetChildrenQueries = {
-      first: () => Relay.QL`query { widgetByArg(name: $pathName) }`,
-      second: () => Relay.QL`query { widgetByArg(name: $queryName) }`,
-      third: () => Relay.QL`query { widgetByArg(name: $parentName) }`,
-    };
 
     let prerenderSpy;
     let renderSpy;
@@ -94,19 +84,19 @@ describe('Resolver', () => {
         <Route path="/:parentName" Component={Root}>
           <Route
             Component={WidgetParentContainer}
-            getQueries={() => ({
-              widget: () => Relay.QL`query { widget }`,
-            })}
-            extraQuery={Relay.QL`
-              query {
-                widgetByArg(name: "prerender") {
+            getQuery={() => graphql`
+              query Resolver_test_WidgetParent_Query {
+                widget {
+                  ...Resolver_test_widget
+                }
+                extra: widgetByArg(name: "extra") {
                   name
                 }
               }
             `}
             prerender={prerenderSpy}
             render={renderSpy}
-            prepareParams={({ parentName, ...params }) => ({
+            prepareVariables={({ parentName, ...params }) => ({
               ...params,
               parentName: `${parentName}-`,
             })}
@@ -114,8 +104,24 @@ describe('Resolver', () => {
             <Route
               path=":pathName"
               Component={WidgetChildrenContainer}
-              queries={WidgetChildrenQueries}
-              prepareParams={(params, { location }) => ({
+              query={graphql`
+                query Resolver_test_WidgetChildren_Query(
+                  $pathName: String!
+                  $queryName: String!
+                  $parentName: String!
+                ) {
+                  first: widgetByArg(name: $pathName) {
+                    ...Resolver_test_first
+                  }
+                  second: widgetByArg(name: $queryName) {
+                    ...Resolver_test_second
+                  }
+                  third: widgetByArg(name: $parentName) {
+                    ...Resolver_test_third
+                  }
+                }
+              `}
+              prepareVariables={(params, { location }) => ({
                 ...params,
                 queryName: location.query.name,
               })}
@@ -171,10 +177,6 @@ describe('Resolver', () => {
           expect(renderArgs.props).toBeNull();
         });
 
-        it('should have the correct ready state', () => {
-          expect(renderArgs.done).toBeFalsy();
-        });
-
         it('should have router props', () => {
           expect(renderArgs.match).toBeDefined();
           expect(renderArgs.match.route).toBeDefined();
@@ -184,11 +186,9 @@ describe('Resolver', () => {
         it('should have the correct prerender args', () => {
           const prerenderArgs = prerenderSpy.mock.calls[0][0];
 
-          expect(prerenderArgs.done).toBeFalsy();
           expect(prerenderArgs.match).toBeDefined();
           expect(prerenderArgs.match.route).toBeDefined();
-          expect(prerenderArgs.props).toBeUndefined();
-          expect(prerenderArgs.extraData).toBeNull();
+          expect(prerenderArgs.props).toBeNull();
         });
       });
 
@@ -208,10 +208,6 @@ describe('Resolver', () => {
           expect(renderArgs.props.widget).toBeDefined();
         });
 
-        it('should have the correct ready state', () => {
-          expect(renderArgs.done).toBeTruthy();
-        });
-
         it('should have router props', () => {
           expect(renderArgs.props.route).toBeDefined();
           expect(renderArgs.match).toBeDefined();
@@ -228,13 +224,11 @@ describe('Resolver', () => {
           expect(prerenderSpy.mock.calls.length).toBe(2);
           const prerenderArgs = prerenderSpy.mock.calls[1][0];
 
-          expect(prerenderArgs.done).toBeTruthy();
           expect(prerenderArgs.match).toBeDefined();
           expect(prerenderArgs.match.route).toBeDefined();
-          expect(prerenderArgs.props).toBeUndefined();
-          expect(prerenderArgs.extraData).toMatchObject({
-            widgetByArg: {
-              name: 'prerender',
+          expect(prerenderArgs.props).toMatchObject({
+            extra: {
+              name: 'extra',
             },
           });
         });

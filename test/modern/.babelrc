@@ -6,7 +6,5 @@
     "stage-1",
     "react"
   ],
-  "plugins": [
-    "./fixtures/babelRelayPlugin"
-  ]
+  "plugins": ["relay"]
 }
