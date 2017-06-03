@@ -2,7 +2,7 @@
 
 [Relay](http://facebook.github.io/relay/) integration for [Found](https://github.com/4Catalyzer/found).
 
-**Relay Modern support is under active development. See [#12](https://github.com/4Catalyzer/found-relay/issues/12) for details and updates.**
+**For Relay Modern and Relay Classic on Relay v1.x support, use the [v0.3.x prereleases](https://github.com/4Catalyzer/found-relay/releases) from the [`next`](https://github.com/4Catalyzer/found-relay/tree/next) branch.**
 
 Detailed documentation forthcoming. For a basic usage example, see the [`found` branch on taion/relay-todomvc](https://github.com/taion/relay-todomvc/tree/found).
 
