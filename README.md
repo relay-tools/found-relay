@@ -5,6 +5,7 @@
 Detailed documentation forthcoming. For basic usage examples, see:
 
 - Relay Modern: [taion/relay-todomvc/found-modern](https://github.com/taion/relay-todomvc/tree/found-modern)
+- Relay Modern with server-side rendering: [taion/relay-todomvc/found-modern-universal](https://github.com/taion/relay-todomvc/tree/found-modern-universal)
 - Relay Classic: [taion/relay-todomvc/found-classic](https://github.com/taion/relay-todomvc/tree/found-classic)
 
 [build-badge]: https://img.shields.io/travis/4Catalyzer/found-relay/master.svg
