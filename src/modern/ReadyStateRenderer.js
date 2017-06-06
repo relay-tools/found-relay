@@ -45,11 +45,16 @@ class SnapshotRenderer extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { querySubscription } = nextProps;
+    const { querySubscription, Component } = nextProps;
     const { readyState } = querySubscription;
 
     if (querySubscription !== this.props.querySubscription) {
-      this.onUpdate(readyState);
+      if (
+        Component !== this.props.Component ||
+        readyState.props != null
+      ) {
+        this.onUpdate(readyState);
+      }
 
       this.selectionReference.dispose();
       this.selectionReference = querySubscription.retain();
