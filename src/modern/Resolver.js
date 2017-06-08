@@ -15,11 +15,7 @@ export default class Resolver {
   }
 
   async * resolveElements(match) {
-    // TODO: Close over and abort earlier requests.
-
     const routeMatches = getRouteMatches(match);
-
-    // These
 
     const Components = getComponents(routeMatches);
     const queries = getRouteValues(
