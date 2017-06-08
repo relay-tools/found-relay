@@ -2,6 +2,7 @@ import {
   checkResolved, getComponents, getRouteMatches, getRouteValues, isResolved,
 } from 'found/lib/ResolverUtils';
 import isPromise from 'is-promise';
+import isEqual from 'lodash/isEqual';
 import React from 'react';
 
 import QuerySubscription from './QuerySubscription';
@@ -11,6 +12,8 @@ export default class Resolver {
   constructor(environment) {
     this.environment = environment;
 
+    this.lastQueries = [];
+    this.lastRouteVariables = [];
     this.lastQuerySubscriptions = [];
   }
 
@@ -30,9 +33,8 @@ export default class Resolver {
     );
 
     const routeVariables = this.getRouteVariables(routeMatches);
-    const operations = this.getOperations(queries, routeVariables);
     const querySubscriptions = this.updateQuerySubscriptions(
-      operations, cacheConfigs,
+      queries, routeVariables, cacheConfigs,
     );
 
     const fetches = querySubscriptions.map(querySubscription => (
@@ -81,35 +83,44 @@ export default class Resolver {
     });
   }
 
-  getOperations(queries, routeVariables) {
+  updateQuerySubscriptions(queries, routeVariables, cacheConfigs) {
     const { createOperationSelector, getOperation } =
       this.environment.unstable_internal;
 
-    return queries.map((query, i) => {
+    const querySubscriptions = queries.map((query, i) => {
       if (!query) {
-        // TODO: Warn if variables are specified?
         return null;
       }
 
-      return createOperationSelector(getOperation(query), routeVariables[i]);
-    });
-  }
+      const variables = routeVariables[i];
 
-  updateQuerySubscriptions(operations, cacheConfigs) {
-    // TODO: Reuse unchanged query subscriptions.
+      if (
+        this.lastQueries[i] === query &&
+        isEqual(this.lastRouteVariables[i], variables)
+      ) {
+        // Match the logic in <QueryRenderer> for not refetching.
+        const lastQuerySubscription = this.lastQuerySubscriptions[i];
+        this.lastQuerySubscriptions[i] = null;
+        return lastQuerySubscription;
+      }
+
+      return new QuerySubscription(
+        this.environment,
+        createOperationSelector(getOperation(query), variables),
+        cacheConfigs[i],
+      );
+    });
+
     this.lastQuerySubscriptions.forEach((querySubscription) => {
       if (querySubscription) {
         querySubscription.dispose();
       }
     });
 
-    const querySubscriptions = operations.map((operation, i) => (
-      operation && new QuerySubscription(
-        this.environment, operation, cacheConfigs[i],
-      )
-    ));
-
+    this.lastQueries = queries;
+    this.lastRouteVariables = routeVariables;
     this.lastQuerySubscriptions = querySubscriptions;
+
     return querySubscriptions;
   }
 
