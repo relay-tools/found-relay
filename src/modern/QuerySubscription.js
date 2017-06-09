@@ -6,6 +6,7 @@ export default class QuerySubscription {
     this.operation = operation;
     this.cacheConfig = cacheConfig;
 
+    this.fetchPromise = null;
     this.selectionReference = null;
     this.pendingRequest = null;
     this.rootSubscription = null;
@@ -25,45 +26,49 @@ export default class QuerySubscription {
   }
 
   fetch() {
-    let snapshot;
+    if (!this.fetchPromise) {
+      this.fetchPromise = new Promise((resolve, reject) => {
+        let snapshot;
 
-    return new Promise((resolve, reject) => {
-      this.selectionReference = this.retain();
+        this.selectionReference = this.retain();
 
-      this.pendingRequest = this.environment.streamQuery({
-        operation: this.operation,
-        cacheConfig: this.cacheConfig,
+        this.pendingRequest = this.environment.streamQuery({
+          operation: this.operation,
+          cacheConfig: this.cacheConfig,
 
-        onNext: () => {
-          if (snapshot) {
-            return;
-          }
+          onNext: () => {
+            if (snapshot) {
+              return;
+            }
 
-          snapshot = this.environment.lookup(this.operation.fragment);
-          this.updateReadyState(snapshot);
-          this.rootSubscription = this.environment.subscribe(
-            snapshot, this.onChange,
-          );
+            snapshot = this.environment.lookup(this.operation.fragment);
+            this.updateReadyState(snapshot);
+            this.rootSubscription = this.environment.subscribe(
+              snapshot, this.onChange,
+            );
 
-          resolve();
-        },
+            resolve();
+          },
 
-        onCompleted: () => {
-          this.pendingRequest = null;
-        },
+          onCompleted: () => {
+            this.pendingRequest = null;
+          },
 
-        onError: (error) => {
-          this.readyState = {
-            error,
-            props: null,
-            retry: this.retry,
-          };
-          this.pendingRequest = null;
+          onError: (error) => {
+            this.readyState = {
+              error,
+              props: null,
+              retry: this.retry,
+            };
+            this.pendingRequest = null;
 
-          reject();
-        },
+            reject();
+          },
+        });
       });
-    });
+    }
+
+    return this.fetchPromise;
   }
 
   updateReadyState(snapshot) {
