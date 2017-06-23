@@ -32,13 +32,14 @@ describe('Resolver', () => {
       );
     }
 
-    const WidgetParentContainer = createFragmentContainer(WidgetParent, {
-      widget: graphql`
-        fragment Resolver_test_widget on Widget {
+    const WidgetParentContainer = createFragmentContainer(
+      WidgetParent,
+      graphql`
+        fragment Resolver_widget on Widget {
           name
         }
       `,
-    });
+    );
 
     function WidgetChildren({ first, second, third, route }) {
       expect(route).toBeTruthy();
@@ -52,23 +53,22 @@ describe('Resolver', () => {
       );
     }
 
-    const WidgetChildrenContainer = createFragmentContainer(WidgetChildren, {
-      first: graphql`
-        fragment Resolver_test_first on Widget {
+    const WidgetChildrenContainer = createFragmentContainer(
+      WidgetChildren,
+      graphql`
+        fragment Resolver_first on Widget {
+          name
+        }
+
+        fragment Resolver_second on Widget {
+          name
+        }
+
+        fragment Resolver_third on Widget {
           name
         }
       `,
-      second: graphql`
-        fragment Resolver_test_second on Widget {
-          name
-        }
-      `,
-      third: graphql`
-        fragment Resolver_test_third on Widget {
-          name
-        }
-      `,
-    });
+    );
 
     let prerenderSpy;
     let renderSpy;
@@ -85,9 +85,9 @@ describe('Resolver', () => {
           <Route
             Component={WidgetParentContainer}
             getQuery={() => graphql`
-              query Resolver_test_WidgetParent_Query {
+              query Resolver_WidgetParent_Query {
                 widget {
-                  ...Resolver_test_widget
+                  ...Resolver_widget
                 }
                 extra: widgetByArg(name: "extra") {
                   name
@@ -105,19 +105,19 @@ describe('Resolver', () => {
               path=":pathName"
               Component={WidgetChildrenContainer}
               query={graphql`
-                query Resolver_test_WidgetChildren_Query(
+                query Resolver_WidgetChildren_Query(
                   $pathName: String!
                   $queryName: String!
                   $parentName: String!
                 ) {
                   first: widgetByArg(name: $pathName) {
-                    ...Resolver_test_first
+                    ...Resolver_first
                   }
                   second: widgetByArg(name: $queryName) {
-                    ...Resolver_test_second
+                    ...Resolver_second
                   }
                   third: widgetByArg(name: $parentName) {
-                    ...Resolver_test_third
+                    ...Resolver_third
                   }
                 }
               `}

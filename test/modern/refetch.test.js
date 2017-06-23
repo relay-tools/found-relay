@@ -19,7 +19,7 @@ describe('refetch behavior', () => {
     const routeConfig = [{
       path: '/',
       query: graphql`
-        query refetch_test_parent_Query {
+        query refetch_parent_Query {
           widget {
             name
           }
@@ -30,7 +30,7 @@ describe('refetch behavior', () => {
       children: [{
         path: ':name',
         query: graphql`
-          query refetch_test_child_Query($name: String!) {
+          query refetch_child_Query($name: String!) {
             widgetByArg(name: $name) {
               name
             }
