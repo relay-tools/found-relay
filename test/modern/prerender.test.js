@@ -20,7 +20,7 @@ describe('prerender', () => {
       routeConfig: [{
         path: '/',
         query: graphql`
-          query prerender_test_Query {
+          query prerender_Query {
             widget {
               name
             }

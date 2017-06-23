@@ -27,7 +27,7 @@ export default class QuerySubscription {
 
   fetch() {
     if (!this.fetchPromise) {
-      this.fetchPromise = new Promise((resolve, reject) => {
+      this.fetchPromise = new Promise((resolve) => {
         let snapshot;
 
         this.selectionReference = this.retain();
@@ -62,7 +62,7 @@ export default class QuerySubscription {
             };
             this.pendingRequest = null;
 
-            reject();
+            resolve();
           },
         });
       });

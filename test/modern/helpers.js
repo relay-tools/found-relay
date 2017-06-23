@@ -8,8 +8,13 @@ export function createFakeFetch() {
 }
 
 // Delay field resolution to exercise async data fetching logic.
-function delay(value) {
-  return new Promise(((resolve) => { setTimeout(resolve, 10, value); }));
+function delay(promise) {
+  return new Promise((resolve, reject) => {
+    promise.then(
+      (value) => { setTimeout(resolve, 10, value); },
+      (error) => { setTimeout(reject, 10, error); },
+    );
+  });
 }
 
 export function createEnvironment(fetch = createFakeFetch()) {

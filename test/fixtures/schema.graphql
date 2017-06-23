@@ -1,6 +1,7 @@
 type Query {
   widget: Widget
   widgetByArg(name: String!): Widget
+  error: String
 }
 
 type Widget {

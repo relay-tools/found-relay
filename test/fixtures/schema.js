@@ -26,6 +26,10 @@ const query = new GraphQLObjectType({
       },
       resolve: (obj, { name }) => ({ name }),
     },
+    error: {
+      type: GraphQLString,
+      resolve: () => { throw new Error('expected error'); },
+    },
   },
 });
 
