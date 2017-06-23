@@ -8,9 +8,7 @@ import React from 'react';
 import ReactTestUtils from 'react-dom/test-utils';
 import { createFragmentContainer, graphql } from 'react-relay';
 
-import { Resolver } from '../../src';
-
-import { createEnvironment } from './helpers';
+import { createEnvironment, InstrumentedResolver } from './helpers';
 
 describe('Resolver', () => {
   let environment;
@@ -74,7 +72,7 @@ describe('Resolver', () => {
     let renderSpy;
     let instance;
 
-    beforeEach((done) => {
+    beforeEach(async () => {
       prerenderSpy = jest.fn();
       renderSpy = jest.fn(({ props }) => (
         props && <WidgetParentContainer {...props} />
@@ -138,16 +136,12 @@ describe('Resolver', () => {
         render: createRender({}),
       });
 
-      class InstrumentedResolver extends Resolver {
-        async * resolveElements(match) {
-          yield* super.resolveElements(match);
-          done();
-        }
-      }
-
+      const resolver = new InstrumentedResolver(environment);
       instance = ReactTestUtils.renderIntoDocument(
-        <Router resolver={new InstrumentedResolver(environment)} />,
+        <Router resolver={resolver} />,
       );
+
+      await resolver.done;
     });
 
     describe('rendered components', () => {

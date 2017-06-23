@@ -1,6 +1,8 @@
 import { createFetch } from 'relay-local-schema';
 import { Environment, Network, RecordSource, Store } from 'relay-runtime';
 
+import { Resolver } from '../../src';
+
 import schema from '../fixtures/schema';
 
 export function createFakeFetch() {
@@ -24,4 +26,19 @@ export function createEnvironment(fetch = createFakeFetch()) {
     ),
     store: new Store(new RecordSource()),
   });
+}
+
+export class InstrumentedResolver extends Resolver {
+  constructor(environment = createEnvironment()) {
+    super(environment);
+
+    this.done = new Promise((resolve) => {
+      this.resolveDone = resolve;
+    });
+  }
+
+  async * resolveElements(match) {
+    yield* super.resolveElements(match);
+    this.resolveDone();
+  }
 }

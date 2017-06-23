@@ -5,9 +5,7 @@ import React from 'react';
 import ReactTestUtils from 'react-dom/test-utils';
 import { graphql } from 'react-relay';
 
-import { Resolver } from '../../src';
-
-import { createEnvironment } from './helpers';
+import { createEnvironment, InstrumentedResolver } from './helpers';
 
 describe('error', () => {
   let environment;
@@ -16,7 +14,7 @@ describe('error', () => {
     environment = createEnvironment();
   });
 
-  it('should pass error to render methods', (done) => {
+  it('should pass error to render methods', async () => {
     const prerender = jest.fn()
       .mockImplementationOnce(({ error, props }) => {
         expect(error).toBeNull();
@@ -55,19 +53,14 @@ describe('error', () => {
       render: createRender({}),
     });
 
-    class InstrumentedResolver extends Resolver {
-      async * resolveElements(match) {
-        yield* super.resolveElements(match);
-
-        expect(prerender.mock.calls.length).toBe(2);
-        expect(render.mock.calls.length).toBe(2);
-
-        done();
-      }
-    }
-
+    const resolver = new InstrumentedResolver(environment);
     ReactTestUtils.renderIntoDocument(
-      <Router resolver={new InstrumentedResolver(environment)} />,
+      <Router resolver={resolver} />,
     );
+
+    await resolver.done;
+
+    expect(prerender.mock.calls.length).toBe(2);
+    expect(render.mock.calls.length).toBe(2);
   });
 });
