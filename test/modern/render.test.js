@@ -1,9 +1,14 @@
 import ServerProtocol from 'farce/lib/ServerProtocol';
 import createFarceRouter from 'found/lib/createFarceRouter';
 import createRender from 'found/lib/createRender';
+import HttpError from 'found/lib/HttpError';
+import RedirectException from 'found/lib/RedirectException';
+import getFarceResult from 'found/lib/server/getFarceResult';
 import React from 'react';
 import ReactTestUtils from 'react-dom/test-utils';
 import { graphql } from 'react-relay';
+
+import { Resolver } from '../../src';
 
 import { createEnvironment, InstrumentedResolver } from './helpers';
 
@@ -81,5 +86,68 @@ describe('render', () => {
     ReactTestUtils.findRenderedDOMComponentWithClass(instance, 'root');
     ReactTestUtils.findRenderedDOMComponentWithClass(instance, 'foo-nav');
     ReactTestUtils.findRenderedDOMComponentWithClass(instance, 'foo-main');
+  });
+
+  it('should support erroring based on query data', async () => {
+    const { status, element } = await getFarceResult({
+      url: '/',
+      routeConfig: [{
+        path: '/',
+        query: graphql`
+          query render_Query {
+            widget {
+              name
+            }
+          }
+        `,
+        render: ({ resolving, props }) => {
+          if (resolving && props) {
+            throw new HttpError(400, props);
+          }
+
+          return null;
+        },
+      }],
+      resolver: new Resolver(environment),
+      render: createRender({
+        renderError: ({ error }) => (
+          <div className={`error-${error.data.widget.name}`} />
+        ),
+      }),
+    });
+
+    expect(status).toBe(400);
+
+    const instance = ReactTestUtils.renderIntoDocument(element);
+    ReactTestUtils.findRenderedDOMComponentWithClass(instance, 'error-foo');
+  });
+
+  it('should support redirecting based on query data', async () => {
+    const { redirect } = await getFarceResult({
+      url: '/',
+      routeConfig: [{
+        path: '/',
+        query: graphql`
+          query render_Query {
+            widget {
+              name
+            }
+          }
+        `,
+        render: ({ resolving, props }) => {
+          if (resolving && props) {
+            throw new RedirectException(`/${props.widget.name}`);
+          }
+
+          return null;
+        },
+      }],
+      resolver: new Resolver(environment),
+      render: createRender({}),
+    });
+
+    expect(redirect).toEqual({
+      url: '/foo',
+    });
   });
 });

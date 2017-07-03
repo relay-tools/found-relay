@@ -15,16 +15,6 @@ describe('error', () => {
   });
 
   it('should pass error to render methods', async () => {
-    const prerender = jest.fn()
-      .mockImplementationOnce(({ error, props }) => {
-        expect(error).toBeNull();
-        expect(props).toBeNull();
-      })
-      .mockImplementationOnce(({ error, props }) => {
-        expect(error.message).toMatch(/expected error/);
-        expect(props).toBeNull();
-      });
-
     const render = jest.fn()
       .mockImplementationOnce(({ error, props }) => {
         expect(error).toBeNull();
@@ -46,7 +36,6 @@ describe('error', () => {
             error
           }
         `,
-        prerender,
         render,
       }],
 
@@ -60,7 +49,6 @@ describe('error', () => {
 
     await resolver.done;
 
-    expect(prerender.mock.calls).toHaveLength(2);
     expect(render.mock.calls).toHaveLength(2);
   });
 });

@@ -24,7 +24,9 @@ describe('Resolver', () => {
       return React.cloneElement(children, { extraProp: 3 });
     }
 
-    function WidgetParent({ widget, children }) {
+    function WidgetParent({ widget, extraProp, children }) {
+      expect(extraProp).toBe(3);
+
       return (
         <div className={widget.name}>
           {children}

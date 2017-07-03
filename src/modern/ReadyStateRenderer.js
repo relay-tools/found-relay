@@ -2,9 +2,9 @@ import PropTypes from 'prop-types';
 import elementType from 'prop-types-extra/lib/elementType';
 import React from 'react';
 import RelayPropTypes from 'react-relay/lib/RelayPropTypes';
-import warning from 'warning';
 
 import QuerySubscription from './QuerySubscription';
+import renderElement from './renderElement';
 
 const propTypes = {
   match: PropTypes.shape({
@@ -14,6 +14,7 @@ const propTypes = {
   }).isRequired,
   Component: elementType,
   hasComponent: PropTypes.bool.isRequired,
+  element: PropTypes.element,
   querySubscription: PropTypes.instanceOf(QuerySubscription).isRequired,
 };
 
@@ -25,10 +26,10 @@ class ReadyStateRenderer extends React.Component {
   constructor(props, context) {
     super(props, context);
 
-    const { querySubscription } = props;
+    const { element, querySubscription } = props;
 
     this.state = {
-      readyState: querySubscription.readyState,
+      element,
     };
 
     this.selectionReference = querySubscription.retain();
@@ -45,19 +46,18 @@ class ReadyStateRenderer extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { querySubscription } = nextProps;
-    const { readyState } = querySubscription;
+    const { element, querySubscription } = nextProps;
+
+    if (element !== this.props.element) {
+      this.setState({ element });
+    }
 
     if (querySubscription !== this.props.querySubscription) {
-      this.onUpdate(readyState);
-
       this.selectionReference.dispose();
       this.selectionReference = querySubscription.retain();
 
       this.props.querySubscription.unsubscribe(this.onUpdate);
       querySubscription.subscribe(this.onUpdate);
-    } else if (readyState !== this.state.readyState) {
-      this.onUpdate(readyState);
     }
   }
 
@@ -67,46 +67,31 @@ class ReadyStateRenderer extends React.Component {
   }
 
   onUpdate = (readyState) => {
-    this.setState({ readyState });
+    const { match, Component, hasComponent } = this.props;
+
+    this.setState({
+      element: renderElement({
+        match,
+        Component,
+        hasComponent,
+        readyState,
+        resolving: false,
+      }),
+    });
   };
 
   render() {
-    const { match, Component, hasComponent, ...ownProps } = this.props;
+    const { ...ownProps } = this.props;
+
+    delete ownProps.match;
+    delete ownProps.Component;
+    delete ownProps.hasComponent;
+    delete ownProps.element;
     delete ownProps.querySubscription;
 
-    const { route } = match;
+    const { element } = this.state;
 
-    const { readyState } = this.state;
-    const { props } = readyState;
-
-    if (!route.render) {
-      if (__DEV__ && !hasComponent) {
-        let { query } = route;
-        if (query.modern) {
-          query = query.modern;
-        }
-
-        warning(
-          false,
-          'Route with query %s has no render method or component.',
-          typeof query === 'function' ? query().name : 'UNKNOWN',
-        );
-      }
-
-      if (!Component || !props) {
-        return null;
-      }
-
-      return <Component {...match} {...ownProps} {...props} />;
-    }
-
-    return route.render({
-      ...readyState,
-      match,
-      Component,
-      props: props && { ...match, ...ownProps, ...props },
-      ownProps,
-    });
+    return element && React.cloneElement(element, ownProps);
   }
 }
 

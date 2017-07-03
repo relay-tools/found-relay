@@ -22,7 +22,9 @@ describe('Resolver', () => {
       return React.cloneElement(children, { extraProp: 3 });
     }
 
-    function WidgetParent({ widget, children }) {
+    function WidgetParent({ widget, extraProp, children }) {
+      expect(extraProp).toBe(3);
+
       return (
         <div className={widget.name}>
           {children}
@@ -68,12 +70,10 @@ describe('Resolver', () => {
       `,
     );
 
-    let prerenderSpy;
     let renderSpy;
     let instance;
 
     beforeEach(async () => {
-      prerenderSpy = jest.fn();
       renderSpy = jest.fn(({ props }) => (
         props && <WidgetParentContainer {...props} />
       ));
@@ -92,7 +92,6 @@ describe('Resolver', () => {
                 }
               }
             `}
-            prerender={prerenderSpy}
             render={renderSpy}
             prepareVariables={({ parentName, ...params }) => ({
               ...params,
@@ -176,14 +175,6 @@ describe('Resolver', () => {
           expect(renderArgs.match.route).toBeDefined();
           expect(renderArgs.Component).toBe(WidgetParentContainer);
         });
-
-        it('should have the correct prerender args', () => {
-          const prerenderArgs = prerenderSpy.mock.calls[0][0];
-
-          expect(prerenderArgs.match).toBeDefined();
-          expect(prerenderArgs.match.route).toBeDefined();
-          expect(prerenderArgs.props).toBeNull();
-        });
       });
 
       describe('after data are ready', () => {
@@ -200,6 +191,11 @@ describe('Resolver', () => {
         it('should have Relay props', () => {
           expect(renderArgs.props).toBeDefined();
           expect(renderArgs.props.widget).toBeDefined();
+          expect(renderArgs.props).toMatchObject({
+            extra: {
+              name: 'extra',
+            },
+          });
         });
 
         it('should have router props', () => {
@@ -207,24 +203,6 @@ describe('Resolver', () => {
           expect(renderArgs.match).toBeDefined();
           expect(renderArgs.match.route).toBeDefined();
           expect(renderArgs.Component).toBe(WidgetParentContainer);
-        });
-
-        it('should support injected props', () => {
-          expect(renderArgs.props.extraProp).toBe(3);
-          expect(renderArgs.ownProps.extraProp).toBe(3);
-        });
-
-        it('should have the correct prerender args', () => {
-          expect(prerenderSpy.mock.calls).toHaveLength(2);
-          const prerenderArgs = prerenderSpy.mock.calls[1][0];
-
-          expect(prerenderArgs.match).toBeDefined();
-          expect(prerenderArgs.match.route).toBeDefined();
-          expect(prerenderArgs.props).toMatchObject({
-            extra: {
-              name: 'extra',
-            },
-          });
         });
       });
     });
