@@ -1,8 +1,8 @@
-import invariant from 'invariant';
 import PropTypes from 'prop-types';
 import elementType from 'prop-types-extra/lib/elementType';
 import React from 'react';
 import RelayPropTypes from 'react-relay/lib/RelayPropTypes';
+import warning from 'warning';
 
 import QuerySubscription from './QuerySubscription';
 
@@ -82,12 +82,13 @@ class SnapshotRenderer extends React.Component {
     const { props } = readyState;
 
     if (!route.render) {
-      invariant(
+      warning(
         hasComponent,
-        'Relay routes without a render method must specify a component.',
+        'Route with query %s has no render method or component.',
+        route.query().name,
       );
 
-      if (!props) {
+      if (!Component || !props) {
         return null;
       }
 
