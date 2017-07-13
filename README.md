@@ -4,11 +4,13 @@
 
 **This branch tracks the [v0.3 prereleases](https://github.com/4Catalyzer/found-relay/releases), tagged `next` on npm. For the v0.2 releases tagged `latest` on npm, see the [`v0.2-dev`](https://github.com/4Catalyzer/found-relay/tree/v0.2-dev) branch.**
 
-Detailed documentation forthcoming. For basic usage examples, see:
+Detailed documentation forthcoming.
 
-- Relay Modern: [taion/relay-todomvc/found-modern](https://github.com/taion/relay-todomvc/tree/found-modern)
-- Relay Modern with server-side rendering: [taion/relay-todomvc/found-modern-universal](https://github.com/taion/relay-todomvc/tree/found-modern-universal)
-- Relay Classic: [taion/relay-todomvc/found-classic](https://github.com/taion/relay-todomvc/tree/found-classic)
+## Examples
+
+- [TodoMVC with Relay Modern](/examples/todomvc-modern)
+- [TodoMVC with Relay Modern and server-side rendering](/examples/todomvc-modern-universal)
+- [TodoMVC with Relay Classic](/examples/todomvc-classic)
 
 [build-badge]: https://img.shields.io/travis/4Catalyzer/found-relay/master.svg
 [build]: https://travis-ci.org/4Catalyzer/found-relay
