@@ -7,8 +7,6 @@
     "react"
   ],
   "plugins": [
-    "dev-expression",
-    "transform-runtime", // Need stage-3 Symbol polyfill.
-    "add-module-exports"
+    ["relay", { "schema": "test/fixtures/schema.graphql" }]
   ]
 }
