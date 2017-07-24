@@ -32,13 +32,18 @@ export class InstrumentedResolver extends Resolver {
   constructor(environment = createEnvironment()) {
     super(environment);
 
-    this.done = new Promise((resolve) => {
-      this.resolveDone = resolve;
-    });
+    // This should be a rejected promise to prevent awaiting on done before
+    // trying to resolve, but Node doesn't like naked unresolved promises.
+    this.done = new Promise(() => {});
   }
 
   async * resolveElements(match) {
+    let resolveDone;
+    this.done = new Promise((resolve) => {
+      resolveDone = resolve;
+    });
+
     yield* super.resolveElements(match);
-    this.resolveDone();
+    resolveDone();
   }
 }
