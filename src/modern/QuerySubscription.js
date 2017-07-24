@@ -103,6 +103,8 @@ export default class QuerySubscription {
   }
 
   dispose() {
+    this.fetchPromise = null;
+
     if (this.selectionReference) {
       this.selectionReference.dispose();
     }

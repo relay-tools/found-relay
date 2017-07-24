@@ -21,7 +21,8 @@
     "setupFiles": [
       "babel-polyfill",
       "<rootDir>/test/setup.js"
-    ]
+    ],
+    "testEnvironment": "jsdom-11.0.0"
   },
   "repository": {
     "type": "git",
@@ -70,9 +71,10 @@
     "eslint-plugin-jsx-a11y": "^2.2.3",
     "eslint-plugin-react": "^6.10.3",
     "farce": "^0.2.1",
-    "found": "^0.3.1",
-    "graphql": "^0.10.3",
+    "found": "^0.3.2",
+    "graphql": "^0.10.5",
     "jest": "^20.0.4",
+    "jest-environment-jsdom-11.0.0": "^20.0.9",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-relay": "^1.1.0",
