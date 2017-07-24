@@ -21,7 +21,7 @@ const childContextTypes = {
   relay: RelayPropTypes.Relay,
 };
 
-class SnapshotRenderer extends React.Component {
+class ReadyStateRenderer extends React.Component {
   constructor(props, context) {
     super(props, context);
 
@@ -82,11 +82,18 @@ class SnapshotRenderer extends React.Component {
     const { props } = readyState;
 
     if (!route.render) {
-      warning(
-        hasComponent,
-        'Route with query %s has no render method or component.',
-        route.query().name,
-      );
+      if (__DEV__ && !hasComponent) {
+        let { query } = route;
+        if (query.modern) {
+          query = query.modern;
+        }
+
+        warning(
+          false,
+          'Route with query %s has no render method or component.',
+          typeof query === 'function' ? query().name : 'UNKNOWN',
+        );
+      }
 
       if (!Component || !props) {
         return null;
@@ -105,7 +112,7 @@ class SnapshotRenderer extends React.Component {
   }
 }
 
-SnapshotRenderer.propTypes = propTypes;
-SnapshotRenderer.childContextTypes = childContextTypes;
+ReadyStateRenderer.propTypes = propTypes;
+ReadyStateRenderer.childContextTypes = childContextTypes;
 
-export default SnapshotRenderer;
+export default ReadyStateRenderer;

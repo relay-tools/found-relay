@@ -1,0 +1,12 @@
+{
+  "presets": [
+    ["latest", {
+      "es2015": { "loose": true }
+    }],
+    "stage-1",
+    "react"
+  ],
+  "plugins": [
+    ["relay", {"compat": true, "schema": "test/fixtures/schema.graphql"}]
+  ]
+}

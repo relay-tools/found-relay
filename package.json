@@ -11,7 +11,7 @@
     "build-fixtures": "npm run update-schema && npm run relay-compiler",
     "lint": "eslint src test *.js",
     "prepublish": "npm run build",
-    "relay-compiler": "relay-compiler --src test/modern --schema test/fixtures/schema.graphql",
+    "relay-compiler": "relay-compiler --src test --schema test/fixtures/schema.graphql",
     "tdd": "jest --watch",
     "test": "npm run build-fixtures && npm run lint && npm run testonly",
     "testonly": "jest --runInBand --verbose",
