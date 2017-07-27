@@ -18,6 +18,9 @@ before_install:
   - ./autogen.sh && ./configure && make && sudo make install
   - popd
 
+after_script:
+  - node_modules/.bin/codecov
+
 branches:
   only:
     - master
