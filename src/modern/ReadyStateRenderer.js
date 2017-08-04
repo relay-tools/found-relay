@@ -41,7 +41,7 @@ class ReadyStateRenderer extends React.Component {
   }
 
   componentDidMount() {
-    this.subscribe(this.props.querySubscription);
+    this.props.querySubscription.subscribe(this.onUpdate);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -54,7 +54,8 @@ class ReadyStateRenderer extends React.Component {
       this.selectionReference.dispose();
       this.selectionReference = querySubscription.retain();
 
-      this.subscribe(querySubscription);
+      this.props.querySubscription.unsubscribe(this.onUpdate);
+      querySubscription.subscribe(this.onUpdate);
     } else if (readyState !== this.state.readyState) {
       this.onUpdate(readyState);
     }
@@ -62,15 +63,12 @@ class ReadyStateRenderer extends React.Component {
 
   componentWillUnmount() {
     this.selectionReference.dispose();
+    this.props.querySubscription.unsubscribe(this.onUpdate);
   }
 
   onUpdate = (readyState) => {
     this.setState({ readyState });
   };
-
-  subscribe(querySubscription) {
-    querySubscription.subscribe(this.onUpdate);
-  }
 
   render() {
     const { match, Component, hasComponent, ...ownProps } = this.props;

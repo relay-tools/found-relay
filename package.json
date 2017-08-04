@@ -44,7 +44,6 @@
   "homepage": "https://github.com/4Catalyzer/found-relay#readme",
   "dependencies": {
     "babel-runtime": "^6.23.0",
-    "invariant": "^2.2.2",
     "is-promise": "^2.1.0",
     "lodash": "^4.17.4",
     "prop-types": "^15.5.10",
