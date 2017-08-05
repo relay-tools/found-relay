@@ -6,6 +6,7 @@ import makeRouteConfig from 'found/lib/makeRouteConfig';
 import Route from 'found/lib/Route';
 import React from 'react';
 import ReactTestUtils from 'react-dom/test-utils';
+import ReadyStateRenderer from '../../src/modern/ReadyStateRenderer';
 import { createFragmentContainer, graphql } from 'react-relay';
 
 import { createEnvironment, InstrumentedResolver } from './helpers';
@@ -22,12 +23,24 @@ describe('Resolver', () => {
       return React.cloneElement(children, { extraProp: 3 });
     }
 
-    function WidgetParent({ widget, children }) {
-      return (
-        <div className={widget.name}>
-          {children}
-        </div>
-      );
+    class WidgetParent extends React.Component {
+      state = { testMultiple: false }
+
+      componentWillUpdate() {
+        this.previousChildren = this.props.children;
+      }
+
+      previousChildren = null;
+
+      render() {
+        const { widget, children } = this.props;
+        return (
+          <div className={widget.name}>
+            {this.state.testMultiple && this.previousChildren}
+            {children}
+          </div>
+        );
+      }
     }
 
     const WidgetParentContainer = createFragmentContainer(
@@ -225,6 +238,50 @@ describe('Resolver', () => {
               name: 'extra',
             },
           });
+        });
+      });
+    });
+
+    describe('query listeners', () => {
+      it('should support multiple listeners', () => {
+        // First we match only a single instance
+        const parentAndChildRenderers =
+          ReactTestUtils.scryRenderedComponentsWithType(
+            instance, ReadyStateRenderer,
+          );
+
+        expect(parentAndChildRenderers).toHaveLength(2);
+        parentAndChildRenderers.forEach((thisRendererInstance) => {
+          expect(
+            ReactTestUtils.isCompositeComponentWithType(
+              thisRendererInstance,
+              ReadyStateRenderer,
+            ),
+          ).toBe(true);
+        });
+
+        // Now we trigger an update which should add
+        // an aditional ReadyStateRenderer
+        const parent =
+          ReactTestUtils.findRenderedComponentWithType(
+            instance, WidgetParent,
+          );
+        parent.setState({ testMultiple: true });
+
+        // Let's check for two
+        const parentChildAndCloneRenderers =
+          ReactTestUtils.scryRenderedComponentsWithType(
+            instance, ReadyStateRenderer,
+          );
+
+        expect(parentChildAndCloneRenderers).toHaveLength(3);
+        parentChildAndCloneRenderers.forEach((thisRendererInstance) => {
+          expect(
+            ReactTestUtils.isCompositeComponentWithType(
+              thisRendererInstance,
+              ReadyStateRenderer,
+            ),
+          ).toBe(true);
         });
       });
     });
