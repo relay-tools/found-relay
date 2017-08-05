@@ -11,6 +11,13 @@ import { createFragmentContainer, graphql } from 'react-relay';
 
 import { createEnvironment, InstrumentedResolver } from './helpers';
 
+const historyProtocol = new ServerProtocol('/parent/bar?name=baz');
+historyProtocol.transition = (location) => {
+  const { action } = location;
+  const delta = action === 'PUSH' ? 1 : 0;
+  return { ...location, delta };
+};
+
 describe('Resolver', () => {
   let environment;
 
@@ -24,8 +31,6 @@ describe('Resolver', () => {
     }
 
     class WidgetParent extends React.Component {
-      state = { testMultiple: false }
-
       componentWillUpdate() {
         this.previousChildren = this.props.children;
       }
@@ -33,10 +38,16 @@ describe('Resolver', () => {
       previousChildren = null;
 
       render() {
-        const { widget, children } = this.props;
+        const { widget, children, location } = this.props;
+        const { state: locationState } = location;
+
+        const usePreviousChildren =
+          locationState &&
+          locationState.shouldRenderPreviousChildren;
+
         return (
           <div className={widget.name}>
-            {this.state.testMultiple && this.previousChildren}
+            {usePreviousChildren && this.previousChildren}
             {children}
           </div>
         );
@@ -84,6 +95,7 @@ describe('Resolver', () => {
     let prerenderSpy;
     let renderSpy;
     let instance;
+    let resolver;
 
     beforeEach(async () => {
       prerenderSpy = jest.fn();
@@ -112,6 +124,17 @@ describe('Resolver', () => {
               parentName: `${parentName}-`,
             })}
           >
+            <Route
+              path="default"
+              Component={WidgetChildrenContainer}
+              query={graphql`
+                query Resolver_WidgetDefault_Query {
+                  widget {
+                    name
+                  }
+                }
+              `}
+            />
             <Route
               path=":pathName"
               Component={WidgetChildrenContainer}
@@ -142,14 +165,14 @@ describe('Resolver', () => {
       );
 
       const Router = createFarceRouter({
-        historyProtocol: new ServerProtocol('/parent/bar?name=baz'),
+        historyProtocol,
         historyMiddlewares: [queryMiddleware],
         routeConfig: routes,
 
         render: createRender({}),
       });
 
-      const resolver = new InstrumentedResolver(environment);
+      resolver = new InstrumentedResolver(environment);
       instance = ReactTestUtils.renderIntoDocument(
         <Router resolver={resolver} />,
       );
@@ -243,14 +266,16 @@ describe('Resolver', () => {
     });
 
     describe('query listeners', () => {
-      it('should support multiple listeners', () => {
+      it('should support multiple listeners', async () => {
         // First we match only a single instance
         const parentAndChildRenderers =
           ReactTestUtils.scryRenderedComponentsWithType(
             instance, ReadyStateRenderer,
           );
 
-        expect(parentAndChildRenderers).toHaveLength(2);
+        const expectedSize = 2;
+
+        expect(parentAndChildRenderers).toHaveLength(expectedSize);
         parentAndChildRenderers.forEach((thisRendererInstance) => {
           expect(
             ReactTestUtils.isCompositeComponentWithType(
@@ -260,21 +285,24 @@ describe('Resolver', () => {
           ).toBe(true);
         });
 
-        // Now we trigger an update which should add
-        // an aditional ReadyStateRenderer
-        const parent =
-          ReactTestUtils.findRenderedComponentWithType(
-            instance, WidgetParent,
-          );
-        parent.setState({ testMultiple: true });
+        // Now we trigger a route change
+        const mockRouter = ReactTestUtils.findRenderedComponentWithType(
+          instance, WidgetParentContainer,
+        ).props.router;
+        mockRouter.push({
+          pathname: '/parent/default',
+          state: { shouldRenderPreviousChildren: true },
+        });
 
-        // Let's check for two
+        await resolver.done;
+
+        // And check for an extra ReadyStateRenderer
         const parentChildAndCloneRenderers =
           ReactTestUtils.scryRenderedComponentsWithType(
             instance, ReadyStateRenderer,
           );
 
-        expect(parentChildAndCloneRenderers).toHaveLength(3);
+        expect(parentChildAndCloneRenderers).toHaveLength(expectedSize + 1);
         parentChildAndCloneRenderers.forEach((thisRendererInstance) => {
           expect(
             ReactTestUtils.isCompositeComponentWithType(
