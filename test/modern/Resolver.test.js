@@ -6,17 +6,9 @@ import makeRouteConfig from 'found/lib/makeRouteConfig';
 import Route from 'found/lib/Route';
 import React from 'react';
 import ReactTestUtils from 'react-dom/test-utils';
-import ReadyStateRenderer from '../../src/modern/ReadyStateRenderer';
 import { createFragmentContainer, graphql } from 'react-relay';
 
 import { createEnvironment, InstrumentedResolver } from './helpers';
-
-const historyProtocol = new ServerProtocol('/parent/bar?name=baz');
-historyProtocol.transition = (location) => {
-  const { action } = location;
-  const delta = action === 'PUSH' ? 1 : 0;
-  return { ...location, delta };
-};
 
 describe('Resolver', () => {
   let environment;
@@ -30,28 +22,12 @@ describe('Resolver', () => {
       return React.cloneElement(children, { extraProp: 3 });
     }
 
-    class WidgetParent extends React.Component {
-      componentWillUpdate() {
-        this.previousChildren = this.props.children;
-      }
-
-      previousChildren = null;
-
-      render() {
-        const { widget, children, location } = this.props;
-        const { state: locationState } = location;
-
-        const usePreviousChildren =
-          locationState &&
-          locationState.shouldRenderPreviousChildren;
-
-        return (
-          <div className={widget.name}>
-            {usePreviousChildren && this.previousChildren}
-            {children}
-          </div>
-        );
-      }
+    function WidgetParent({ widget, children }) {
+      return (
+        <div className={widget.name}>
+          {children}
+        </div>
+      );
     }
 
     const WidgetParentContainer = createFragmentContainer(
@@ -95,7 +71,6 @@ describe('Resolver', () => {
     let prerenderSpy;
     let renderSpy;
     let instance;
-    let resolver;
 
     beforeEach(async () => {
       prerenderSpy = jest.fn();
@@ -124,17 +99,6 @@ describe('Resolver', () => {
               parentName: `${parentName}-`,
             })}
           >
-            <Route
-              path="default"
-              Component={WidgetChildrenContainer}
-              query={graphql`
-                query Resolver_WidgetDefault_Query {
-                  widget {
-                    name
-                  }
-                }
-              `}
-            />
             <Route
               path=":pathName"
               Component={WidgetChildrenContainer}
@@ -165,14 +129,14 @@ describe('Resolver', () => {
       );
 
       const Router = createFarceRouter({
-        historyProtocol,
+        historyProtocol: new ServerProtocol('/parent/bar?name=baz'),
         historyMiddlewares: [queryMiddleware],
         routeConfig: routes,
 
         render: createRender({}),
       });
 
-      resolver = new InstrumentedResolver(environment);
+      const resolver = new InstrumentedResolver(environment);
       instance = ReactTestUtils.renderIntoDocument(
         <Router resolver={resolver} />,
       );
@@ -230,7 +194,7 @@ describe('Resolver', () => {
         });
 
         it('should have rendered twice', () => {
-          expect(renderSpy.mock.calls.length).toBe(2);
+          expect(renderSpy.mock.calls).toHaveLength(2);
         });
 
         it('should have Relay props', () => {
@@ -251,7 +215,7 @@ describe('Resolver', () => {
         });
 
         it('should have the correct prerender args', () => {
-          expect(prerenderSpy.mock.calls.length).toBe(2);
+          expect(prerenderSpy.mock.calls).toHaveLength(2);
           const prerenderArgs = prerenderSpy.mock.calls[1][0];
 
           expect(prerenderArgs.match).toBeDefined();
@@ -261,55 +225,6 @@ describe('Resolver', () => {
               name: 'extra',
             },
           });
-        });
-      });
-    });
-
-    describe('query listeners', () => {
-      it('should support multiple listeners', async () => {
-        // First we match only a single instance
-        const parentAndChildRenderers =
-          ReactTestUtils.scryRenderedComponentsWithType(
-            instance, ReadyStateRenderer,
-          );
-
-        const expectedSize = 2;
-
-        expect(parentAndChildRenderers).toHaveLength(expectedSize);
-        parentAndChildRenderers.forEach((thisRendererInstance) => {
-          expect(
-            ReactTestUtils.isCompositeComponentWithType(
-              thisRendererInstance,
-              ReadyStateRenderer,
-            ),
-          ).toBe(true);
-        });
-
-        // Now we trigger a route change
-        const mockRouter = ReactTestUtils.findRenderedComponentWithType(
-          instance, WidgetParentContainer,
-        ).props.router;
-        mockRouter.push({
-          pathname: '/parent/default',
-          state: { shouldRenderPreviousChildren: true },
-        });
-
-        await resolver.done;
-
-        // And check for an extra ReadyStateRenderer
-        const parentChildAndCloneRenderers =
-          ReactTestUtils.scryRenderedComponentsWithType(
-            instance, ReadyStateRenderer,
-          );
-
-        expect(parentChildAndCloneRenderers).toHaveLength(expectedSize + 1);
-        parentChildAndCloneRenderers.forEach((thisRendererInstance) => {
-          expect(
-            ReactTestUtils.isCompositeComponentWithType(
-              thisRendererInstance,
-              ReadyStateRenderer,
-            ),
-          ).toBe(true);
         });
       });
     });
