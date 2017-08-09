@@ -1,5 +1,3 @@
-import invariant from 'invariant';
-
 export default class QuerySubscription {
   constructor(environment, operation, cacheConfig) {
     this.environment = environment;
@@ -17,7 +15,7 @@ export default class QuerySubscription {
       retry: null,
     };
 
-    this.listener = null;
+    this.listeners = [];
 
     this.relayContext = {
       environment: this.environment,
@@ -82,15 +80,17 @@ export default class QuerySubscription {
   onChange = (snapshot) => {
     this.updateReadyState(snapshot);
 
-    if (this.listener) {
-      this.listener(this.readyState);
-    }
+    this.listeners.forEach((listener) => {
+      listener(this.readyState);
+    });
   };
 
   subscribe(listener) {
-    invariant(!this.listener, 'QuerySubscription already has a listener.');
+    this.listeners.push(listener);
+  }
 
-    this.listener = listener;
+  unsubscribe(listener) {
+    this.listeners = this.listeners.filter(item => item !== listener);
   }
 
   retry = () => {

@@ -37,7 +37,7 @@ describe('retry', () => {
       render: createRender({}),
     });
 
-    expect(fetchSpy.mock.calls.length).toBe(0);
+    expect(fetchSpy.mock.calls).toHaveLength(0);
 
     const resolver = new InstrumentedResolver(environment);
     ReactTestUtils.renderIntoDocument(
@@ -45,11 +45,11 @@ describe('retry', () => {
     );
 
     await resolver.done;
-    expect(fetchSpy.mock.calls.length).toBe(1);
+    expect(fetchSpy.mock.calls).toHaveLength(1);
 
     renderSpy.mock.calls[1][0].retry();
 
     await resolver.done;
-    expect(fetchSpy.mock.calls.length).toBe(2);
+    expect(fetchSpy.mock.calls).toHaveLength(2);
   });
 });

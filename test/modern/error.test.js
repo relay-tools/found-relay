@@ -60,7 +60,7 @@ describe('error', () => {
 
     await resolver.done;
 
-    expect(prerender.mock.calls.length).toBe(2);
-    expect(render.mock.calls.length).toBe(2);
+    expect(prerender.mock.calls).toHaveLength(2);
+    expect(render.mock.calls).toHaveLength(2);
   });
 });

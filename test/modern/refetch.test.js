@@ -43,12 +43,12 @@ describe('refetch behavior', () => {
     const resolver = new Resolver(environment);
     const render = createRender({});
 
-    expect(fetchSpy.mock.calls.length).toBe(0);
+    expect(fetchSpy.mock.calls).toHaveLength(0);
 
     await getFarceResult({ url: '/foo', routeConfig, resolver, render });
-    expect(fetchSpy.mock.calls.length).toBe(2);
+    expect(fetchSpy.mock.calls).toHaveLength(2);
 
     await getFarceResult({ url: '/bar', routeConfig, resolver, render });
-    expect(fetchSpy.mock.calls.length).toBe(3);
+    expect(fetchSpy.mock.calls).toHaveLength(3);
   });
 });

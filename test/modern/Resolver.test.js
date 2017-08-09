@@ -194,7 +194,7 @@ describe('Resolver', () => {
         });
 
         it('should have rendered twice', () => {
-          expect(renderSpy.mock.calls.length).toBe(2);
+          expect(renderSpy.mock.calls).toHaveLength(2);
         });
 
         it('should have Relay props', () => {
@@ -215,7 +215,7 @@ describe('Resolver', () => {
         });
 
         it('should have the correct prerender args', () => {
-          expect(prerenderSpy.mock.calls.length).toBe(2);
+          expect(prerenderSpy.mock.calls).toHaveLength(2);
           const prerenderArgs = prerenderSpy.mock.calls[1][0];
 
           expect(prerenderArgs.match).toBeDefined();
