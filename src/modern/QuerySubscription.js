@@ -40,7 +40,19 @@ export default class QuerySubscription {
             }
 
             snapshot = this.environment.lookup(this.operation.fragment);
-            this.updateReadyState(snapshot);
+
+            // retry is unset only for the initial request.
+            if (this.readyState.retry) {
+              // We've already fetched once. That means this isn't an initial
+              // render, so we need to trigger listeners.
+              this.onChange(snapshot);
+            } else {
+              // Don't trigger listeners on the initial fetch, because the
+              // resolver will trigger an update and make ReadyStateRenderers
+              // rerender anyway.
+              this.updateReadyState(snapshot);
+            }
+
             this.rootSubscription = this.environment.subscribe(
               snapshot, this.onChange,
             );

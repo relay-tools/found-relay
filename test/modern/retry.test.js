@@ -17,8 +17,10 @@ describe('retry', () => {
     environment = createEnvironment(fetchSpy);
   });
 
-  it('should fire a new network request', async () => {
-    const renderSpy = jest.fn(() => null);
+  it('should send a new network requests and rerender', async () => {
+    const renderSpy = jest.fn(({ props }) => (
+      props && <div className={props.widget.name} />
+    ));
 
     const Router = createFarceRouter({
       historyProtocol: new ServerProtocol('/'),
@@ -40,16 +42,34 @@ describe('retry', () => {
     expect(fetchSpy.mock.calls).toHaveLength(0);
 
     const resolver = new InstrumentedResolver(environment);
-    ReactTestUtils.renderIntoDocument(
+    const instance = ReactTestUtils.renderIntoDocument(
       <Router resolver={resolver} />,
     );
 
     await resolver.done;
+
     expect(fetchSpy.mock.calls).toHaveLength(1);
+    ReactTestUtils.findRenderedDOMComponentWithClass(instance, 'foo');
 
-    renderSpy.mock.calls[1][0].retry();
+    const retryPromise = new Promise((resolve) => {
+      fetchSpy.mockImplementationOnce(async () => {
+        // Wait until request resolves to make assertions below.
+        setTimeout(resolve, 20);
 
-    await resolver.done;
+        return {
+          data: {
+            widget: {
+              name: 'bar',
+            },
+          },
+        };
+      });
+    });
+
+    renderSpy.mock.calls.slice(-1)[0][0].retry();
+    await retryPromise;
+
     expect(fetchSpy.mock.calls).toHaveLength(2);
+    ReactTestUtils.findRenderedDOMComponentWithClass(instance, 'bar');
   });
 });
