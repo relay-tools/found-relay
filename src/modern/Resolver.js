@@ -7,6 +7,7 @@ import React from 'react';
 
 import QuerySubscription from './QuerySubscription';
 import ReadyStateRenderer from './ReadyStateRenderer';
+import renderElement from './renderElement';
 
 export default class Resolver {
   constructor(environment) {
@@ -150,15 +151,23 @@ export default class Resolver {
         return Component ? <Component {...match} /> : null;
       }
 
-      if (route.prerender) {
-        route.prerender({ ...querySubscription.readyState, match });
-      }
+      const resolvedComponent = isComponentResolved ? Component : null;
+      const hasComponent = Component != null;
+
+      const element = renderElement({
+        match,
+        Component: resolvedComponent,
+        hasComponent,
+        readyState: querySubscription.readyState,
+        resolving: true,
+      });
 
       return (
         <ReadyStateRenderer
           match={match}
-          Component={isComponentResolved ? Component : null}
-          hasComponent={Component != null}
+          Component={resolvedComponent}
+          hasComponent={hasComponent}
+          element={element}
           querySubscription={querySubscription}
         />
       );

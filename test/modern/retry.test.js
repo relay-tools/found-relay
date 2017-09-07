@@ -51,6 +51,9 @@ describe('retry', () => {
     expect(fetchSpy.mock.calls).toHaveLength(1);
     ReactTestUtils.findRenderedDOMComponentWithClass(instance, 'foo');
 
+    expect(renderSpy.mock.calls).toHaveLength(2);
+    expect(renderSpy.mock.calls[1][0].resolving).toBe(true);
+
     const retryPromise = new Promise((resolve) => {
       fetchSpy.mockImplementationOnce(async () => {
         // Wait until request resolves to make assertions below.
@@ -66,10 +69,13 @@ describe('retry', () => {
       });
     });
 
-    renderSpy.mock.calls.slice(-1)[0][0].retry();
+    renderSpy.mock.calls[1][0].retry();
     await retryPromise;
 
     expect(fetchSpy.mock.calls).toHaveLength(2);
     ReactTestUtils.findRenderedDOMComponentWithClass(instance, 'bar');
+
+    expect(renderSpy.mock.calls).toHaveLength(3);
+    expect(renderSpy.mock.calls[2][0].resolving).toBe(false);
   });
 });
