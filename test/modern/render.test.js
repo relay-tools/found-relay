@@ -10,7 +10,7 @@ import { graphql } from 'react-relay';
 
 import { Resolver } from '../../src';
 
-import { createEnvironment, InstrumentedResolver } from './helpers';
+import { createEnvironment, InstrumentedResolver, timeout } from './helpers';
 
 describe('render', () => {
   let environment;
@@ -73,13 +73,20 @@ describe('render', () => {
         }],
       }],
 
-      render: createRender({}),
+      render: createRender({
+        renderPending: () => <div className="pending" />,
+      }),
     });
 
     const resolver = new InstrumentedResolver(environment);
     const instance = ReactTestUtils.renderIntoDocument(
       <Router resolver={resolver} />,
     );
+
+    // Initial pending render is asynchronous.
+    await timeout(10);
+
+    ReactTestUtils.findRenderedDOMComponentWithClass(instance, 'pending');
 
     await resolver.done;
 

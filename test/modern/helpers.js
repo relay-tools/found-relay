@@ -9,20 +9,20 @@ export function createFakeFetch() {
   return createFetch({ schema });
 }
 
-// Delay field resolution to exercise async data fetching logic.
-function delay(promise) {
-  return new Promise((resolve, reject) => {
-    promise.then(
-      (value) => { setTimeout(resolve, 10, value); },
-      (error) => { setTimeout(reject, 10, error); },
-    );
+export function timeout(delay) {
+  return new Promise((resolve) => {
+    setTimeout(resolve, delay);
   });
 }
 
 export function createEnvironment(fetch = createFakeFetch()) {
   return new Environment({
     network: Network.create(
-      (...args) => delay(fetch(...args)),
+      async (...args) => {
+        // Delay field resolution to exercise async data fetching logic.
+        await timeout(20);
+        return fetch(...args);
+      },
     ),
     store: new Store(new RecordSource()),
   });
