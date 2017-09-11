@@ -13,6 +13,7 @@ const propTypes = {
     }).isRequired,
   }).isRequired,
   Component: elementType,
+  isComponentResolved: PropTypes.bool.isRequired,
   hasComponent: PropTypes.bool.isRequired,
   element: PropTypes.element,
   querySubscription: PropTypes.instanceOf(QuerySubscription).isRequired,
@@ -67,17 +68,18 @@ class ReadyStateRenderer extends React.Component {
   }
 
   onUpdate = (readyState) => {
-    const { match, Component, hasComponent } = this.props;
+    const { match, Component, isComponentResolved, hasComponent } = this.props;
 
-    this.setState({
-      element: renderElement({
-        match,
-        Component,
-        hasComponent,
-        readyState,
-        resolving: false,
-      }),
+    const element = renderElement({
+      match,
+      Component,
+      isComponentResolved,
+      hasComponent,
+      readyState,
+      resolving: false,
     });
+
+    this.setState({ element: element || null });
   };
 
   render() {
@@ -85,6 +87,7 @@ class ReadyStateRenderer extends React.Component {
 
     delete ownProps.match;
     delete ownProps.Component;
+    delete ownProps.isComponentResolved;
     delete ownProps.hasComponent;
     delete ownProps.element;
     delete ownProps.querySubscription;

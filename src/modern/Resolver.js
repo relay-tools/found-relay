@@ -49,11 +49,14 @@ export default class Resolver {
     let fetchedComponents;
 
     if (!earlyComponents.every(isResolved) || !earlyData.every(isResolved)) {
-      yield this.createElements(
+      const pendingElements = this.createElements(
         routeMatches,
         earlyComponents,
         querySubscriptions,
       );
+
+      yield pendingElements.every(element => element !== undefined) ?
+        pendingElements : undefined;
 
       fetchedComponents = await Promise.all(Components);
       await Promise.all(fetches);
@@ -157,15 +160,21 @@ export default class Resolver {
       const element = renderElement({
         match,
         Component: resolvedComponent,
+        isComponentResolved,
         hasComponent,
         readyState: querySubscription.readyState,
         resolving: true,
       });
 
+      if (element === undefined) {
+        return element;
+      }
+
       return (
         <ReadyStateRenderer
           match={match}
           Component={resolvedComponent}
+          isComponentResolved={isComponentResolved}
           hasComponent={hasComponent}
           element={element}
           querySubscription={querySubscription}
