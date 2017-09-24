@@ -30,10 +30,10 @@ export default class QuerySubscription {
 
         this.selectionReference = this.retain();
 
-        this.pendingRequest = this.environment.streamQuery({
+        this.pendingRequest = this.environment.execute({
           operation: this.operation,
           cacheConfig: this.cacheConfig,
-
+        }).subscribeLegacy({
           onNext: () => {
             if (snapshot) {
               return;
