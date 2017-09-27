@@ -46,18 +46,11 @@ export default class QuerySubscription {
 
               snapshot = this.environment.lookup(this.operation.fragment);
 
-              // TODO: Explicitly track whether this is the first resolution.
-              // retry is unset only for the initial request.
-              if (this.readyState.retry) {
-                // We've already fetched once. That means this isn't an initial
-                // render, so we need to trigger listeners.
-                this.onChange(snapshot);
-              } else {
-                // Don't trigger listeners on the initial fetch, because the
-                // resolver will trigger an update and make ReadyStateRenderers
-                // rerender anyway.
-                this.updateReadyState(snapshot);
-              }
+              this.updateReadyState({
+                error: null,
+                props: snapshot.data,
+                retry: this.retry,
+              });
 
               this.rootSubscription = this.environment.subscribe(
                 snapshot, this.onChange,
@@ -67,13 +60,12 @@ export default class QuerySubscription {
             },
 
             error: (error) => {
-              this.readyState = {
+              this.updateReadyState({
                 error,
                 props: null,
                 // FIXME: Use default readyState when retrying.
                 retry: this.retry,
-              };
-              // FIXME: Fire listeners on receiving error.
+              });
 
               resolve();
             },
@@ -84,19 +76,19 @@ export default class QuerySubscription {
     return this.fetchPromise;
   }
 
-  updateReadyState(snapshot) {
-    this.readyState = {
-      error: null,
-      props: snapshot.data,
-      retry: this.retry,
-    };
+  updateReadyState(readyState) {
+    this.readyState = readyState;
+
+    this.listeners.forEach((listener) => {
+      listener(readyState);
+    });
   }
 
   onChange = (snapshot) => {
-    this.updateReadyState(snapshot);
-
-    this.listeners.forEach((listener) => {
-      listener(this.readyState);
+    this.updateReadyState({
+      error: null,
+      props: snapshot.data,
+      retry: this.retry,
     });
   };
 

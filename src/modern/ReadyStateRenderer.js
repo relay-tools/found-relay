@@ -17,6 +17,7 @@ const propTypes = {
   hasComponent: PropTypes.bool.isRequired,
   element: PropTypes.element,
   querySubscription: PropTypes.instanceOf(QuerySubscription).isRequired,
+  fetched: PropTypes.bool.isRequired,
 };
 
 const childContextTypes = {
@@ -68,6 +69,12 @@ class ReadyStateRenderer extends React.Component {
   }
 
   onUpdate = (readyState) => {
+    if (!this.props.fetched) {
+      // Ignore subscription updates if our data aren't yet fetched. We'll
+      // rerender anyway once fetching finishes.
+      return;
+    }
+
     const { match, Component, isComponentResolved, hasComponent } = this.props;
 
     const element = renderElement({
@@ -91,6 +98,7 @@ class ReadyStateRenderer extends React.Component {
     delete ownProps.hasComponent;
     delete ownProps.element;
     delete ownProps.querySubscription;
+    delete ownProps.fetched;
 
     const { element } = this.state;
 
