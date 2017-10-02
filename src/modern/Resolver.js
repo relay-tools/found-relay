@@ -53,6 +53,7 @@ export default class Resolver {
         routeMatches,
         earlyComponents,
         querySubscriptions,
+        false,
       );
 
       yield pendingElements.every(element => element !== undefined) ?
@@ -68,6 +69,7 @@ export default class Resolver {
       routeMatches,
       fetchedComponents,
       querySubscriptions,
+      true,
     );
   }
 
@@ -128,7 +130,7 @@ export default class Resolver {
     return querySubscriptions;
   }
 
-  createElements(routeMatches, Components, querySubscriptions) {
+  createElements(routeMatches, Components, querySubscriptions, fetched) {
     return routeMatches.map((match, i) => {
       const { route } = match;
 
@@ -178,6 +180,7 @@ export default class Resolver {
           hasComponent={hasComponent}
           element={element}
           querySubscription={querySubscription}
+          fetched={fetched}
         />
       );
     });
