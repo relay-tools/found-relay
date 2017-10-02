@@ -30,51 +30,54 @@ export default class QuerySubscription {
 
         this.selectionReference = this.retain();
 
-        this.pendingRequest = this.environment.streamQuery({
-          operation: this.operation,
-          cacheConfig: this.cacheConfig,
-
-          onNext: () => {
-            if (snapshot) {
-              return;
-            }
-
-            snapshot = this.environment.lookup(this.operation.fragment);
-
-            // retry is unset only for the initial request.
-            if (this.readyState.retry) {
-              // We've already fetched once. That means this isn't an initial
-              // render, so we need to trigger listeners.
-              this.onChange(snapshot);
-            } else {
-              // Don't trigger listeners on the initial fetch, because the
-              // resolver will trigger an update and make ReadyStateRenderers
-              // rerender anyway.
-              this.updateReadyState(snapshot);
-            }
-
-            this.rootSubscription = this.environment.subscribe(
-              snapshot, this.onChange,
-            );
-
-            resolve();
-          },
-
-          onCompleted: () => {
+        this.pendingRequest = this.environment
+          .execute({
+            operation: this.operation,
+            cacheConfig: this.cacheConfig,
+          })
+          .finally(() => {
             this.pendingRequest = null;
-          },
+          })
+          .subscribe({
+            next: () => {
+              if (snapshot) {
+                return;
+              }
 
-          onError: (error) => {
-            this.readyState = {
-              error,
-              props: null,
-              retry: this.retry,
-            };
-            this.pendingRequest = null;
+              snapshot = this.environment.lookup(this.operation.fragment);
 
-            resolve();
-          },
-        });
+              // TODO: Explicitly track whether this is the first resolution.
+              // retry is unset only for the initial request.
+              if (this.readyState.retry) {
+                // We've already fetched once. That means this isn't an initial
+                // render, so we need to trigger listeners.
+                this.onChange(snapshot);
+              } else {
+                // Don't trigger listeners on the initial fetch, because the
+                // resolver will trigger an update and make ReadyStateRenderers
+                // rerender anyway.
+                this.updateReadyState(snapshot);
+              }
+
+              this.rootSubscription = this.environment.subscribe(
+                snapshot, this.onChange,
+              );
+
+              resolve();
+            },
+
+            error: (error) => {
+              this.readyState = {
+                error,
+                props: null,
+                // FIXME: Use default readyState when retrying.
+                retry: this.retry,
+              };
+              // FIXME: Fire listeners on receiving error.
+
+              resolve();
+            },
+          });
       });
     }
 
