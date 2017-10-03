@@ -117,7 +117,7 @@ export default class QuerySubscription {
     }
 
     if (this.pendingRequest) {
-      this.pendingRequest.dispose();
+      this.pendingRequest.unsubscribe();
     }
 
     if (this.rootSubscription) {
