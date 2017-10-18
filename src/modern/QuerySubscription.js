@@ -46,11 +46,7 @@ export default class QuerySubscription {
 
               snapshot = this.environment.lookup(this.operation.fragment);
 
-              this.updateReadyState({
-                error: null,
-                props: snapshot.data,
-                retry: this.retry,
-              });
+              this.onChange(snapshot);
 
               this.rootSubscription = this.environment.subscribe(
                 snapshot, this.onChange,
