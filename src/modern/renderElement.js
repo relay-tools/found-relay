@@ -1,6 +1,8 @@
 import React from 'react';
 import warning from 'warning';
 
+import getQueryName from './getQueryName';
+
 export default function renderElement({
 /* eslint-disable react/prop-types */
   match,
@@ -20,18 +22,11 @@ export default function renderElement({
     }
 
     if (!props || !hasComponent) {
-      if (__DEV__ && !hasComponent) {
-        let { query } = route;
-        if (query.modern) {
-          query = query.modern;
-        }
-
-        warning(
-          false,
-          'Route with query %s has no render method or component.',
-          typeof query === 'function' ? query().name : 'UNKNOWN',
-        );
-      }
+      warning(
+        hasComponent,
+        'Route with query `%s` has no render method or component.',
+        getQueryName(route),
+      );
 
       return null;
     }

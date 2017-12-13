@@ -29,7 +29,31 @@ describe('smoke', () => {
 
     expect(warning).toHaveBeenCalledWith(
       false,
-      'Route with query %s has no render method or component.',
+      'Route with query `%s` has no render method or component.',
+      'smokeWarnings_Query',
+    );
+  });
+
+  it('should warn on missing component with dynamic query', async () => {
+    await getFarceResult({
+      url: '/',
+      routeConfig: [{
+        path: '/',
+        getQuery: () => graphql`
+          query smokeWarnings_Query {
+            widget {
+              name
+            }
+          }
+        `,
+      }],
+      resolver: new Resolver(createEnvironment()),
+      render: createRender({}),
+    });
+
+    expect(warning).toHaveBeenCalledWith(
+      false,
+      'Route with query `%s` has no render method or component.',
       'smokeWarnings_Query',
     );
   });

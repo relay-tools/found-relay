@@ -2,15 +2,17 @@ import PropTypes from 'prop-types';
 import elementType from 'prop-types-extra/lib/elementType';
 import React from 'react';
 import RelayPropTypes from 'react-relay/lib/RelayPropTypes';
+import warning from 'warning';
 
+import getQueryName from './getQueryName';
 import QuerySubscription from './QuerySubscription';
 import renderElement from './renderElement';
 
+const { hasOwnProperty } = Object.prototype;
+
 const propTypes = {
   match: PropTypes.shape({
-    route: PropTypes.shape({
-      render: PropTypes.func,
-    }).isRequired,
+    route: PropTypes.object.isRequired,
   }).isRequired,
   Component: elementType,
   isComponentResolved: PropTypes.bool.isRequired,
@@ -90,19 +92,42 @@ class ReadyStateRenderer extends React.Component {
   };
 
   render() {
-    const { ...ownProps } = this.props;
+    const { element } = this.state;
+    if (!element) {
+      return element;
+    }
+
+    const { querySubscription, ...ownProps } = this.props;
 
     delete ownProps.match;
     delete ownProps.Component;
     delete ownProps.isComponentResolved;
     delete ownProps.hasComponent;
     delete ownProps.element;
-    delete ownProps.querySubscription;
     delete ownProps.fetched;
 
-    const { element } = this.state;
+    const { props: relayProps } = querySubscription.readyState;
 
-    return element && React.cloneElement(element, ownProps);
+    if (relayProps) {
+      Object.keys(relayProps).forEach((relayPropName) => {
+        // At least on Node v8.x, it's slightly faster to guard the delete here
+        // with this hasOwnProperty check.
+        if (hasOwnProperty.call(ownProps, relayPropName)) {
+          warning(
+            false,
+            'Ignoring <ReadyStateRenderer> prop `%s` that shadows a Relay ' +
+            'prop from its query `%s`. This is most likely due to its ' +
+            'parent cloning it and adding extraneous Relay props.',
+            relayPropName,
+            getQueryName(this.props.match.route),
+          );
+
+          delete ownProps[relayPropName];
+        }
+      });
+    }
+
+    return React.cloneElement(element, ownProps);
   }
 }
 
