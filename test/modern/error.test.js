@@ -15,7 +15,8 @@ describe('error', () => {
   });
 
   it('should pass error to render methods', async () => {
-    const render = jest.fn()
+    const render = jest
+      .fn()
       .mockImplementationOnce(({ error, props }) => {
         expect(error).toBeNull();
         expect(props).toBeNull();
@@ -29,23 +30,23 @@ describe('error', () => {
 
     const Router = createFarceRouter({
       historyProtocol: new ServerProtocol('/'),
-      routeConfig: [{
-        path: '/',
-        query: graphql`
-          query error_test_Query {
-            error
-          }
-        `,
-        render,
-      }],
+      routeConfig: [
+        {
+          path: '/',
+          query: graphql`
+            query error_test_Query {
+              error
+            }
+          `,
+          render,
+        },
+      ],
 
       render: createRender({}),
     });
 
     const resolver = new InstrumentedResolver(environment);
-    ReactTestUtils.renderIntoDocument(
-      <Router resolver={resolver} />,
-    );
+    ReactTestUtils.renderIntoDocument(<Router resolver={resolver} />);
 
     await resolver.done;
 

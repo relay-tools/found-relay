@@ -16,29 +16,33 @@ describe('refetch behavior', () => {
   });
 
   it('should support redirecting based on query data', async () => {
-    const routeConfig = [{
-      path: '/',
-      query: graphql`
-        query refetch_parent_Query {
-          widget {
-            name
-          }
-        }
-      `,
-      render: () => null,
-
-      children: [{
-        path: ':name',
+    const routeConfig = [
+      {
+        path: '/',
         query: graphql`
-          query refetch_child_Query($name: String!) {
-            widgetByArg(name: $name) {
+          query refetch_parent_Query {
+            widget {
               name
             }
           }
         `,
         render: () => null,
-      }],
-    }];
+
+        children: [
+          {
+            path: ':name',
+            query: graphql`
+              query refetch_child_Query($name: String!) {
+                widgetByArg(name: $name) {
+                  name
+                }
+              }
+            `,
+            render: () => null,
+          },
+        ],
+      },
+    ];
 
     const resolver = new Resolver(environment);
     const render = createRender({});

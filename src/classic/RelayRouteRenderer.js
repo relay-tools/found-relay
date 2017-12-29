@@ -65,7 +65,7 @@ class RelayRouteRenderer extends React.Component {
       return;
     }
 
-    const request = runQueries((readyState) => {
+    const request = runQueries(readyState => {
       if (this.pendingRequest !== request) {
         return;
       }
@@ -85,7 +85,11 @@ class RelayRouteRenderer extends React.Component {
     // actual Relay container rather than the Relay.ReadyStateRenderer, when
     // we get cloned with props like children.
     const {
-      match, Component, environment, queryConfig, ...ownProps
+      match,
+      Component,
+      environment,
+      queryConfig,
+      ...ownProps
     } = this.props;
 
     delete ownProps.readyState;

@@ -1,5 +1,5 @@
-import FarceActionTypes from 'farce/lib/ActionTypes';
-import ServerProtocol from 'farce/lib/ServerProtocol';
+import FarceActions from 'farce/lib/Actions';
+import MemoryProtocol from 'farce/lib/MemoryProtocol';
 import createFarceRouter from 'found/lib/createFarceRouter';
 import createRender from 'found/lib/createRender';
 import React from 'react';
@@ -17,20 +17,21 @@ describe('navigation', () => {
 
   it('should support aborting navigation', async () => {
     const Router = createFarceRouter({
-      historyProtocol: new ServerProtocol('/foo'),
-      routeConfig: [{
-        path: '/:name',
-        query: graphql`
-          query navigation_name_Query($name: String!) {
-            widget: widgetByArg(name: $name) {
-              name
+      historyProtocol: new MemoryProtocol('/foo'),
+      routeConfig: [
+        {
+          path: '/:name',
+          query: graphql`
+            query navigation_name_Query($name: String!) {
+              widget: widgetByArg(name: $name) {
+                name
+              }
             }
-          }
-        `,
-        render: ({ props }) => (
-          props && <div className={props.widget.name} />
-        ),
-      }],
+          `,
+          render: ({ props }) =>
+            props && <div className={props.widget.name} />,
+        },
+      ],
 
       render: createRender({}),
     });
@@ -50,21 +51,10 @@ describe('navigation', () => {
       ReactTestUtils.scryRenderedDOMComponentsWithClass(instance, 'baz'),
     ).toHaveLength(0);
 
-    // TODO: Use MemoryProtocol once we implement it instead of doing this.
-    instance.store.dispatch({
-      type: FarceActionTypes.UPDATE_LOCATION,
-      payload: {
-        pathname: '/bar',
-      },
-    });
+    instance.store.dispatch(FarceActions.push('/bar'));
 
     // Immediately trigger another location update to abort the previous one.
-    instance.store.dispatch({
-      type: FarceActionTypes.UPDATE_LOCATION,
-      payload: {
-        pathname: '/baz',
-      },
-    });
+    instance.store.dispatch(FarceActions.push('/baz'));
 
     await resolver.done;
 
@@ -106,35 +96,37 @@ describe('navigation', () => {
     }
 
     const Router = createFarceRouter({
-      historyProtocol: new ServerProtocol('/foo'),
-      routeConfig: [{
-        path: '/',
-        Component: Parent,
-        children: [
-          {
-            path: 'foo',
-            Component: Widget,
-            query: graphql`
-              query navigation_foo_Query {
-                widget: widgetByArg(name: "foo") {
-                  name
+      historyProtocol: new MemoryProtocol('/foo'),
+      routeConfig: [
+        {
+          path: '/',
+          Component: Parent,
+          children: [
+            {
+              path: 'foo',
+              Component: Widget,
+              query: graphql`
+                query navigation_foo_Query {
+                  widget: widgetByArg(name: "foo") {
+                    name
+                  }
                 }
-              }
-            `,
-          },
-          {
-            path: 'bar',
-            Component: Widget,
-            query: graphql`
-              query navigation_bar_Query {
-                widget: widgetByArg(name: "bar") {
-                  name
+              `,
+            },
+            {
+              path: 'bar',
+              Component: Widget,
+              query: graphql`
+                query navigation_bar_Query {
+                  widget: widgetByArg(name: "bar") {
+                    name
+                  }
                 }
-              }
-            `,
-          },
-        ],
-      }],
+              `,
+            },
+          ],
+        },
+      ],
 
       render: createRender({}),
     });
@@ -151,13 +143,7 @@ describe('navigation', () => {
       ReactTestUtils.scryRenderedDOMComponentsWithClass(instance, 'bar'),
     ).toHaveLength(0);
 
-    // TODO: Use MemoryProtocol once we implement it instead of doing this.
-    instance.store.dispatch({
-      type: FarceActionTypes.UPDATE_LOCATION,
-      payload: {
-        pathname: '/bar',
-      },
-    });
+    instance.store.dispatch(FarceActions.push('/bar'));
 
     await resolver.done;
 

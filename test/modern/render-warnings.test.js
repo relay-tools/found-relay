@@ -21,16 +21,18 @@ describe('render', () => {
   it('should warn on missing component', async () => {
     await getFarceResult({
       url: '/',
-      routeConfig: [{
-        path: '/',
-        query: graphql`
-          query renderWarnings_Query {
-            widget {
-              name
+      routeConfig: [
+        {
+          path: '/',
+          query: graphql`
+            query renderWarnings_Query {
+              widget {
+                name
+              }
             }
-          }
-        `,
-      }],
+          `,
+        },
+      ],
       resolver: new Resolver(environment),
       render: createRender({}),
     });
@@ -45,16 +47,18 @@ describe('render', () => {
   it('should warn on missing component with dynamic query', async () => {
     await getFarceResult({
       url: '/',
-      routeConfig: [{
-        path: '/',
-        getQuery: () => graphql`
-          query renderWarnings_Query {
-            widget {
-              name
+      routeConfig: [
+        {
+          path: '/',
+          getQuery: () => graphql`
+            query renderWarnings_Query {
+              widget {
+                name
+              }
             }
-          }
-        `,
-      }],
+          `,
+        },
+      ],
       resolver: new Resolver(environment),
       render: createRender({}),
     });
@@ -77,20 +81,24 @@ describe('render', () => {
 
     const { element } = await getFarceResult({
       url: '/',
-      routeConfig: [{
-        path: '/',
-        Component: Parent,
-        children: [{
-          Component: Widget,
-          query: graphql`
-            query renderWarnings_Query {
-              widget {
-                name
-              }
-            }
-          `,
-        }],
-      }],
+      routeConfig: [
+        {
+          path: '/',
+          Component: Parent,
+          children: [
+            {
+              Component: Widget,
+              query: graphql`
+                query renderWarnings_Query {
+                  widget {
+                    name
+                  }
+                }
+              `,
+            },
+          ],
+        },
+      ],
       resolver: new Resolver(environment),
       render: createRender({}),
     });
@@ -120,20 +128,24 @@ describe('render', () => {
 
     const { element } = await getFarceResult({
       url: '/',
-      routeConfig: [{
-        path: '/',
-        Component: Parent,
-        children: [{
-          Component: Widget,
-          getQuery: () => graphql`
-            query renderWarnings_Query {
-              widget {
-                name
-              }
-            }
-          `,
-        }],
-      }],
+      routeConfig: [
+        {
+          path: '/',
+          Component: Parent,
+          children: [
+            {
+              Component: Widget,
+              getQuery: () => graphql`
+                query renderWarnings_Query {
+                  widget {
+                    name
+                  }
+                }
+              `,
+            },
+          ],
+        },
+      ],
       resolver: new Resolver(environment),
       render: createRender({}),
     });

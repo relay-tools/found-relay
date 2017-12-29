@@ -13,16 +13,18 @@ describe('smoke', () => {
   it('should warn on missing component', async () => {
     await getFarceResult({
       url: '/',
-      routeConfig: [{
-        path: '/',
-        query: graphql`
-          query smokeWarnings_Query {
-            widget {
-              name
+      routeConfig: [
+        {
+          path: '/',
+          query: graphql`
+            query smokeWarnings_Query {
+              widget {
+                name
+              }
             }
-          }
-        `,
-      }],
+          `,
+        },
+      ],
       resolver: new Resolver(createEnvironment()),
       render: createRender({}),
     });
@@ -37,16 +39,18 @@ describe('smoke', () => {
   it('should warn on missing component with dynamic query', async () => {
     await getFarceResult({
       url: '/',
-      routeConfig: [{
-        path: '/',
-        getQuery: () => graphql`
-          query smokeWarnings_Query {
-            widget {
-              name
+      routeConfig: [
+        {
+          path: '/',
+          getQuery: () => graphql`
+            query smokeWarnings_Query {
+              widget {
+                name
+              }
             }
-          }
-        `,
-      }],
+          `,
+        },
+      ],
       resolver: new Resolver(createEnvironment()),
       render: createRender({}),
     });

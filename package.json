@@ -9,13 +9,25 @@
   "scripts": {
     "build": "rimraf lib && babel src -d lib",
     "build-fixtures": "npm run update-schema && npm run relay-compiler",
-    "lint": "eslint src test *.js",
+    "lint": "eslint src test",
+    "precommit": "lint-staged",
     "prepublish": "npm run build",
     "relay-compiler": "relay-compiler --src test --schema test/fixtures/schema.graphql",
     "tdd": "jest --watch",
     "test": "npm run build-fixtures && npm run lint && npm run testonly -- --coverage",
     "testonly": "jest --runInBand --verbose",
     "update-schema": "babel-node test/fixtures/updateSchema.js"
+  },
+  "lint-staged": {
+    "*.js": [
+      "eslint --fix",
+      "git add"
+    ]
+  },
+  "prettier": {
+    "printWidth": 79,
+    "singleQuote": true,
+    "trailingComma": "all"
   },
   "jest": {
     "collectCoverageFrom": [
@@ -24,8 +36,7 @@
     "setupFiles": [
       "babel-polyfill",
       "<rootDir>/test/setup.js"
-    ],
-    "testEnvironment": "jsdom-11.0.0"
+    ]
   },
   "repository": {
     "type": "git",
@@ -58,7 +69,7 @@
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-eslint": "^7.2.3",
-    "babel-jest": "^21.2.0",
+    "babel-jest": "^22.0.4",
     "babel-plugin-add-module-exports": "^0.2.1",
     "babel-plugin-dev-expression": "^0.2.1",
     "babel-plugin-relay": "^1.4.1",
@@ -68,16 +79,20 @@
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-1": "^6.24.1",
     "codecov": "^3.0.0",
-    "eslint": "^4.13.1",
+    "eslint": "^4.14.0",
     "eslint-config-4catalyzer-react": "^0.3.3",
+    "eslint-config-prettier": "^2.9.0",
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-jsx-a11y": "^5.1.1",
+    "eslint-plugin-prettier": "^2.4.0",
     "eslint-plugin-react": "^7.5.1",
-    "farce": "^0.2.3",
+    "farce": "^0.2.4",
     "found": "^0.3.5",
-    "graphql": "^0.11.7",
-    "jest": "^21.2.1",
-    "jest-environment-jsdom-11.0.0": "^20.0.9",
+    "graphql": "^0.12.3",
+    "husky": "^0.14.3",
+    "jest": "^22.0.4",
+    "lint-staged": "^6.0.0",
+    "prettier": "^1.9.2",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-relay": "^1.4.1",

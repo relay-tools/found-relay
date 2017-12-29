@@ -70,7 +70,7 @@ class ReadyStateRenderer extends React.Component {
     this.props.querySubscription.unsubscribe(this.onUpdate);
   }
 
-  onUpdate = (readyState) => {
+  onUpdate = readyState => {
     if (!this.props.fetched) {
       // Ignore subscription updates if our data aren't yet fetched. We'll
       // rerender anyway once fetching finishes.
@@ -109,15 +109,15 @@ class ReadyStateRenderer extends React.Component {
     const { props: relayProps } = querySubscription.readyState;
 
     if (relayProps) {
-      Object.keys(relayProps).forEach((relayPropName) => {
+      Object.keys(relayProps).forEach(relayPropName => {
         // At least on Node v8.x, it's slightly faster to guard the delete here
         // with this hasOwnProperty check.
         if (hasOwnProperty.call(ownProps, relayPropName)) {
           warning(
             false,
             'Ignoring <ReadyStateRenderer> prop `%s` that shadows a Relay ' +
-            'prop from its query `%s`. This is most likely due to its ' +
-            'parent cloning it and adding extraneous Relay props.',
+              'prop from its query `%s`. This is most likely due to its ' +
+              'parent cloning it and adding extraneous Relay props.',
             relayPropName,
             getQueryName(this.props.match.route),
           );

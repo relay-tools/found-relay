@@ -17,15 +17,17 @@ describe('prerender', () => {
   it('should support redirecting based on extra data', async () => {
     const { redirect } = await getFarceResult({
       url: '/',
-      routeConfig: [{
-        path: '/',
-        extraQuery: Relay.QL`query { widget { name } }`,
-        prerender: ({ done, extraData }) => {
-          if (done) {
-            throw new RedirectException(`/${extraData.widget.name}`);
-          }
+      routeConfig: [
+        {
+          path: '/',
+          extraQuery: Relay.QL`query { widget { name } }`,
+          prerender: ({ done, extraData }) => {
+            if (done) {
+              throw new RedirectException(`/${extraData.widget.name}`);
+            }
+          },
         },
-      }],
+      ],
       resolver: new Resolver(environment),
       render: createRender({}),
     });
