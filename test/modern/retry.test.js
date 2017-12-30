@@ -5,8 +5,11 @@ import React from 'react';
 import ReactTestUtils from 'react-dom/test-utils';
 import { graphql } from 'react-relay';
 
-import { createEnvironment, createFakeFetch, InstrumentedResolver }
-  from './helpers';
+import {
+  createEnvironment,
+  createFakeFetch,
+  InstrumentedResolver,
+} from './helpers';
 
 describe('retry', () => {
   let fetchSpy;
@@ -18,23 +21,25 @@ describe('retry', () => {
   });
 
   it('should send a new network requests and rerender', async () => {
-    const renderSpy = jest.fn(({ props }) => (
-      props && <div className={props.widget.name} />
-    ));
+    const renderSpy = jest.fn(
+      ({ props }) => props && <div className={props.widget.name} />,
+    );
 
     const Router = createFarceRouter({
       historyProtocol: new ServerProtocol('/'),
-      routeConfig: [{
-        path: '/',
-        query: graphql`
-          query retry_Query {
-            widget {
-              name
+      routeConfig: [
+        {
+          path: '/',
+          query: graphql`
+            query retry_Query {
+              widget {
+                name
+              }
             }
-          }
-        `,
-        render: renderSpy,
-      }],
+          `,
+          render: renderSpy,
+        },
+      ],
 
       render: createRender({}),
     });
@@ -54,7 +59,7 @@ describe('retry', () => {
     expect(renderSpy.mock.calls).toHaveLength(2);
     expect(renderSpy.mock.calls[1][0].resolving).toBe(true);
 
-    const retryPromise = new Promise((resolve) => {
+    const retryPromise = new Promise(resolve => {
       fetchSpy.mockImplementationOnce(async () => {
         // Wait until request resolves to make assertions below.
         setTimeout(resolve, 20);

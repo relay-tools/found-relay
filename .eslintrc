@@ -1,14 +1,15 @@
 {
-  "extends": "4catalyzer-react",
+  "extends": [
+    "4catalyzer-react",
+    "prettier"
+  ],
+  "plugins": [
+    "prettier"
+  ],
   "globals": {
     "__DEV__": false
   },
   "rules": {
-    // FIXME: Temporary workaround pending fixing this upstream.
-    "generator-star-spacing": ["error", {
-      "before": false,
-      "after": true,
-      "method": "both"
-    }]
+    "prettier/prettier": "error"
   }
 }

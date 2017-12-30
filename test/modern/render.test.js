@@ -35,43 +35,51 @@ describe('render', () => {
 
     const Router = createFarceRouter({
       historyProtocol: new ServerProtocol('/foo'),
-      routeConfig: [{
-        path: '/',
-        Component: Parent,
-        query: graphql`
-          query render_named_child_routes_root_Query {
-            widget: widgetByArg(name: "root") {
-              name
+      routeConfig: [
+        {
+          path: '/',
+          Component: Parent,
+          query: graphql`
+            query render_named_child_routes_root_Query {
+              widget: widgetByArg(name: "root") {
+                name
+              }
             }
-          }
-        `,
-        children: [{
-          path: 'foo',
-          children: {
-            nav: [{
-              path: '(.*)?',
-              Component: Widget,
-              query: graphql`
-                query render_named_child_routes_foo_nav_Query {
-                  widget: widgetByArg(name: "foo-nav") {
-                    name
-                  }
-                }
-              `,
-            }],
-            main: [{
-              Component: Widget,
-              query: graphql`
-                query render_named_child_routes_foo_main_Query {
-                  widget: widgetByArg(name: "foo-main") {
-                    name
-                  }
-                }
-              `,
-            }],
-          },
-        }],
-      }],
+          `,
+          children: [
+            {
+              path: 'foo',
+              children: {
+                nav: [
+                  {
+                    path: '(.*)?',
+                    Component: Widget,
+                    query: graphql`
+                      query render_named_child_routes_foo_nav_Query {
+                        widget: widgetByArg(name: "foo-nav") {
+                          name
+                        }
+                      }
+                    `,
+                  },
+                ],
+                main: [
+                  {
+                    Component: Widget,
+                    query: graphql`
+                      query render_named_child_routes_foo_main_Query {
+                        widget: widgetByArg(name: "foo-main") {
+                          name
+                        }
+                      }
+                    `,
+                  },
+                ],
+              },
+            },
+          ],
+        },
+      ],
 
       render: createRender({
         renderPending: () => <div className="pending" />,
@@ -98,23 +106,25 @@ describe('render', () => {
   it('should support erroring based on query data', async () => {
     const { status, element } = await getFarceResult({
       url: '/',
-      routeConfig: [{
-        path: '/',
-        query: graphql`
-          query render_Query {
-            widget {
-              name
+      routeConfig: [
+        {
+          path: '/',
+          query: graphql`
+            query render_Query {
+              widget {
+                name
+              }
             }
-          }
-        `,
-        render: ({ resolving, props }) => {
-          if (resolving && props) {
-            throw new HttpError(400, props);
-          }
+          `,
+          render: ({ resolving, props }) => {
+            if (resolving && props) {
+              throw new HttpError(400, props);
+            }
 
-          return null;
+            return null;
+          },
         },
-      }],
+      ],
       resolver: new Resolver(environment),
       render: createRender({
         renderError: ({ error }) => (
@@ -132,23 +142,25 @@ describe('render', () => {
   it('should support redirecting based on query data', async () => {
     const { redirect } = await getFarceResult({
       url: '/',
-      routeConfig: [{
-        path: '/',
-        query: graphql`
-          query render_Query {
-            widget {
-              name
+      routeConfig: [
+        {
+          path: '/',
+          query: graphql`
+            query render_Query {
+              widget {
+                name
+              }
             }
-          }
-        `,
-        render: ({ resolving, props }) => {
-          if (resolving && props) {
-            throw new RedirectException(`/${props.widget.name}`);
-          }
+          `,
+          render: ({ resolving, props }) => {
+            if (resolving && props) {
+              throw new RedirectException(`/${props.widget.name}`);
+            }
 
-          return null;
+            return null;
+          },
         },
-      }],
+      ],
       resolver: new Resolver(environment),
       render: createRender({}),
     });

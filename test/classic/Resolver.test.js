@@ -27,11 +27,7 @@ describe('Resolver', () => {
     function WidgetParent({ widget, extraProp, children }) {
       expect(extraProp).toBe(3);
 
-      return (
-        <div className={widget.name}>
-          {children}
-        </div>
-      );
+      return <div className={widget.name}>{children}</div>;
     }
 
     const WidgetParentContainer = Relay.createContainer(WidgetParent, {
@@ -86,11 +82,11 @@ describe('Resolver', () => {
     let renderSpy;
     let instance;
 
-    beforeEach((done) => {
+    beforeEach(done => {
       prerenderSpy = jest.fn();
-      renderSpy = jest.fn(({ props }) => (
-        props && <WidgetParentContainer {...props} />
-      ));
+      renderSpy = jest.fn(
+        ({ props }) => props && <WidgetParentContainer {...props} />,
+      );
 
       const routes = makeRouteConfig(
         <Route path="/:parentName" Component={Root}>
@@ -135,7 +131,7 @@ describe('Resolver', () => {
       });
 
       class InstrumentedResolver extends Resolver {
-        async * resolveElements(match) {
+        async *resolveElements(match) {
           yield* super.resolveElements(match);
           done();
         }
@@ -155,7 +151,8 @@ describe('Resolver', () => {
       ].forEach(([condition, className]) => {
         it(`should support ${condition}`, () => {
           ReactTestUtils.findRenderedDOMComponentWithClass(
-            instance, className,
+            instance,
+            className,
           );
         });
       });

@@ -7,26 +7,26 @@ import { graphql } from 'react-relay/compat';
 import { Resolver as ModernResolver } from '../../src';
 import { Resolver as ClassicResolver } from '../../src/classic';
 
-import { createEnvironment as createClassicEnvironment }
-  from '../classic/helpers';
-import { createEnvironment as createModernEnvironment }
-  from '../modern/helpers';
+import { createEnvironment as createClassicEnvironment } from '../classic/helpers';
+import { createEnvironment as createModernEnvironment } from '../modern/helpers';
 
 describe('smoke', () => {
   it('should work with modern resolver', async () => {
     const { element } = await getFarceResult({
       url: '/',
-      routeConfig: [{
-        path: '/',
-        Component: () => null,
-        query: graphql`
-          query smoke_Query {
-            widget {
-              name
+      routeConfig: [
+        {
+          path: '/',
+          Component: () => null,
+          query: graphql`
+            query smoke_Query {
+              widget {
+                name
+              }
             }
-          }
-        `,
-      }],
+          `,
+        },
+      ],
       resolver: new ModernResolver(createModernEnvironment()),
       render: createRender({}),
     });
@@ -47,13 +47,15 @@ describe('smoke', () => {
 
     const { element } = await getFarceResult({
       url: '/',
-      routeConfig: [{
-        path: '/',
-        Component: Container,
-        queries: {
-          widget: () => Relay.QL`query { widget }`,
+      routeConfig: [
+        {
+          path: '/',
+          Component: Container,
+          queries: {
+            widget: () => Relay.QL`query { widget }`,
+          },
         },
-      }],
+      ],
       resolver: new ClassicResolver(createClassicEnvironment()),
       render: createRender({}),
     });

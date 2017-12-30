@@ -1,5 +1,9 @@
 import {
-  checkResolved, getComponents, getRouteMatches, getRouteValues, isResolved,
+  checkResolved,
+  getComponents,
+  getRouteMatches,
+  getRouteValues,
+  isResolved,
 } from 'found/lib/ResolverUtils';
 import isPromise from 'is-promise';
 import React from 'react';
@@ -39,7 +43,7 @@ export default class Resolver {
     this.environment = environment;
   }
 
-  async * resolveElements(match) {
+  async *resolveElements(match) {
     // TODO: Close over and abort earlier requests?
 
     const routeMatches = getRouteMatches(match);
@@ -64,14 +68,20 @@ export default class Resolver {
 
     const routeParams = this.getRouteParams(routeMatches);
     const queryConfigs = this.getQueryConfigs(
-      matchQueries, routeIndices, routeParams,
+      matchQueries,
+      routeIndices,
+      routeParams,
     );
     const extraQueries = this.getExtraQueries(extraQueryNodes, routeParams);
 
-    const earlyComponents = Components.some(isPromise) ?
-      await Promise.all(Components.map(checkResolved)) : Components;
+    const earlyComponents = Components.some(isPromise)
+      ? await Promise.all(Components.map(checkResolved))
+      : Components;
     const earlyReadyStates = this.getEarlyReadyStates(
-      earlyComponents, queryConfigs, extraQueries, forceFetches,
+      earlyComponents,
+      queryConfigs,
+      extraQueries,
+      forceFetches,
     );
 
     if (earlyReadyStates.some(readyState => readyState && !readyState.done)) {
@@ -85,10 +95,14 @@ export default class Resolver {
       );
     }
 
-    const fetchedComponents = earlyComponents.every(isResolved) ?
-      earlyComponents : await Promise.all(Components);
+    const fetchedComponents = earlyComponents.every(isResolved)
+      ? earlyComponents
+      : await Promise.all(Components);
     const routeRunQueries = this.getRouteRunQueries(
-      fetchedComponents, queryConfigs, extraQueries, forceFetches,
+      fetchedComponents,
+      queryConfigs,
+      extraQueries,
+      forceFetches,
     );
     const fetchedReadyStates = await this.getFetchedReadyStates(
       routeRunQueries,
@@ -107,7 +121,7 @@ export default class Resolver {
   getRouteParams(routeMatches) {
     let params = null;
 
-    return routeMatches.map((routeMatch) => {
+    return routeMatches.map(routeMatch => {
       const { route } = routeMatch;
 
       // We need to always run this to make sure we don't miss route params.
@@ -145,7 +159,10 @@ export default class Resolver {
   }
 
   getEarlyReadyStates(
-    earlyComponents, queryConfigs, extraQueries, forceFetches,
+    earlyComponents,
+    queryConfigs,
+    extraQueries,
+    forceFetches,
   ) {
     const recordStore = this.environment.getStoreData().getQueuedStore();
 
@@ -168,9 +185,9 @@ export default class Resolver {
       // data we request later.
       if (queryConfig) {
         const querySet = Relay.getQueries(Component, queryConfig);
-        const hasQueryData = Object.values(querySet).every(query => (
-          !query || checkRelayQueryData(recordStore, query)
-        ));
+        const hasQueryData = Object.values(querySet).every(
+          query => !query || checkRelayQueryData(recordStore, query),
+        );
 
         if (!hasQueryData) {
           return PENDING_READY_STATE;
@@ -186,7 +203,10 @@ export default class Resolver {
   }
 
   getRouteRunQueries(
-    fetchedComponents, queryConfigs, extraQueries, forceFetches,
+    fetchedComponents,
+    queryConfigs,
+    extraQueries,
+    forceFetches,
   ) {
     return fetchedComponents.map((Component, i) => {
       const queryConfig = queryConfigs[i];
@@ -212,31 +232,30 @@ export default class Resolver {
         querySet = { ...querySet, [extraQueryKey]: extraQuery };
       }
 
-      return onReadyStateChange => (
-        forceFetches[i] ?
-          this.environment.forceFetch(querySet, onReadyStateChange) :
-          this.environment.primeCache(querySet, onReadyStateChange)
-      );
+      return onReadyStateChange =>
+        forceFetches[i]
+          ? this.environment.forceFetch(querySet, onReadyStateChange)
+          : this.environment.primeCache(querySet, onReadyStateChange);
     });
   }
 
   getFetchedReadyStates(routeRunQueries) {
     // TODO: What about deferred queries?
-    return Promise.all(routeRunQueries.map(
-      (runQueries) => {
+    return Promise.all(
+      routeRunQueries.map(runQueries => {
         if (!runQueries) {
           return null;
         }
 
-        return new Promise((resolve) => {
-          runQueries((readyState) => {
+        return new Promise(resolve => {
+          runQueries(readyState => {
             if (readyState.aborted || readyState.done || readyState.error) {
               resolve(readyState);
             }
           });
         });
-      },
-    ));
+      }),
+    );
   }
 
   createElements(
@@ -318,8 +337,10 @@ export default class Resolver {
 
     const identifyingArg = extraQuery.getIdentifyingArg();
     const queryData = this.environment.readQuery(extraQuery);
-    const fieldData = identifyingArg && Array.isArray(identifyingArg.value) ?
-      queryData : queryData[0];
+    const fieldData =
+      identifyingArg && Array.isArray(identifyingArg.value)
+        ? queryData
+        : queryData[0];
 
     return { [extraQuery.getFieldName()]: fieldData };
   }

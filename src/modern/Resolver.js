@@ -1,5 +1,9 @@
 import {
-  checkResolved, getComponents, getRouteMatches, getRouteValues, isResolved,
+  checkResolved,
+  getComponents,
+  getRouteMatches,
+  getRouteValues,
+  isResolved,
 } from 'found/lib/ResolverUtils';
 import isPromise from 'is-promise';
 import isEqual from 'lodash/isEqual';
@@ -18,7 +22,7 @@ export default class Resolver {
     this.lastQuerySubscriptions = [];
   }
 
-  async * resolveElements(match) {
+  async *resolveElements(match) {
     const routeMatches = getRouteMatches(match);
 
     const Components = getComponents(routeMatches);
@@ -35,15 +39,18 @@ export default class Resolver {
 
     const routeVariables = this.getRouteVariables(routeMatches);
     const querySubscriptions = this.updateQuerySubscriptions(
-      queries, routeVariables, cacheConfigs,
+      queries,
+      routeVariables,
+      cacheConfigs,
     );
 
-    const fetches = querySubscriptions.map(querySubscription => (
-      querySubscription && querySubscription.fetch()
-    ));
+    const fetches = querySubscriptions.map(
+      querySubscription => querySubscription && querySubscription.fetch(),
+    );
 
-    const earlyComponents = Components.some(isPromise) ?
-      await Promise.all(Components.map(checkResolved)) : Components;
+    const earlyComponents = Components.some(isPromise)
+      ? await Promise.all(Components.map(checkResolved))
+      : Components;
     const earlyData = await Promise.all(fetches.map(checkResolved));
 
     let fetchedComponents;
@@ -56,8 +63,9 @@ export default class Resolver {
         false,
       );
 
-      yield pendingElements.every(element => element !== undefined) ?
-        pendingElements : undefined;
+      yield pendingElements.every(element => element !== undefined)
+        ? pendingElements
+        : undefined;
 
       fetchedComponents = await Promise.all(Components);
       await Promise.all(fetches);
@@ -76,7 +84,7 @@ export default class Resolver {
   getRouteVariables(routeMatches) {
     let variables = null;
 
-    return routeMatches.map((routeMatch) => {
+    return routeMatches.map(routeMatch => {
       const { route } = routeMatch;
 
       // We need to always run this to make sure we don't miss route params.
@@ -90,8 +98,10 @@ export default class Resolver {
   }
 
   updateQuerySubscriptions(queries, routeVariables, cacheConfigs) {
-    const { createOperationSelector, getOperation } =
-      this.environment.unstable_internal;
+    const {
+      createOperationSelector,
+      getOperation,
+    } = this.environment.unstable_internal;
 
     const querySubscriptions = queries.map((query, i) => {
       if (!query) {
@@ -117,7 +127,7 @@ export default class Resolver {
       );
     });
 
-    this.lastQuerySubscriptions.forEach((querySubscription) => {
+    this.lastQuerySubscriptions.forEach(querySubscription => {
       if (querySubscription) {
         querySubscription.dispose();
       }

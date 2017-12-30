@@ -1,5 +1,9 @@
-import { GraphQLNonNull, GraphQLObjectType, GraphQLSchema, GraphQLString }
-  from 'graphql';
+import {
+  GraphQLNonNull,
+  GraphQLObjectType,
+  GraphQLSchema,
+  GraphQLString,
+} from 'graphql';
 
 const Widget = new GraphQLObjectType({
   name: 'Widget',
@@ -28,7 +32,9 @@ const query = new GraphQLObjectType({
     },
     error: {
       type: GraphQLString,
-      resolve: () => { throw new Error('expected error'); },
+      resolve: () => {
+        throw new Error('expected error');
+      },
     },
   },
 });

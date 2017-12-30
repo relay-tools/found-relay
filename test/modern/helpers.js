@@ -10,20 +10,18 @@ export function createFakeFetch() {
 }
 
 export function timeout(delay) {
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     setTimeout(resolve, delay);
   });
 }
 
 export function createEnvironment(fetch = createFakeFetch()) {
   return new Environment({
-    network: Network.create(
-      async (...args) => {
-        // Delay field resolution to exercise async data fetching logic.
-        await timeout(20);
-        return fetch(...args);
-      },
-    ),
+    network: Network.create(async (...args) => {
+      // Delay field resolution to exercise async data fetching logic.
+      await timeout(20);
+      return fetch(...args);
+    }),
     store: new Store(new RecordSource()),
   });
 }
@@ -37,9 +35,9 @@ export class InstrumentedResolver extends Resolver {
     this.done = new Promise(() => {});
   }
 
-  async * resolveElements(match) {
+  async *resolveElements(match) {
     let resolveDone;
-    this.done = new Promise((resolve) => {
+    this.done = new Promise(resolve => {
       resolveDone = resolve;
     });
 

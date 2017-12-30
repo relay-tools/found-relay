@@ -25,7 +25,7 @@ export default class QuerySubscription {
 
   fetch() {
     if (!this.fetchPromise) {
-      this.fetchPromise = new Promise((resolve) => {
+      this.fetchPromise = new Promise(resolve => {
         let snapshot;
 
         this.selectionReference = this.retain();
@@ -49,13 +49,14 @@ export default class QuerySubscription {
               this.onChange(snapshot);
 
               this.rootSubscription = this.environment.subscribe(
-                snapshot, this.onChange,
+                snapshot,
+                this.onChange,
               );
 
               resolve();
             },
 
-            error: (error) => {
+            error: error => {
               this.updateReadyState({
                 error,
                 props: null,
@@ -75,12 +76,12 @@ export default class QuerySubscription {
   updateReadyState(readyState) {
     this.readyState = readyState;
 
-    this.listeners.forEach((listener) => {
+    this.listeners.forEach(listener => {
       listener(readyState);
     });
   }
 
-  onChange = (snapshot) => {
+  onChange = snapshot => {
     this.updateReadyState({
       error: null,
       props: snapshot.data,
