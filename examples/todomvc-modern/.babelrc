@@ -1,6 +1,6 @@
 {
   "presets": [
-    "./tools/latestPreset",
+    "./tools/envPreset",
     "stage-2",
     "react"
   ],

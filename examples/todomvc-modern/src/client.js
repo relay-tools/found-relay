@@ -1,4 +1,4 @@
-import BrowserProtocol from 'farce/lib/BrowserProtocol';
+import HashProtocol from 'farce/lib/HashProtocol';
 import queryMiddleware from 'farce/lib/queryMiddleware';
 import createFarceRouter from 'found/lib/createFarceRouter';
 import createRender from 'found/lib/createRender';
@@ -23,7 +23,7 @@ const environment = new Environment({
 });
 
 const Router = createFarceRouter({
-  historyProtocol: new BrowserProtocol(),
+  historyProtocol: new HashProtocol(),
   historyMiddlewares: [queryMiddleware],
   routeConfig: routes,
 
@@ -33,7 +33,4 @@ const Router = createFarceRouter({
 const mountNode = document.createElement('div');
 document.body.appendChild(mountNode);
 
-ReactDOM.render(
-  <Router resolver={new Resolver(environment)} />,
-  mountNode,
-);
+ReactDOM.render(<Router resolver={new Resolver(environment)} />, mountNode);

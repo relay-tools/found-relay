@@ -36,7 +36,9 @@ function commit(environment, user, todos, complete, status) {
     updater(store) {
       const userProxy = store.get(user.id);
       const connection = ConnectionHandler.getConnection(
-        userProxy, 'TodoList_todos', { status },
+        userProxy,
+        'TodoList_todos',
+        { status },
       );
       const todoEdges = store
         .getRootField('markAllTodos')
@@ -49,7 +51,9 @@ function commit(environment, user, todos, complete, status) {
     optimisticUpdater(store) {
       const userProxy = store.get(user.id);
       const connection = ConnectionHandler.getConnection(
-        userProxy, 'TodoList_todos', { status },
+        userProxy,
+        'TodoList_todos',
+        { status },
       );
 
       if (
