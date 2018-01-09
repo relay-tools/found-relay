@@ -22,7 +22,9 @@ function sharedUpdater(store, user, todoProxy) {
   const userProxy = store.get(user.id);
   const status = todoProxy.getValue('complete') ? 'active' : 'completed';
   const connection = ConnectionHandler.getConnection(
-    userProxy, 'TodoList_todos', { status },
+    userProxy,
+    'TodoList_todos',
+    { status },
   );
   if (connection) {
     ConnectionHandler.deleteNode(connection, todoProxy.getValue('id'));
@@ -50,7 +52,8 @@ function commit(environment, user, todo, complete) {
       const numCompletedTodos = userProxy.getValue('numCompletedTodos');
       if (numCompletedTodos != null) {
         userProxy.setValue(
-          numCompletedTodos + (complete ? 1 : -1), 'numCompletedTodos',
+          numCompletedTodos + (complete ? 1 : -1),
+          'numCompletedTodos',
         );
       }
     },
