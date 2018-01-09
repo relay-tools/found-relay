@@ -1,4 +1,4 @@
-import BrowserProtocol from 'farce/lib/BrowserProtocol';
+import HashProtocol from 'farce/lib/HashProtocol';
 import queryMiddleware from 'farce/lib/queryMiddleware';
 import createFarceRouter from 'found/lib/createFarceRouter';
 import createRender from 'found/lib/createRender';
@@ -17,12 +17,10 @@ import 'todomvc-app-css/index.css';
 
 import './assets/learn.json';
 
-Relay.injectNetworkLayer(
-  new RelayLocalSchema.NetworkLayer({ schema }),
-);
+Relay.injectNetworkLayer(new RelayLocalSchema.NetworkLayer({ schema }));
 
 const Router = createFarceRouter({
-  historyProtocol: new BrowserProtocol(),
+  historyProtocol: new HashProtocol(),
   historyMiddlewares: [queryMiddleware],
   routeConfig: routes,
 
@@ -32,7 +30,4 @@ const Router = createFarceRouter({
 const mountNode = document.createElement('div');
 document.body.appendChild(mountNode);
 
-ReactDOM.render(
-  <Router resolver={new Resolver(Relay.Store)} />,
-  mountNode,
-);
+ReactDOM.render(<Router resolver={new Resolver(Relay.Store)} />, mountNode);

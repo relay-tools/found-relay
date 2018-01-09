@@ -37,13 +37,15 @@ export default class RemoveTodoMutation extends Relay.Mutation {
   }
 
   getConfigs() {
-    return [{
-      type: 'NODE_DELETE',
-      parentName: 'viewer',
-      parentID: this.props.viewer.id,
-      connectionName: 'todos',
-      deletedIDFieldName: 'deletedId',
-    }];
+    return [
+      {
+        type: 'NODE_DELETE',
+        parentName: 'viewer',
+        parentID: this.props.viewer.id,
+        connectionName: 'todos',
+        deletedIDFieldName: 'deletedId',
+      },
+    ];
   }
 
   getVariables() {

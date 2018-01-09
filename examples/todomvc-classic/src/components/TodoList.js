@@ -11,25 +11,19 @@ const propTypes = {
 };
 
 class TodoList extends React.Component {
-  onToggleAllChange = (e) => {
+  onToggleAllChange = e => {
     const { relay, viewer } = this.props;
     const { todos } = viewer;
     const complete = e.target.checked;
 
-    relay.commitUpdate(
-      new MarkAllTodosMutation({ viewer, todos, complete }),
-    );
+    relay.commitUpdate(new MarkAllTodosMutation({ viewer, todos, complete }));
   };
 
   renderTodos() {
     const { viewer } = this.props;
 
     return viewer.todos.edges.map(({ node }) => (
-      <Todo
-        key={node.id}
-        viewer={viewer}
-        todo={node}
-      />
+      <Todo key={node.id} viewer={viewer} todo={node} />
     ));
   }
 
@@ -48,13 +42,9 @@ class TodoList extends React.Component {
           className="toggle-all"
           onChange={this.onToggleAllChange}
         />
-        <label htmlFor="toggle-all">
-          Mark all as complete
-        </label>
+        <label htmlFor="toggle-all">Mark all as complete</label>
 
-        <ul className="todo-list">
-          {this.renderTodos()}
-        </ul>
+        <ul className="todo-list">{this.renderTodos()}</ul>
       </section>
     );
   }
