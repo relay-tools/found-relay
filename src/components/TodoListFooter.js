@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { createFragmentContainer, graphql } from 'react-relay';
 
-import RemoveCompletedTodosMutation
-  from '../mutations/RemoveCompletedTodosMutation';
+import RemoveCompletedTodosMutation from '../mutations/RemoveCompletedTodosMutation';
 
 const propTypes = {
   viewer: PropTypes.object.isRequired,
@@ -28,20 +27,24 @@ class TodoListFooter extends React.Component {
     return (
       <footer className="footer">
         <span className="todo-count">
-          <strong>
-            {numTodos}
-          </strong> {numTodos === 1 ? 'item' : 'items'} left
+          <strong>{numTodos}</strong> {numTodos === 1 ? 'item' : 'items'} left
         </span>
 
         <ul className="filters">
           <li>
-            <Link to="/" activeClassName="selected" exact>All</Link>
+            <Link to="/" activeClassName="selected" exact>
+              All
+            </Link>
           </li>
           <li>
-            <Link to="/active" activeClassName="selected">Active</Link>
+            <Link to="/active" activeClassName="selected">
+              Active
+            </Link>
           </li>
           <li>
-            <Link to="/completed" activeClassName="selected">Completed</Link>
+            <Link to="/completed" activeClassName="selected">
+              Completed
+            </Link>
           </li>
         </ul>
 
