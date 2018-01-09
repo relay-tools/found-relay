@@ -27,16 +27,17 @@ export default class AddTodoMutation extends Relay.Mutation {
   }
 
   getConfigs() {
-    return [{
-      type: 'RANGE_ADD',
-      parentName: 'viewer',
-      parentID: this.props.viewer.id,
-      connectionName: 'todos',
-      edgeName: 'todoEdge',
-      rangeBehaviors: ({ status }) => (
-        status === 'completed' ? 'ignore' : 'append'
-      ),
-    }];
+    return [
+      {
+        type: 'RANGE_ADD',
+        parentName: 'viewer',
+        parentID: this.props.viewer.id,
+        connectionName: 'todos',
+        edgeName: 'todoEdge',
+        rangeBehaviors: ({ status }) =>
+          status === 'completed' ? 'ignore' : 'append',
+      },
+    ];
   }
 
   getVariables() {

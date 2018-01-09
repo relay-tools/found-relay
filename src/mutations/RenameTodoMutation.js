@@ -24,12 +24,14 @@ export default class RenameTodoMutation extends Relay.Mutation {
   }
 
   getConfigs() {
-    return [{
-      type: 'FIELDS_CHANGE',
-      fieldIDs: {
-        todo: this.props.todo.id,
+    return [
+      {
+        type: 'FIELDS_CHANGE',
+        fieldIDs: {
+          todo: this.props.todo.id,
+        },
       },
-    }];
+    ];
   }
 
   getVariables() {

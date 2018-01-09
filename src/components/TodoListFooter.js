@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import Relay from 'react-relay/classic';
 
-import RemoveCompletedTodosMutation
-  from '../mutations/RemoveCompletedTodosMutation';
+import RemoveCompletedTodosMutation from '../mutations/RemoveCompletedTodosMutation';
 
 const propTypes = {
   viewer: PropTypes.object.isRequired,
@@ -16,9 +15,7 @@ class TodoListFooter extends React.Component {
     const { relay, viewer } = this.props;
     const { todos } = viewer;
 
-    relay.commitUpdate(
-      new RemoveCompletedTodosMutation({ viewer, todos }),
-    );
+    relay.commitUpdate(new RemoveCompletedTodosMutation({ viewer, todos }));
   };
 
   renderRemaining() {
@@ -26,9 +23,7 @@ class TodoListFooter extends React.Component {
 
     return (
       <span className="todo-count">
-        <strong>
-          {numTodos}
-        </strong> {numTodos === 1 ? 'item' : 'items'} left
+        <strong>{numTodos}</strong> {numTodos === 1 ? 'item' : 'items'} left
       </span>
     );
   }
@@ -39,10 +34,7 @@ class TodoListFooter extends React.Component {
     }
 
     return (
-      <button
-        className="clear-completed"
-        onClick={this.onClearCompletedClick}
-      >
+      <button className="clear-completed" onClick={this.onClearCompletedClick}>
         Clear completed
       </button>
     );
@@ -59,13 +51,19 @@ class TodoListFooter extends React.Component {
 
         <ul className="filters">
           <li>
-            <Link to="/" activeClassName="selected" exact>All</Link>
+            <Link to="/" activeClassName="selected" exact>
+              All
+            </Link>
           </li>
           <li>
-            <Link to="/active" activeClassName="selected">Active</Link>
+            <Link to="/active" activeClassName="selected">
+              Active
+            </Link>
           </li>
           <li>
-            <Link to="/completed" activeClassName="selected">Completed</Link>
+            <Link to="/completed" activeClassName="selected">
+              Completed
+            </Link>
           </li>
         </ul>
 

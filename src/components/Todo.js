@@ -23,7 +23,7 @@ class Todo extends React.Component {
     };
   }
 
-  onCompleteChange = (e) => {
+  onCompleteChange = e => {
     const { relay, viewer, todo } = this.props;
     const complete = e.target.checked;
 
@@ -49,14 +49,12 @@ class Todo extends React.Component {
     this.removeTodo();
   };
 
-  onTextInputSave = (text) => {
+  onTextInputSave = text => {
     const { relay, todo } = this.props;
 
     this.setEditMode(false);
 
-    relay.commitUpdate(
-      new RenameTodoMutation({ todo, text }),
-    );
+    relay.commitUpdate(new RenameTodoMutation({ todo, text }));
   };
 
   setEditMode(isEditing) {
@@ -66,9 +64,7 @@ class Todo extends React.Component {
   removeTodo() {
     const { relay, viewer, todo } = this.props;
 
-    relay.commitUpdate(
-      new RemoveTodoMutation({ viewer, todo }),
-    );
+    relay.commitUpdate(new RemoveTodoMutation({ viewer, todo }));
   }
 
   renderTextInput() {
@@ -107,13 +103,8 @@ class Todo extends React.Component {
             className="toggle"
             onChange={this.onCompleteChange}
           />
-          <label onDoubleClick={this.onLabelDoubleClick}>
-            {text}
-          </label>
-          <button
-            className="destroy"
-            onClick={this.onDestroyClick}
-          />
+          <label onDoubleClick={this.onLabelDoubleClick}>{text}</label>
+          <button className="destroy" onClick={this.onDestroyClick} />
         </div>
 
         {this.renderTextInput()}

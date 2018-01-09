@@ -13,12 +13,10 @@ const propTypes = {
 };
 
 class TodoApp extends React.Component {
-  onNewTodoSave = (text) => {
+  onNewTodoSave = text => {
     const { relay, viewer } = this.props;
 
-    relay.commitUpdate(
-      new AddTodoMutation({ viewer, text }),
-    );
+    relay.commitUpdate(new AddTodoMutation({ viewer, text }));
   };
 
   render() {
@@ -45,13 +43,13 @@ class TodoApp extends React.Component {
         <footer className="info">
           <p>Double-click to edit a todo</p>
           <p>
-            Adapted by <a href="http://fashionablenonsense.com/">
-              @jimmy_jia
-            </a> from work by the <a href="https://facebook.github.io/relay/">
-              Relay team
-            </a>
+            Adapted by <a href="http://fashionablenonsense.com/">@jimmy_jia</a>{' '}
+            from work by the{' '}
+            <a href="https://facebook.github.io/relay/">Relay team</a>
           </p>
-          <p>Part of <a href="http://todomvc.com">TodoMVC</a></p>
+          <p>
+            Part of <a href="http://todomvc.com">TodoMVC</a>
+          </p>
         </footer>
       </div>
     );
