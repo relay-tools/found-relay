@@ -8,8 +8,12 @@ import webpack from 'webpack';
 import webpackMiddleware from 'webpack-dev-middleware';
 
 import { ServerFetcher } from './fetcher';
-import { createResolver, historyMiddlewares, render, routeConfig }
-  from './router';
+import {
+  createResolver,
+  historyMiddlewares,
+  render,
+  routeConfig,
+} from './router';
 import schema from './data/schema';
 
 const PORT = 8080;
@@ -19,10 +23,7 @@ const app = express();
 app.use('/graphql', graphQLHTTP({ schema }));
 
 const webpackConfig = {
-  entry: [
-    'babel-polyfill',
-    './src/client',
-  ],
+  entry: ['babel-polyfill', './src/client'],
 
   output: {
     path: '/',
@@ -37,14 +38,14 @@ const webpackConfig = {
     ],
   },
 
-  plugins: [
-    new ExtractTextPlugin('styles.css'),
-  ],
+  plugins: [new ExtractTextPlugin('styles.css')],
 };
 
-app.use(webpackMiddleware(webpack(webpackConfig), {
-  stats: { colors: true },
-}));
+app.use(
+  webpackMiddleware(webpack(webpackConfig), {
+    stats: { colors: true },
+  }),
+);
 
 app.use(async (req, res) => {
   const fetcher = new ServerFetcher(`http://localhost:${PORT}/graphql`);

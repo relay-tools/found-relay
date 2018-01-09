@@ -19,13 +19,17 @@ const contextTypes = {
 };
 
 class TodoList extends React.Component {
-  onToggleAllChange = (e) => {
+  onToggleAllChange = e => {
     const { relay, viewer } = this.props;
     const { variables } = this.context.relay;
     const complete = e.target.checked;
 
     MarkAllTodosMutation.commit(
-      relay.environment, viewer, viewer.todos, complete, variables.status,
+      relay.environment,
+      viewer,
+      viewer.todos,
+      complete,
+      variables.status,
     );
   };
 
@@ -46,17 +50,11 @@ class TodoList extends React.Component {
           className="toggle-all"
           onChange={this.onToggleAllChange}
         />
-        <label htmlFor="toggle-all">
-          Mark all as complete
-        </label>
+        <label htmlFor="toggle-all">Mark all as complete</label>
 
         <ul className="todo-list">
           {todos.edges.map(({ node }) => (
-            <Todo
-              key={node.id}
-              viewer={viewer}
-              todo={node}
-            />
+            <Todo key={node.id} viewer={viewer} todo={node} />
           ))}
         </ul>
       </section>
@@ -71,10 +69,8 @@ export default createFragmentContainer(
   TodoList,
   graphql`
     fragment TodoList_viewer on User {
-      todos(
-        status: $status
-        first: 2147483647
-      ) @connection(key: "TodoList_todos") {
+      todos(status: $status, first: 2147483647)
+        @connection(key: "TodoList_todos") {
         edges {
           node {
             id
