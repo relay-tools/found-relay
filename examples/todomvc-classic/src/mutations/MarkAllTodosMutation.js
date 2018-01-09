@@ -38,12 +38,14 @@ export default class MarkAllTodosMutation extends Relay.Mutation {
   }
 
   getConfigs() {
-    return [{
-      type: 'FIELDS_CHANGE',
-      fieldIDs: {
-        viewer: this.props.viewer.id,
+    return [
+      {
+        type: 'FIELDS_CHANGE',
+        fieldIDs: {
+          viewer: this.props.viewer.id,
+        },
       },
-    }];
+    ];
   }
 
   getVariables() {

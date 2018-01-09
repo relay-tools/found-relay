@@ -16,12 +16,14 @@ const mutation = graphql`
 function sharedUpdater(store, user, deletedIds) {
   const userProxy = store.get(user.id);
 
-  ['any', 'completed'].forEach((status) => {
+  ['any', 'completed'].forEach(status => {
     const connection = ConnectionHandler.getConnection(
-      userProxy, 'TodoList_todos', { status },
+      userProxy,
+      'TodoList_todos',
+      { status },
     );
     if (connection) {
-      deletedIds.forEach((deletedId) => {
+      deletedIds.forEach(deletedId => {
         ConnectionHandler.deleteNode(connection, deletedId);
       });
     }

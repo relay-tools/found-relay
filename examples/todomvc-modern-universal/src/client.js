@@ -4,8 +4,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import { ClientFetcher } from './fetcher';
-import { createResolver, historyMiddlewares, render, routeConfig }
-  from './router';
+import {
+  createResolver,
+  historyMiddlewares,
+  render,
+  routeConfig,
+} from './router';
 
 import 'todomvc-common/base';
 import 'todomvc-common/base.css';

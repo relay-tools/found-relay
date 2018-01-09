@@ -31,10 +31,6 @@ export default makeRouteConfig(
       query={TodoListQuery}
       prepareVariables={params => ({ ...params, status: 'any' })}
     />
-    <Route
-      path=":status"
-      Component={TodoList}
-      query={TodoListQuery}
-    />
+    <Route path=":status" Component={TodoList} query={TodoListQuery} />
   </Route>,
 );
