@@ -101,7 +101,11 @@ export default class Resolver {
     const {
       createOperationSelector,
       getOperation,
+      getRequest,
     } = this.environment.unstable_internal;
+
+    // FIXME: Use getRequest directly when only supporting relay >=1.5.0.
+    const getOperationOrRequest = getOperation || getRequest;
 
     const querySubscriptions = queries.map((query, i) => {
       if (!query) {
@@ -122,7 +126,7 @@ export default class Resolver {
 
       return new QuerySubscription(
         this.environment,
-        createOperationSelector(getOperation(query), variables),
+        createOperationSelector(getOperationOrRequest(query), variables),
         cacheConfigs[i],
       );
     });
