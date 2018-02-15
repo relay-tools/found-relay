@@ -1,4 +1,5 @@
 import {
+  accumulateRouteValues,
   checkResolved,
   getComponents,
   getRouteMatches,
@@ -66,7 +67,7 @@ export default class Resolver {
       route => route.forceFetch,
     );
 
-    const routeParams = this.getRouteParams(routeMatches);
+    const routeParams = this.getRouteParams(match, routeMatches);
     const queryConfigs = this.getQueryConfigs(
       matchQueries,
       routeIndices,
@@ -118,20 +119,23 @@ export default class Resolver {
     );
   }
 
-  getRouteParams(routeMatches) {
-    let params = null;
+  getRouteParams(match, routeMatches) {
+    return accumulateRouteValues(
+      routeMatches,
+      match.routeIndices,
+      (params, routeMatch) => {
+        const { route, routeParams } = routeMatch;
 
-    return routeMatches.map(routeMatch => {
-      const { route } = routeMatch;
+        // We need to always run this to make sure we don't miss route params.
+        let nextParams = { ...params, ...routeParams };
+        if (route.prepareParams) {
+          nextParams = route.prepareParams(nextParams, routeMatch);
+        }
 
-      // We need to always run this to make sure we don't miss route params.
-      params = { ...params, ...routeMatch.routeParams };
-      if (route.prepareParams) {
-        params = route.prepareParams(params, routeMatch);
-      }
-
-      return params;
-    });
+        return nextParams;
+      },
+      null,
+    );
   }
 
   getQueryConfigs(matchQueries, routeIndices, routeParams) {

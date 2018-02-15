@@ -1,4 +1,5 @@
 import {
+  accumulateRouteValues,
   checkResolved,
   getComponents,
   getRouteMatches,
@@ -37,7 +38,7 @@ export default class Resolver {
       route => route.cacheConfig,
     );
 
-    const routeVariables = this.getRouteVariables(routeMatches);
+    const routeVariables = this.getRouteVariables(match, routeMatches);
     const querySubscriptions = this.updateQuerySubscriptions(
       queries,
       routeVariables,
@@ -81,20 +82,23 @@ export default class Resolver {
     );
   }
 
-  getRouteVariables(routeMatches) {
-    let variables = null;
+  getRouteVariables(match, routeMatches) {
+    return accumulateRouteValues(
+      routeMatches,
+      match.routeIndices,
+      (variables, routeMatch) => {
+        const { route, routeParams } = routeMatch;
 
-    return routeMatches.map(routeMatch => {
-      const { route } = routeMatch;
+        // We need to always run this to make sure we don't miss route params.
+        let nextVariables = { ...variables, ...routeParams };
+        if (route.prepareVariables) {
+          nextVariables = route.prepareVariables(nextVariables, routeMatch);
+        }
 
-      // We need to always run this to make sure we don't miss route params.
-      variables = { ...variables, ...routeMatch.routeParams };
-      if (route.prepareVariables) {
-        variables = route.prepareVariables(variables, routeMatch);
-      }
-
-      return variables;
-    });
+        return nextVariables;
+      },
+      null,
+    );
   }
 
   updateQuerySubscriptions(queries, routeVariables, cacheConfigs) {
