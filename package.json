@@ -62,7 +62,7 @@
     "warning": "^3.0.0"
   },
   "peerDependencies": {
-    "found": ">=0.3.0",
+    "found": ">=0.3.8",
     "react": "^0.14.9 || >=15.3.0",
     "react-relay": ">=1.4.0"
   },
@@ -87,7 +87,7 @@
     "eslint-plugin-prettier": "^2.4.0",
     "eslint-plugin-react": "^7.5.1",
     "farce": "^0.2.4",
-    "found": "^0.3.5",
+    "found": "^0.3.8",
     "graphql": "^0.12.3",
     "husky": "^0.14.3",
     "jest": "^22.0.4",
