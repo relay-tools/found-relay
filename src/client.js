@@ -30,7 +30,7 @@ import './assets/learn.json';
     render,
   });
 
-  ReactDOM.render(
+  ReactDOM.hydrate(
     <Router resolver={resolver} />,
     document.getElementById('root'),
   );
