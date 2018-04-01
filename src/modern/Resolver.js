@@ -104,12 +104,12 @@ export default class Resolver {
   updateQuerySubscriptions(queries, routeVariables, cacheConfigs) {
     const {
       createOperationSelector,
-      getOperation,
       getRequest,
+      getOperation,
     } = this.environment.unstable_internal;
 
     // FIXME: Use getRequest directly when only supporting relay >=1.5.0.
-    const getOperationOrRequest = getOperation || getRequest;
+    const getRequestOrOperation = getRequest || getOperation;
 
     const querySubscriptions = queries.map((query, i) => {
       if (!query) {
@@ -130,7 +130,7 @@ export default class Resolver {
 
       return new QuerySubscription(
         this.environment,
-        createOperationSelector(getOperationOrRequest(query), variables),
+        createOperationSelector(getRequestOrOperation(query), variables),
         cacheConfigs[i],
       );
     });
