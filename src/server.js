@@ -1,6 +1,6 @@
+import CopyWebpackPlugin from 'copy-webpack-plugin';
 import express from 'express';
 import graphQLHTTP from 'express-graphql';
-import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import { getFarceResult } from 'found/lib/server';
 import ReactDOMServer from 'react-dom/server';
 import serialize from 'serialize-javascript';
@@ -23,6 +23,8 @@ const app = express();
 app.use('/graphql', graphQLHTTP({ schema }));
 
 const webpackConfig = {
+  mode: 'development',
+
   entry: ['babel-polyfill', './src/client'],
 
   output: {
@@ -31,14 +33,16 @@ const webpackConfig = {
   },
 
   module: {
-    rules: [
-      { test: /\.js$/, exclude: /node_modules/, use: 'babel-loader' },
-      { test: /\.css$/, use: ExtractTextPlugin.extract('css-loader') },
-      { test: /learn\.json$/, use: 'file-loader?name=[name].[ext]' },
-    ],
+    rules: [{ test: /\.js$/, exclude: /node_modules/, use: 'babel-loader' }],
   },
 
-  plugins: [new ExtractTextPlugin('styles.css')],
+  plugins: [
+    new CopyWebpackPlugin([
+      'src/assets',
+      'node_modules/todomvc-common/base.css',
+      'node_modules/todomvc-app-css/index.css',
+    ]),
+  ],
 };
 
 app.use(
@@ -70,7 +74,8 @@ app.use(async (req, res) => {
 <head>
   <meta charset="utf-8">
   <title>Relay • TodoMVC</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="index.css">
 </head>
 
 <body>
