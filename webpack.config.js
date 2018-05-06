@@ -1,9 +1,8 @@
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 
-const production = process.env.NODE_ENV === 'production';
-
-module.exports = {
+module.exports = (env, { mode }) => ({
   entry: ['babel-polyfill', './src/client'],
 
   output: {
@@ -15,7 +14,6 @@ module.exports = {
     rules: [
       { test: /\.js$/, exclude: /node_modules/, use: 'babel-loader' },
       { test: /\.css$/, use: ['style-loader', 'css-loader'] },
-      { test: /learn\.json$/, use: 'file-loader?name=[name].[ext]' },
     ],
   },
 
@@ -23,11 +21,8 @@ module.exports = {
     new HtmlWebpackPlugin({
       title: 'Relay • TodoMVC',
     }),
+    new CopyWebpackPlugin(['src/assets']),
   ],
 
-  devtool: production ? 'source-map' : 'module-source-map',
-
-  devServer: {
-    historyApiFallback: true,
-  },
-};
+  devtool: mode === 'production' ? 'source-map' : 'cheap-module-source-map',
+});
