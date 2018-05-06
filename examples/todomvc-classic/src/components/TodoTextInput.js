@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 const propTypes = {
-  commitOnBlur: PropTypes.bool.isRequired,
+  commitOnBlur: PropTypes.bool,
   initialValue: PropTypes.string,
   onCancel: PropTypes.func,
   onDelete: PropTypes.func,
@@ -21,7 +21,6 @@ class TodoTextInput extends React.Component {
     super(props, context);
 
     this.state = {
-      isEditing: false,
       text: this.props.initialValue || '',
     };
   }

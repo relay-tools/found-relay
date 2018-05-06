@@ -15,8 +15,6 @@ import 'todomvc-common/base';
 import 'todomvc-common/base.css';
 import 'todomvc-app-css/index.css';
 
-import './assets/learn.json';
-
 const environment = new Environment({
   network: Network.create({ schema }),
   store: new Store(new RecordSource()),

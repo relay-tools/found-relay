@@ -12,10 +12,6 @@ import {
 } from './router';
 
 import 'todomvc-common/base';
-import 'todomvc-common/base.css';
-import 'todomvc-app-css/index.css';
-
-import './assets/learn.json';
 
 (async () => {
   // eslint-disable-next-line no-underscore-dangle
