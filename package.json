@@ -40,7 +40,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/4Catalyzer/found-relay.git"
+    "url": "git+https://github.com/relay-tools/found-relay.git"
   },
   "keywords": [
     "router",
@@ -50,9 +50,9 @@
   "author": "4Catalyzer",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/4Catalyzer/found-relay/issues"
+    "url": "https://github.com/relay-tools/found-relay/issues"
   },
-  "homepage": "https://github.com/4Catalyzer/found-relay#readme",
+  "homepage": "https://github.com/relay-tools/found-relay#readme",
   "dependencies": {
     "babel-runtime": "^6.26.0",
     "is-promise": "^2.1.0",

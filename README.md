@@ -2,7 +2,7 @@
 
 [Relay](http://facebook.github.io/relay/) integration for [Found](https://github.com/4Catalyzer/found).
 
-**This branch tracks the [v0.3 prereleases](https://github.com/4Catalyzer/found-relay/releases), tagged `next` on npm. For the v0.2 releases tagged `latest` on npm, see the [`v0.2-dev`](https://github.com/4Catalyzer/found-relay/tree/v0.2-dev) branch.**
+**This branch tracks the [v0.3 prereleases](https://github.com/relay-tools/found-relay/releases), tagged `next` on npm. For the v0.2 releases tagged `latest` on npm, see the [`v0.2-dev`](https://github.com/relay-tools/found-relay/tree/v0.2-dev) branch.**
 
 Detailed documentation forthcoming.
 
@@ -12,8 +12,8 @@ Detailed documentation forthcoming.
 - [TodoMVC with Relay Modern and server-side rendering](/examples/todomvc-modern-universal)
 - [TodoMVC with Relay Classic](/examples/todomvc-classic)
 
-[build-badge]: https://img.shields.io/travis/4Catalyzer/found-relay/master.svg
-[build]: https://travis-ci.org/4Catalyzer/found-relay
+[build-badge]: https://img.shields.io/travis/relay-tools/found-relay/master.svg
+[build]: https://travis-ci.org/relay-tools/found-relay
 
 [npm-badge]: https://img.shields.io/npm/v/found-relay/next.svg
 [npm]: https://www.npmjs.org/package/found-relay
