@@ -37,11 +37,14 @@ class ReadyStateRenderer extends React.Component {
     };
 
     this.selectionReference = querySubscription.retain();
+
+    this.relayContext = {};
+    this.updateRelayContext(querySubscription);
   }
 
   getChildContext() {
     return {
-      relay: this.props.querySubscription.relayContext,
+      relay: this.relayContext,
     };
   }
 
@@ -62,6 +65,8 @@ class ReadyStateRenderer extends React.Component {
 
       this.props.querySubscription.unsubscribe(this.onUpdate);
       querySubscription.subscribe(this.onUpdate);
+
+      this.updateRelayContext(querySubscription);
     }
   }
 
@@ -90,6 +95,12 @@ class ReadyStateRenderer extends React.Component {
 
     this.setState({ element: element || null });
   };
+
+  updateRelayContext(querySubscription) {
+    // XXX: Relay v1.6.0 adds an assumption that context.relay is mutated
+    // in-place, so we need to do that here.
+    Object.assign(this.relayContext, querySubscription.relayContext);
+  }
 
   render() {
     const { element } = this.state;
