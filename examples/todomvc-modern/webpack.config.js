@@ -12,6 +12,12 @@ module.exports = (env, { mode }) => ({
 
   module: {
     rules: [
+      // See https://github.com/aws/aws-amplify/issues/686#issuecomment-387710340.
+      {
+        test: /\.mjs$/,
+        include: /node_modules/,
+        type: 'javascript/auto',
+      },
       { test: /\.js$/, exclude: /node_modules/, use: 'babel-loader' },
       { test: /\.css$/, use: ['style-loader', 'css-loader'] },
     ],
