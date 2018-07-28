@@ -1,22 +1,23 @@
 import BrowserProtocol from 'farce/lib/BrowserProtocol';
 import createInitialFarceRouter from 'found/lib/createInitialFarceRouter';
+import { Resolver } from 'found-relay';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import RelayClientSSR from 'react-relay-network-modern-ssr/lib/client';
 
-import { ClientFetcher } from './fetcher';
-import {
-  createResolver,
-  historyMiddlewares,
-  render,
-  routeConfig,
-} from './router';
+import createRelayEnvironment from './createRelayEnvironment';
+import { historyMiddlewares, render, routeConfig } from './router';
 
 import 'todomvc-common/base';
 
 (async () => {
-  // eslint-disable-next-line no-underscore-dangle
-  const fetcher = new ClientFetcher('/graphql', window.__RELAY_PAYLOADS__);
-  const resolver = createResolver(fetcher);
+  const resolver = new Resolver(
+    createRelayEnvironment(
+      // eslint-disable-next-line no-underscore-dangle
+      new RelayClientSSR(window.__RELAY_PAYLOADS__),
+      '/graphql',
+    ),
+  );
 
   const Router = await createInitialFarceRouter({
     historyProtocol: new BrowserProtocol(),

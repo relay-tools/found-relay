@@ -1,19 +1,18 @@
+import 'isomorphic-fetch';
+
 import CopyWebpackPlugin from 'copy-webpack-plugin';
 import express from 'express';
 import graphQLHTTP from 'express-graphql';
 import { getFarceResult } from 'found/lib/server';
+import { Resolver } from 'found-relay';
 import ReactDOMServer from 'react-dom/server';
+import RelayServerSSR from 'react-relay-network-modern-ssr/lib/server';
 import serialize from 'serialize-javascript';
 import webpack from 'webpack';
 import webpackMiddleware from 'webpack-dev-middleware';
 
-import { ServerFetcher } from './fetcher';
-import {
-  createResolver,
-  historyMiddlewares,
-  render,
-  routeConfig,
-} from './router';
+import createRelayEnvironment from './createRelayEnvironment';
+import { historyMiddlewares, render, routeConfig } from './router';
 import schema from './data/schema';
 
 const PORT = 8080;
@@ -25,7 +24,7 @@ app.use('/graphql', graphQLHTTP({ schema }));
 const webpackConfig = {
   mode: 'development',
 
-  entry: ['babel-polyfill', './src/client'],
+  entry: ['babel-polyfill', 'isomorphic-fetch', './src/client'],
 
   output: {
     path: '/',
@@ -33,7 +32,15 @@ const webpackConfig = {
   },
 
   module: {
-    rules: [{ test: /\.js$/, exclude: /node_modules/, use: 'babel-loader' }],
+    rules: [
+      // See https://github.com/aws/aws-amplify/issues/686#issuecomment-387710340.
+      {
+        test: /\.mjs$/,
+        include: /node_modules/,
+        type: 'javascript/auto',
+      },
+      { test: /\.js$/, exclude: /node_modules/, use: 'babel-loader' },
+    ],
   },
 
   plugins: [
@@ -43,6 +50,8 @@ const webpackConfig = {
       'node_modules/todomvc-app-css/index.css',
     ]),
   ],
+
+  devtool: 'cheap-module-source-map',
 };
 
 app.use(
@@ -52,13 +61,15 @@ app.use(
 );
 
 app.use(async (req, res) => {
-  const fetcher = new ServerFetcher(`http://localhost:${PORT}/graphql`);
+  const relaySsr = new RelayServerSSR();
 
   const { redirect, status, element } = await getFarceResult({
     url: req.url,
     historyMiddlewares,
     routeConfig,
-    resolver: createResolver(fetcher),
+    resolver: new Resolver(
+      createRelayEnvironment(relaySsr, `http://localhost:${PORT}/graphql`),
+    ),
     render,
   });
 
@@ -66,6 +77,9 @@ app.use(async (req, res) => {
     res.redirect(302, redirect.url);
     return;
   }
+
+  const appHtml = ReactDOMServer.renderToString(element);
+  const relayData = await relaySsr.getCache();
 
   res.status(status).send(`
 <!DOCTYPE html>
@@ -79,10 +93,10 @@ app.use(async (req, res) => {
 </head>
 
 <body>
-<div id="root">${ReactDOMServer.renderToString(element)}</div>
+<div id="root">${appHtml}</div>
 
 <script>
-  window.__RELAY_PAYLOADS__ = ${serialize(fetcher, { isJSON: true })};
+  window.__RELAY_PAYLOADS__ = ${serialize(relayData, { isJSON: true })};
 </script>
 <script src="/bundle.js"></script>
 </body>
