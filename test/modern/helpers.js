@@ -15,15 +15,19 @@ export function timeout(delay) {
   });
 }
 
-export function createEnvironment(fetch = createFakeFetch()) {
+export function createSyncEnvironment(fetch = createFakeFetch(), records) {
   return new Environment({
-    network: Network.create(async (...args) => {
-      // Delay field resolution to exercise async data fetching logic.
-      await timeout(20);
-      return fetch(...args);
-    }),
-    store: new Store(new RecordSource()),
+    network: Network.create(fetch),
+    store: new Store(new RecordSource(records)),
   });
+}
+
+export function createEnvironment(fetch = createFakeFetch(), records) {
+  return createSyncEnvironment(async (...args) => {
+    // Delay field resolution to exercise async data fetching logic.
+    await timeout(20);
+    return fetch(...args);
+  }, records);
 }
 
 export class InstrumentedResolver extends Resolver {
