@@ -37,12 +37,18 @@ export default class Resolver {
       route => route.getCacheConfig,
       route => route.cacheConfig,
     );
+    const dataFroms = getRouteValues(
+      routeMatches,
+      route => route.getDataFrom,
+      route => route.dataFrom,
+    );
 
     const routeVariables = this.getRouteVariables(match, routeMatches);
     const querySubscriptions = this.updateQuerySubscriptions(
       queries,
       routeVariables,
       cacheConfigs,
+      dataFroms,
     );
 
     const fetches = querySubscriptions.map(
@@ -101,7 +107,7 @@ export default class Resolver {
     );
   }
 
-  updateQuerySubscriptions(queries, routeVariables, cacheConfigs) {
+  updateQuerySubscriptions(queries, routeVariables, cacheConfigs, dataFroms) {
     const {
       createOperationSelector,
       getRequest,
@@ -132,6 +138,7 @@ export default class Resolver {
         this.environment,
         createOperationSelector(getRequestOrOperation(query), variables),
         cacheConfigs[i],
+        dataFroms[i],
       );
     });
 
