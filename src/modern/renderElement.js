@@ -37,7 +37,7 @@ export default function renderElement({
   return route.render({
     ...readyState,
     match,
-    Component,
+    Component: isComponentResolved ? Component : null,
     props: props && { ...match, ...props },
     resolving,
   });
