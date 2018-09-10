@@ -1,4 +1,5 @@
 import {
+  GraphQLID,
   GraphQLNonNull,
   GraphQLObjectType,
   GraphQLSchema,
@@ -8,15 +9,18 @@ import {
 const Widget = new GraphQLObjectType({
   name: 'Widget',
   fields: {
-    name: {
-      type: GraphQLString,
-    },
+    name: { type: GraphQLString },
   },
 });
 
 const query = new GraphQLObjectType({
   name: 'Query',
   fields: {
+    // XXX: relay-compiler chokes unless at least one type has an ID.
+    id: {
+      type: GraphQLID,
+      resolve: () => 'query',
+    },
     widget: {
       type: Widget,
       resolve: () => ({ name: 'foo' }),

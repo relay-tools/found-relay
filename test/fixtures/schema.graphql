@@ -1,4 +1,5 @@
 type Query {
+  id: ID
   widget: Widget
   widgetByArg(name: String!): Widget
   error: String

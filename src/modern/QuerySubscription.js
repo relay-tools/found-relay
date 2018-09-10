@@ -59,6 +59,17 @@ export default class QuerySubscription {
       resolve();
     };
 
+    const onError = error => {
+      this.updateReadyState({
+        error,
+        props: null,
+        // FIXME: Use default readyState when retrying.
+        retry: this.retry,
+      });
+
+      resolve();
+    };
+
     const useStoreSnapshot =
       !this.retrying &&
       (this.dataFrom === 'STORE_THEN_NETWORK' ||
@@ -66,28 +77,23 @@ export default class QuerySubscription {
       this.environment.check(this.operation.root);
 
     if (!(this.dataFrom === 'STORE_OR_NETWORK' && useStoreSnapshot)) {
-      this.pendingRequest = this.environment
-        .execute({
-          operation: this.operation,
-          cacheConfig: this.cacheConfig,
-        })
-        .finally(() => {
-          this.pendingRequest = null;
-        })
-        .subscribe({
-          next: onSnapshot,
-
-          error: error => {
-            this.updateReadyState({
-              error,
-              props: null,
-              // FIXME: Use default readyState when retrying.
-              retry: this.retry,
-            });
-
-            resolve();
-          },
-        });
+      try {
+        this.pendingRequest = this.environment
+          .execute({
+            operation: this.operation,
+            cacheConfig: this.cacheConfig,
+          })
+          .finally(() => {
+            this.pendingRequest = null;
+          })
+          .subscribe({
+            next: onSnapshot,
+            error: onError,
+          });
+      } catch (error) {
+        onError(error);
+        return;
+      }
     }
 
     // Only use the store snapshot if the network layer doesn't synchronously

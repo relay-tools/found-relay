@@ -131,6 +131,7 @@ describe('Resolver', () => {
       });
 
       class InstrumentedResolver extends Resolver {
+        // eslint-disable-next-line require-await
         async *resolveElements(match) {
           yield* super.resolveElements(match);
           done();

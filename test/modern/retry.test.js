@@ -19,12 +19,16 @@ describe('retry', () => {
   let Router;
   let resolver;
 
+  beforeAll(() => {
+    jest.spyOn(global, 'fail').mockImplementation(() => {});
+  });
+
   beforeEach(() => {
     fetchSpy = jest.fn();
 
     renderSpy = jest.fn(({ error, props }) => {
       if (error) {
-        return <div className={error.source.errors[0]} />;
+        return <div className={error.message} />;
       } else if (props) {
         return <div className={props.widget.name} />;
       }
@@ -51,6 +55,10 @@ describe('retry', () => {
     });
 
     resolver = new InstrumentedResolver(createEnvironment(fetchSpy));
+  });
+
+  afterAll(() => {
+    jest.restoreAllMocks();
   });
 
   it('should send a new network request and rerender', async () => {
@@ -100,7 +108,9 @@ describe('retry', () => {
   });
 
   it('should use pending ready state after error', async () => {
-    fetchSpy.mockImplementationOnce(() => ({ errors: ['failed'] }));
+    fetchSpy.mockImplementationOnce(() => {
+      throw new Error('failed');
+    });
 
     const instance = ReactTestUtils.renderIntoDocument(
       <Router resolver={resolver} />,
@@ -150,7 +160,9 @@ describe('retry', () => {
   it('should use synchronous ready state after error', async () => {
     resolver = new InstrumentedResolver(createSyncEnvironment(fetchSpy));
 
-    fetchSpy.mockImplementationOnce(() => ({ errors: ['failed'] }));
+    fetchSpy.mockImplementationOnce(() => {
+      throw new Error('failed');
+    });
 
     const instance = ReactTestUtils.renderIntoDocument(
       <Router resolver={resolver} />,

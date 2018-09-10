@@ -11,6 +11,14 @@ import { Resolver } from '../../src';
 
 import { createEnvironment } from './helpers';
 
+const query = graphql`
+  query renderWarnings_Query {
+    widget {
+      name
+    }
+  }
+`;
+
 describe('render', () => {
   let environment;
 
@@ -24,13 +32,7 @@ describe('render', () => {
       routeConfig: [
         {
           path: '/',
-          query: graphql`
-            query renderWarnings_Query {
-              widget {
-                name
-              }
-            }
-          `,
+          query,
         },
       ],
       resolver: new Resolver(environment),
@@ -50,13 +52,7 @@ describe('render', () => {
       routeConfig: [
         {
           path: '/',
-          getQuery: () => graphql`
-            query renderWarnings_Query {
-              widget {
-                name
-              }
-            }
-          `,
+          getQuery: () => query,
         },
       ],
       resolver: new Resolver(environment),
@@ -88,13 +84,7 @@ describe('render', () => {
           children: [
             {
               Component: Widget,
-              query: graphql`
-                query renderWarnings_Query {
-                  widget {
-                    name
-                  }
-                }
-              `,
+              query,
             },
           ],
         },
@@ -135,13 +125,7 @@ describe('render', () => {
           children: [
             {
               Component: Widget,
-              getQuery: () => graphql`
-                query renderWarnings_Query {
-                  widget {
-                    name
-                  }
-                }
-              `,
+              getQuery: () => query,
             },
           ],
         },
