@@ -9,6 +9,14 @@ import { Resolver } from '../../src';
 
 import { createEnvironment } from '../modern/helpers';
 
+const query = graphql`
+  query smokeWarnings_Query {
+    widget {
+      name
+    }
+  }
+`;
+
 describe('smoke', () => {
   it('should warn on missing component', async () => {
     await getFarceResult({
@@ -16,13 +24,7 @@ describe('smoke', () => {
       routeConfig: [
         {
           path: '/',
-          query: graphql`
-            query smokeWarnings_Query {
-              widget {
-                name
-              }
-            }
-          `,
+          query,
         },
       ],
       resolver: new Resolver(createEnvironment()),
@@ -42,13 +44,7 @@ describe('smoke', () => {
       routeConfig: [
         {
           path: '/',
-          getQuery: () => graphql`
-            query smokeWarnings_Query {
-              widget {
-                name
-              }
-            }
-          `,
+          getQuery: () => query,
         },
       ],
       resolver: new Resolver(createEnvironment()),

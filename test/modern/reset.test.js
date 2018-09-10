@@ -64,7 +64,7 @@ describe('reset', () => {
 
     ReactTestUtils.findRenderedDOMComponentWithClass(instance, 'foo');
 
-    fetchSpy.mockImplementationOnce(async () => ({
+    fetchSpy.mockImplementationOnce(() => ({
       data: {
         widget: {
           name: 'bar',

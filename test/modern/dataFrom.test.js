@@ -13,6 +13,14 @@ import {
   InstrumentedResolver,
 } from './helpers';
 
+const query = graphql`
+  query dataFrom_default_Query {
+    widget {
+      name
+    }
+  }
+`;
+
 function createRecords() {
   return {
     'client:root': {
@@ -49,13 +57,7 @@ describe('dataFrom', () => {
         routeConfig: [
           {
             path: '/',
-            query: graphql`
-              query dataFrom_Query {
-                widget {
-                  name
-                }
-              }
-            `,
+            query,
             render: renderSpy,
           },
         ],
@@ -107,13 +109,7 @@ describe('dataFrom', () => {
         routeConfig: [
           {
             path: '/',
-            query: graphql`
-              query dataFrom_Query {
-                widget {
-                  name
-                }
-              }
-            `,
+            query,
             render: renderSpy,
             dataFrom: 'STORE_THEN_NETWORK',
           },
@@ -222,13 +218,7 @@ describe('dataFrom', () => {
         routeConfig: [
           {
             path: '/',
-            query: graphql`
-              query dataFrom_Query {
-                widget {
-                  name
-                }
-              }
-            `,
+            query,
             render: renderSpy,
             dataFrom: 'STORE_OR_NETWORK',
           },

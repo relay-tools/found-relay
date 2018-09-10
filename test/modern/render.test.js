@@ -110,7 +110,7 @@ describe('render', () => {
         {
           path: '/',
           query: graphql`
-            query render_Query {
+            query render_error_Query {
               widget {
                 name
               }
@@ -146,7 +146,7 @@ describe('render', () => {
         {
           path: '/',
           query: graphql`
-            query render_Query {
+            query render_redirect_Query {
               widget {
                 name
               }
