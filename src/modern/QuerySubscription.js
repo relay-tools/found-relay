@@ -63,7 +63,6 @@ export default class QuerySubscription {
       this.updateReadyState({
         error,
         props: null,
-        // FIXME: Use default readyState when retrying.
         retry: this.retry,
       });
 
