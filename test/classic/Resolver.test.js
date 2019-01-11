@@ -40,8 +40,8 @@ describe('Resolver', () => {
       },
     });
 
-    function WidgetChildren({ first, second, third, route }) {
-      expect(route).toBeTruthy();
+    function WidgetChildren({ first, second, third, match }) {
+      expect(match.route).toBeTruthy();
 
       return (
         <div>
@@ -213,7 +213,8 @@ describe('Resolver', () => {
         });
 
         it('should have router props', () => {
-          expect(renderArgs.props.route).toBeDefined();
+          expect(renderArgs.props.match).toBeDefined();
+          expect(renderArgs.props.match.route).toBeDefined();
           expect(renderArgs.match).toBeDefined();
           expect(renderArgs.match.route).toBeDefined();
           expect(renderArgs.Component).toBe(WidgetParentContainer);
