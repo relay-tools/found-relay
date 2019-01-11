@@ -16,8 +16,8 @@ const propTypes = {
 };
 
 class RelayRouteRenderer extends React.Component {
-  constructor(props, context) {
-    super(props, context);
+  constructor(props) {
+    super(props);
 
     this.state = {
       readyState: props.readyState,

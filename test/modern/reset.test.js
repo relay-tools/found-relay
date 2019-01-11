@@ -36,8 +36,8 @@ describe('reset', () => {
     });
 
     class ResettableRouter extends React.Component {
-      constructor(props, context) {
-        super(props, context);
+      constructor(props) {
+        super(props);
 
         this.state = {
           resolver: this.createResolver(),
