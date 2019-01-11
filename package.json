@@ -97,7 +97,7 @@
     "eslint-plugin-prettier": "^2.6.2",
     "eslint-plugin-react": "^7.11.1",
     "farce": "^0.2.6",
-    "found": "^0.3.14",
+    "found": "^0.4.0-alpha.4",
     "graphql": "^0.13.2",
     "husky": "^0.14.3",
     "jest": "^23.6.0",
