@@ -2,6 +2,8 @@
 
 [Relay](http://facebook.github.io/relay/) integration for [Found](https://github.com/4Catalyzer/found).
 
+**This branch tracks the [v0.3 releases](https://github.com/relay-tools/found-relay/releases), tagged `latest` on npm. For the v0.4 prereleases tagged `next` on npm, see the [`next`](https://github.com/relay-tools/found-relay/tree/next) branch.**
+
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents** _generated with [DocToc](https://github.com/thlorenz/doctoc)_
@@ -252,5 +254,5 @@ ReactDOM.render(
 
 [build-badge]: https://img.shields.io/travis/relay-tools/found-relay/master.svg
 [build]: https://travis-ci.org/relay-tools/found-relay
-[npm-badge]: https://img.shields.io/npm/v/found-relay/next.svg
+[npm-badge]: https://img.shields.io/npm/v/found-relay.svg
 [npm]: https://www.npmjs.org/package/found-relay
