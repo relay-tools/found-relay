@@ -190,6 +190,7 @@ export default class Resolver {
         isComponentResolved,
         hasComponent,
         readyState: querySubscription.readyState,
+        relayVariables: querySubscription.relayContext.variables,
         resolving: true,
       });
 

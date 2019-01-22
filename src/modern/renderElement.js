@@ -10,6 +10,7 @@ export default function renderElement({
   isComponentResolved,
   hasComponent,
   readyState,
+  relayVariables,
   resolving, // Whether it's safe to throw a RedirectException or an HttpError.
   /* eslint-enable react/prop-types */
 }) {
@@ -39,6 +40,7 @@ export default function renderElement({
     match,
     Component: isComponentResolved ? Component : null,
     props: props && { ...match, ...props },
+    relayVariables,
     resolving,
   });
 }
