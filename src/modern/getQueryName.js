@@ -6,7 +6,9 @@ export default function getQueryName(route) {
     }
 
     if (typeof query === 'function') {
-      return query().name;
+      query = query();
+      if (query.name) return query.name;
+      if (query.params && query.params.name) return query.params.name;
     }
   }
 

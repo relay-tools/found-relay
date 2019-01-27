@@ -109,7 +109,7 @@ export default class Resolver {
 
   updateQuerySubscriptions(queries, routeVariables, cacheConfigs, dataFroms) {
     const {
-      createOperationSelector,
+      createOperationDescriptor,
       getRequest,
       getOperation,
     } = this.environment.unstable_internal;
@@ -136,7 +136,7 @@ export default class Resolver {
 
       return new QuerySubscription(
         this.environment,
-        createOperationSelector(getRequestOrOperation(query), variables),
+        createOperationDescriptor(getRequestOrOperation(query), variables),
         cacheConfigs[i],
         dataFroms[i],
       );

@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import elementType from 'prop-types-extra/lib/elementType';
 import React from 'react';
-import RelayPropTypes from 'react-relay/lib/RelayPropTypes';
+import ReactRelayContext from 'react-relay/lib/ReactRelayContext';
 import warning from 'warning';
 
 import getQueryName from './getQueryName';
@@ -22,13 +22,9 @@ const propTypes = {
   fetched: PropTypes.bool.isRequired,
 };
 
-const childContextTypes = {
-  relay: RelayPropTypes.Relay,
-};
-
 class ReadyStateRenderer extends React.Component {
-  constructor(props, context) {
-    super(props, context);
+  constructor(props) {
+    super(props);
 
     const { element, querySubscription } = props;
 
@@ -40,12 +36,6 @@ class ReadyStateRenderer extends React.Component {
 
     this.relayContext = {};
     this.updateRelayContext(querySubscription);
-  }
-
-  getChildContext() {
-    return {
-      relay: this.relayContext,
-    };
   }
 
   componentDidMount() {
@@ -138,11 +128,14 @@ class ReadyStateRenderer extends React.Component {
       });
     }
 
-    return React.cloneElement(element, ownProps);
+    return (
+      <ReactRelayContext.Provider value={this.relayContext}>
+        {React.cloneElement(element, ownProps)}
+      </ReactRelayContext.Provider>
+    );
   }
 }
 
 ReadyStateRenderer.propTypes = propTypes;
-ReadyStateRenderer.childContextTypes = childContextTypes;
 
 export default ReadyStateRenderer;
