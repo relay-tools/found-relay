@@ -201,6 +201,11 @@ describe('Resolver', () => {
           expect(renderArgs.match.route).toBeDefined();
           expect(renderArgs.Component).toBe(WidgetParentContainer);
         });
+
+        it('should have relay variables', () => {
+          expect(renderArgs.relayVariables).toBeDefined();
+          expect(renderArgs.relayVariables.parentName).toBeDefined();
+        });
       });
     });
   });
