@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import elementType from 'prop-types-extra/lib/elementType';
 import React from 'react';
-import RelayPropTypes from 'react-relay/lib/RelayPropTypes';
+import { ReactRelayContext } from 'react-relay';
 import warning from 'warning';
 
 import getQueryName from './getQueryName';
@@ -22,13 +22,9 @@ const propTypes = {
   fetched: PropTypes.bool.isRequired,
 };
 
-const childContextTypes = {
-  relay: RelayPropTypes.Relay,
-};
-
 class ReadyStateRenderer extends React.Component {
-  constructor(props, context) {
-    super(props, context);
+  constructor(props) {
+    super(props);
 
     const { element, querySubscription } = props;
 
@@ -37,15 +33,6 @@ class ReadyStateRenderer extends React.Component {
     };
 
     this.selectionReference = querySubscription.retain();
-
-    this.relayContext = {};
-    this.updateRelayContext(querySubscription);
-  }
-
-  getChildContext() {
-    return {
-      relay: this.relayContext,
-    };
   }
 
   componentDidMount() {
@@ -65,8 +52,6 @@ class ReadyStateRenderer extends React.Component {
 
       this.props.querySubscription.unsubscribe(this.onUpdate);
       querySubscription.subscribe(this.onUpdate);
-
-      this.updateRelayContext(querySubscription);
     }
   }
 
@@ -101,12 +86,6 @@ class ReadyStateRenderer extends React.Component {
 
     this.setState({ element: element || null });
   };
-
-  updateRelayContext(querySubscription) {
-    // XXX: Relay v1.6.0 adds an assumption that context.relay is mutated
-    // in-place, so we need to do that here.
-    Object.assign(this.relayContext, querySubscription.relayContext);
-  }
 
   render() {
     const { element } = this.state;
@@ -144,11 +123,14 @@ class ReadyStateRenderer extends React.Component {
       });
     }
 
-    return React.cloneElement(element, ownProps);
+    return (
+      <ReactRelayContext.Provider value={querySubscription.relayContext}>
+        {React.cloneElement(element, ownProps)}
+      </ReactRelayContext.Provider>
+    );
   }
 }
 
 ReadyStateRenderer.propTypes = propTypes;
-ReadyStateRenderer.childContextTypes = childContextTypes;
 
 export default ReadyStateRenderer;

@@ -7,18 +7,11 @@ export default class QuerySubscription {
     this.dataFrom = dataFrom;
 
     const {
-      createOperationSelector,
+      createOperationDescriptor,
       getRequest,
-      getOperation,
     } = this.environment.unstable_internal;
 
-    // FIXME: Use getRequest directly when only supporting relay >=1.5.0.
-    const getRequestOrOperation = getRequest || getOperation;
-
-    this.operation = createOperationSelector(
-      getRequestOrOperation(query),
-      variables,
-    );
+    this.operation = createOperationDescriptor(getRequest(query), variables);
 
     this.fetchPromise = null;
     this.selectionReference = null;
