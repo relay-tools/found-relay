@@ -9,12 +9,12 @@ export default function renderElement({
   Component,
   isComponentResolved,
   hasComponent,
-  readyState,
-  relayVariables,
+  querySubscription,
   resolving, // Whether it's safe to throw a RedirectException or an HttpError.
   /* eslint-enable react/prop-types */
 }) {
   const { route } = match;
+  const { readyState, variables } = querySubscription;
   const { error, props } = readyState;
 
   if (!route.render) {
@@ -40,7 +40,7 @@ export default function renderElement({
     match,
     Component: isComponentResolved ? Component : null,
     props: props && { ...match, ...props },
-    relayVariables,
+    variables,
     resolving,
   });
 }

@@ -71,13 +71,13 @@ describe('Resolver', () => {
 
     beforeEach(async () => {
       renderSpy = jest.fn(
-        ({ props }) => props && <WidgetParentContainer {...props} />,
+        ({ Component, props }) => props && <Component {...props} />,
       );
 
       const routes = makeRouteConfig(
         <Route path="/:parentName" Component={Root}>
           <Route
-            Component={WidgetParentContainer}
+            getComponent={() => WidgetParentContainer}
             getQuery={() => graphql`
               query Resolver_WidgetParent_Query {
                 widget {
@@ -88,11 +88,11 @@ describe('Resolver', () => {
                 }
               }
             `}
-            render={renderSpy}
             prepareVariables={({ parentName, ...params }) => ({
               ...params,
               parentName: `${parentName}-`,
             })}
+            render={renderSpy}
           >
             <Route
               path=":pathName"
@@ -172,6 +172,12 @@ describe('Resolver', () => {
           expect(renderArgs.match.route).toBeDefined();
           expect(renderArgs.Component).toBe(WidgetParentContainer);
         });
+
+        it('should have Relay variables', () => {
+          expect(renderArgs.variables).toEqual({
+            parentName: 'parent-',
+          });
+        });
       });
 
       describe('after data are ready', () => {
@@ -202,9 +208,10 @@ describe('Resolver', () => {
           expect(renderArgs.Component).toBe(WidgetParentContainer);
         });
 
-        it('should have relay variables', () => {
-          expect(renderArgs.relayVariables).toBeDefined();
-          expect(renderArgs.relayVariables.parentName).toBeDefined();
+        it('should have Relay variables', () => {
+          expect(renderArgs.variables).toEqual({
+            parentName: 'parent-',
+          });
         });
       });
     });

@@ -108,38 +108,31 @@ export default class Resolver {
   }
 
   updateQuerySubscriptions(queries, routeVariables, cacheConfigs, dataFroms) {
-    const {
-      createOperationSelector,
-      getRequest,
-      getOperation,
-    } = this.environment.unstable_internal;
-
-    // FIXME: Use getRequest directly when only supporting relay >=1.5.0.
-    const getRequestOrOperation = getRequest || getOperation;
-
     const querySubscriptions = queries.map((query, i) => {
       if (!query) {
         return null;
       }
 
       const variables = routeVariables[i];
+      const lastQuerySubscription = this.lastQuerySubscriptions[i];
 
+      // Match the logic in <QueryRenderer> for not refetching.
       if (
-        this.lastQueries[i] === query &&
-        isEqual(this.lastRouteVariables[i], variables)
+        lastQuerySubscription &&
+        lastQuerySubscription.query === query &&
+        isEqual(lastQuerySubscription.variables, variables)
       ) {
-        // Match the logic in <QueryRenderer> for not refetching.
-        const lastQuerySubscription = this.lastQuerySubscriptions[i];
         this.lastQuerySubscriptions[i] = null;
         return lastQuerySubscription;
       }
 
-      return new QuerySubscription(
-        this.environment,
-        createOperationSelector(getRequestOrOperation(query), variables),
-        cacheConfigs[i],
-        dataFroms[i],
-      );
+      return new QuerySubscription({
+        environment: this.environment,
+        query,
+        variables,
+        cacheConfig: cacheConfigs[i],
+        dataFrom: dataFroms[i],
+      });
     });
 
     this.lastQuerySubscriptions.forEach(querySubscription => {
@@ -189,8 +182,7 @@ export default class Resolver {
         Component: resolvedComponent,
         isComponentResolved,
         hasComponent,
-        readyState: querySubscription.readyState,
-        relayVariables: querySubscription.relayContext.variables,
+        querySubscription,
         resolving: true,
       });
 

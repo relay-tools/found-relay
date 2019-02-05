@@ -1,9 +1,24 @@
 export default class QuerySubscription {
-  constructor(environment, operation, cacheConfig, dataFrom) {
+  constructor({ environment, query, variables, cacheConfig, dataFrom }) {
     this.environment = environment;
-    this.operation = operation;
+    this.query = query;
+    this.variables = variables;
     this.cacheConfig = cacheConfig;
     this.dataFrom = dataFrom;
+
+    const {
+      createOperationSelector,
+      getRequest,
+      getOperation,
+    } = this.environment.unstable_internal;
+
+    // FIXME: Use getRequest directly when only supporting relay >=1.5.0.
+    const getRequestOrOperation = getRequest || getOperation;
+
+    this.operation = createOperationSelector(
+      getRequestOrOperation(query),
+      variables,
+    );
 
     this.fetchPromise = null;
     this.selectionReference = null;
@@ -114,7 +129,7 @@ export default class QuerySubscription {
     this.readyState = readyState;
 
     this.listeners.forEach(listener => {
-      listener(readyState);
+      listener();
     });
   }
 
