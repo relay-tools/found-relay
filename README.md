@@ -192,6 +192,7 @@ This behaves identically to `render` in Found, except its render arguments objec
 
 - `error`: the Relay error, if any, as on `render` on `<QueryRenderer>`
 - `retry`: when available, a callback that will refetch the data for the route, as on `<QueryRenderer>`
+- `variables`: an object containing the Relay variables used for the route
 - `resolving`: a boolean indicating whether the route is rendering as part of router navigation resolution rather than due to a subsequent store update; in general, it is only safe to throw `HttpError` or `RedirectException` instances to trigger navigation when `resolving` is `true`
 
 ## Relay Classic usage
