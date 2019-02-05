@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import elementType from 'prop-types-extra/lib/elementType';
 import React from 'react';
-import ReactRelayContext from 'react-relay/lib/ReactRelayContext';
+import { ReactRelayContext } from 'react-relay';
 import warning from 'warning';
 
 import getQueryName from './getQueryName';
@@ -33,9 +33,6 @@ class ReadyStateRenderer extends React.Component {
     };
 
     this.selectionReference = querySubscription.retain();
-
-    this.relayContext = {};
-    this.updateRelayContext(querySubscription);
   }
 
   componentDidMount() {
@@ -55,8 +52,6 @@ class ReadyStateRenderer extends React.Component {
 
       this.props.querySubscription.unsubscribe(this.onUpdate);
       querySubscription.subscribe(this.onUpdate);
-
-      this.updateRelayContext(querySubscription);
     }
   }
 
@@ -91,12 +86,6 @@ class ReadyStateRenderer extends React.Component {
 
     this.setState({ element: element || null });
   };
-
-  updateRelayContext(querySubscription) {
-    // XXX: Relay v1.6.0 adds an assumption that context.relay is mutated
-    // in-place, so we need to do that here.
-    Object.assign(this.relayContext, querySubscription.relayContext);
-  }
 
   render() {
     const { element } = this.state;
@@ -135,7 +124,7 @@ class ReadyStateRenderer extends React.Component {
     }
 
     return (
-      <ReactRelayContext.Provider value={this.relayContext}>
+      <ReactRelayContext.Provider value={querySubscription.relayContext}>
         {React.cloneElement(element, ownProps)}
       </ReactRelayContext.Provider>
     );

@@ -18,8 +18,6 @@ export default class Resolver {
   constructor(environment) {
     this.environment = environment;
 
-    this.lastQueries = [];
-    this.lastRouteVariables = [];
     this.lastQuerySubscriptions = [];
   }
 
@@ -141,8 +139,6 @@ export default class Resolver {
       }
     });
 
-    this.lastQueries = queries;
-    this.lastRouteVariables = routeVariables;
     this.lastQuerySubscriptions = querySubscriptions;
 
     return querySubscriptions;
