@@ -1,9 +1,17 @@
 export default class QuerySubscription {
-  constructor(environment, operation, cacheConfig, dataFrom) {
+  constructor({ environment, query, variables, cacheConfig, dataFrom }) {
     this.environment = environment;
-    this.operation = operation;
+    this.query = query;
+    this.variables = variables;
     this.cacheConfig = cacheConfig;
     this.dataFrom = dataFrom;
+
+    const {
+      createOperationDescriptor,
+      getRequest,
+    } = this.environment.unstable_internal;
+
+    this.operation = createOperationDescriptor(getRequest(query), variables);
 
     this.fetchPromise = null;
     this.selectionReference = null;
@@ -114,7 +122,7 @@ export default class QuerySubscription {
     this.readyState = readyState;
 
     this.listeners.forEach(listener => {
-      listener(readyState);
+      listener();
     });
   }
 

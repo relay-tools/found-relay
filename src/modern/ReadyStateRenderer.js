@@ -65,21 +65,27 @@ class ReadyStateRenderer extends React.Component {
     this.props.querySubscription.unsubscribe(this.onUpdate);
   }
 
-  onUpdate = readyState => {
+  onUpdate = () => {
     if (!this.props.fetched) {
       // Ignore subscription updates if our data aren't yet fetched. We'll
       // rerender anyway once fetching finishes.
       return;
     }
 
-    const { match, Component, isComponentResolved, hasComponent } = this.props;
+    const {
+      match,
+      Component,
+      isComponentResolved,
+      hasComponent,
+      querySubscription,
+    } = this.props;
 
     const element = renderElement({
       match,
       Component,
       isComponentResolved,
       hasComponent,
-      readyState,
+      querySubscription,
       resolving: false,
     });
 
