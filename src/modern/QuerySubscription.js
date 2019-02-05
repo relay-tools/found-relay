@@ -169,4 +169,8 @@ export default class QuerySubscription {
       this.rootSubscription.dispose();
     }
   }
+
+  getQueryName() {
+    return this.operation.root.node.name;
+  }
 }

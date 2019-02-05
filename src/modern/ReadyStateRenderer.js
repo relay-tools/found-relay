@@ -4,7 +4,6 @@ import React from 'react';
 import { ReactRelayContext } from 'react-relay';
 import warning from 'warning';
 
-import getQueryName from './getQueryName';
 import QuerySubscription from './QuerySubscription';
 import renderElement from './renderElement';
 
@@ -115,7 +114,7 @@ class ReadyStateRenderer extends React.Component {
               'prop from its query `%s`. This is most likely due to its ' +
               'parent cloning it and adding extraneous Relay props.',
             relayPropName,
-            getQueryName(this.props.match.route),
+            querySubscription.getQueryName(),
           );
 
           delete ownProps[relayPropName];
