@@ -13,7 +13,7 @@ export default function renderElement({
   resolving, // Whether it's safe to throw a RedirectException or an HttpError.
   /* eslint-enable react/prop-types */
 }) {
-  const { route } = match;
+  const { route, router } = match;
   const { readyState, variables } = querySubscription;
   const { error, props } = readyState;
 
@@ -32,14 +32,14 @@ export default function renderElement({
       return null;
     }
 
-    return <Component {...match} {...props} />;
+    return <Component match={match} router={router} {...props} />;
   }
 
   return route.render({
     ...readyState,
     match,
     Component: isComponentResolved ? Component : null,
-    props: props && { ...match, ...props },
+    props: props && { match, router, ...props },
     variables,
     resolving,
   });

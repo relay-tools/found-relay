@@ -16,8 +16,8 @@ const propTypes = {
 };
 
 class RelayRouteRenderer extends React.Component {
-  constructor(props, context) {
-    super(props, context);
+  constructor(props) {
+    super(props);
 
     this.state = {
       readyState: props.readyState,
@@ -95,7 +95,7 @@ class RelayRouteRenderer extends React.Component {
     delete ownProps.readyState;
     delete ownProps.runQueries;
 
-    const { route } = match;
+    const { route, router } = match;
 
     // The render function must be bound here to correctly trigger updates in
     // Relay.ReadyStateRenderer.
@@ -107,14 +107,16 @@ class RelayRouteRenderer extends React.Component {
           return undefined;
         }
 
-        return <Component {...match} {...ownProps} {...props} />;
+        return (
+          <Component match={match} router={router} {...ownProps} {...props} />
+        );
       }
 
       return route.render({
         ...renderArgs,
         match,
         Component,
-        props: props && { ...match, ...ownProps, ...props },
+        props: props && { match, router, ...ownProps, ...props },
         ownProps,
       });
     }

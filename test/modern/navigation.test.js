@@ -69,8 +69,8 @@ describe('navigation', () => {
 
   it('should support retaining previous children', async () => {
     class Parent extends React.Component {
-      constructor(props, context) {
-        super(props, context);
+      constructor(props) {
+        super(props);
 
         this.previousChildren = null;
       }

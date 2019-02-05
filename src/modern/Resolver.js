@@ -150,7 +150,7 @@ export default class Resolver {
 
   createElements(routeMatches, Components, querySubscriptions, fetched) {
     return routeMatches.map((match, i) => {
-      const { route } = match;
+      const { route, router } = match;
 
       const Component = Components[i];
       const querySubscription = querySubscriptions[i];
@@ -171,7 +171,7 @@ export default class Resolver {
           return undefined;
         }
 
-        return Component ? <Component {...match} /> : null;
+        return Component ? <Component match={match} router={router} /> : null;
       }
 
       const resolvedComponent = isComponentResolved ? Component : null;
