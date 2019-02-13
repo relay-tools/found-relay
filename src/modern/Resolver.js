@@ -182,7 +182,7 @@ export default class Resolver {
         resolving: true,
       });
 
-      if (element === undefined) {
+      if (!element) {
         return element;
       }
 
