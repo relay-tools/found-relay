@@ -62,7 +62,7 @@ describe('render', () => {
     expect(warning).toHaveBeenCalledWith(
       false,
       'Route with query `%s` has no render method or component.',
-      'UNKNOWN',
+      'renderWarnings_Query',
     );
   });
 
@@ -142,7 +142,7 @@ describe('render', () => {
         'prop `%s` that shadows a Relay prop from its query `%s`',
       ),
       'widget',
-      'UNKNOWN',
+      'renderWarnings_Query',
     );
 
     expect(name).toEqual('foo');
