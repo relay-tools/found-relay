@@ -195,6 +195,8 @@ This behaves identically to `render` in Found, except its render arguments objec
 - `variables`: an object containing the Relay variables used for the route
 - `resolving`: a boolean indicating whether the route is rendering as part of router navigation resolution rather than due to a subsequent store update; in general, it is only safe to throw `HttpError` or `RedirectException` instances to trigger navigation when `resolving` is `true`
 
+If `render` returns a truthy value, then the rendered element will also subscribe to Relay store updates.
+
 ## Relay Classic usage
 
 Relay Classic support is available in `found-relay/lib/classic`. Use `Resolver` from `found-relay/lib/classic` as with `Resolver` from `found-relay`, but construct it using a Relay Classic environment rather than a Relay Modern environment.
