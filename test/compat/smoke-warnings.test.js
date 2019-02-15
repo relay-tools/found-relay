@@ -54,7 +54,7 @@ describe('smoke warnings', () => {
     expect(warning).toHaveBeenCalledWith(
       false,
       'Route with query `%s` has no render method or component.',
-      'smokeWarnings_Query',
+      'UNKNOWN',
     );
   });
 });
