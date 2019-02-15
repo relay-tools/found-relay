@@ -17,7 +17,7 @@ const query = graphql`
   }
 `;
 
-describe('smoke', () => {
+describe('smoke warnings', () => {
   it('should warn on missing component', async () => {
     await getFarceResult({
       url: '/',

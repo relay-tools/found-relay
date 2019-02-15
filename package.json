@@ -41,6 +41,8 @@
     "collectCoverageFrom": [
       "src/**"
     ],
+    "resetMocks": true,
+    "restoreMocks": true,
     "setupFiles": [
       "babel-polyfill",
       "<rootDir>/test/setup.js"

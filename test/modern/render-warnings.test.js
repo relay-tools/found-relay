@@ -19,7 +19,7 @@ const query = graphql`
   }
 `;
 
-describe('render', () => {
+describe('render warnings', () => {
   let environment;
 
   beforeEach(() => {
