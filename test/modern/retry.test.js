@@ -19,17 +19,14 @@ describe('retry', () => {
   let Router;
   let resolver;
 
-  beforeAll(() => {
-    jest.spyOn(global, 'fail').mockImplementation(() => {});
-  });
-
   beforeEach(() => {
     fetchSpy = jest.fn();
 
     renderSpy = jest.fn(({ error, props }) => {
       if (error) {
         return <div className={error.message} />;
-      } else if (props) {
+      }
+      if (props) {
         return <div className={props.widget.name} />;
       }
       return <div className="pending" />;
@@ -55,10 +52,6 @@ describe('retry', () => {
     });
 
     resolver = new InstrumentedResolver(createEnvironment(fetchSpy));
-  });
-
-  afterAll(() => {
-    jest.restoreAllMocks();
   });
 
   it('should send a new network request and rerender', async () => {

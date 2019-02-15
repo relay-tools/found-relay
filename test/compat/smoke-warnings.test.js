@@ -17,7 +17,7 @@ const query = graphql`
   }
 `;
 
-describe('smoke', () => {
+describe('smoke warnings', () => {
   it('should warn on missing component', async () => {
     await getFarceResult({
       url: '/',
@@ -54,7 +54,7 @@ describe('smoke', () => {
     expect(warning).toHaveBeenCalledWith(
       false,
       'Route with query `%s` has no render method or component.',
-      'smokeWarnings_Query',
+      'UNKNOWN',
     );
   });
 });
