@@ -1,1 +1,1 @@
-export { QuerySubscription, ReadyStateRenderer, Resolver } from './modern';
+export Resolver from './Resolver';

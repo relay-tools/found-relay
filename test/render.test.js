@@ -8,7 +8,7 @@ import React from 'react';
 import ReactTestUtils from 'react-dom/test-utils';
 import { graphql } from 'react-relay';
 
-import { Resolver } from '../../src';
+import { Resolver } from '../src';
 
 import { createEnvironment, InstrumentedResolver, timeout } from './helpers';
 

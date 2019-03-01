@@ -2,7 +2,7 @@ import createRender from 'found/lib/createRender';
 import getFarceResult from 'found/lib/server/getFarceResult';
 import { graphql } from 'react-relay';
 
-import { Resolver } from '../../src';
+import { Resolver } from '../src';
 
 import { createEnvironment, createFakeFetch } from './helpers';
 
