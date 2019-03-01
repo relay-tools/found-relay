@@ -1,0 +1,143 @@
+schema {
+  query: Root
+  mutation: Mutation
+}
+
+input AddTodoInput {
+  text: String!
+  clientMutationId: String
+}
+
+type AddTodoPayload {
+  viewer: User
+  todoEdge: TodoEdge
+  clientMutationId: String
+}
+
+input ChangeTodoStatusInput {
+  id: ID!
+  complete: Boolean!
+  clientMutationId: String
+}
+
+type ChangeTodoStatusPayload {
+  viewer: User
+  todo: Todo
+  clientMutationId: String
+}
+
+input MarkAllTodosInput {
+  complete: Boolean!
+  clientMutationId: String
+}
+
+type MarkAllTodosPayload {
+  viewer: User
+  changedTodos: [Todo]
+  clientMutationId: String
+}
+
+type Mutation {
+  addTodo(input: AddTodoInput!): AddTodoPayload
+  changeTodoStatus(input: ChangeTodoStatusInput!): ChangeTodoStatusPayload
+  markAllTodos(input: MarkAllTodosInput!): MarkAllTodosPayload
+  removeCompletedTodos(input: RemoveCompletedTodosInput!): RemoveCompletedTodosPayload
+  removeTodo(input: RemoveTodoInput!): RemoveTodoPayload
+  renameTodo(input: RenameTodoInput!): RenameTodoPayload
+}
+
+"""An object with an ID"""
+interface Node {
+  """The id of the object."""
+  id: ID!
+}
+
+"""Information about pagination in a connection."""
+type PageInfo {
+  """When paginating forwards, are there more items?"""
+  hasNextPage: Boolean!
+
+  """When paginating backwards, are there more items?"""
+  hasPreviousPage: Boolean!
+
+  """When paginating backwards, the cursor to continue."""
+  startCursor: String
+
+  """When paginating forwards, the cursor to continue."""
+  endCursor: String
+}
+
+input RemoveCompletedTodosInput {
+  clientMutationId: String
+}
+
+type RemoveCompletedTodosPayload {
+  viewer: User
+  deletedIds: [String]
+  clientMutationId: String
+}
+
+input RemoveTodoInput {
+  id: ID!
+  clientMutationId: String
+}
+
+type RemoveTodoPayload {
+  viewer: User
+  deletedId: ID
+  clientMutationId: String
+}
+
+input RenameTodoInput {
+  id: ID!
+  text: String!
+  clientMutationId: String
+}
+
+type RenameTodoPayload {
+  todo: Todo
+  clientMutationId: String
+}
+
+type Root {
+  viewer: User
+
+  """Fetches an object given its ID"""
+  node(
+    """The ID of an object"""
+    id: ID!
+  ): Node
+}
+
+type Todo implements Node {
+  """The ID of an object"""
+  id: ID!
+  complete: Boolean
+  text: String
+}
+
+"""A connection to a list of items."""
+type TodoConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [TodoEdge]
+}
+
+"""An edge in a connection."""
+type TodoEdge {
+  """The item at the end of the edge"""
+  node: Todo
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
+type User implements Node {
+  """The ID of an object"""
+  id: ID!
+  todos(status: String = "any", after: String, first: Int, before: String, last: Int): TodoConnection
+  numTodos: Int
+  numCompletedTodos: Int
+}

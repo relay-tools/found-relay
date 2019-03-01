@@ -1,0 +1,10 @@
+{
+  "presets": [
+    "./tools/envPreset",
+    "stage-2",
+    "react"
+  ],
+  "plugins": [
+    ["relay", { "schema": "src/data/schema.graphql" }]
+  ]
+}
