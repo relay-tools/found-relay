@@ -2,6 +2,8 @@
 
 [Relay](http://facebook.github.io/relay/) integration for [Found](https://github.com/4Catalyzer/found).
 
+**This branch tracks the [v0.4 prereleases](https://github.com/4Catalyzer/found-relay/releases), tagged `next` on npm. For the v0.3 releases tagged `latest` on npm, see the [`v0.3-dev`](https://github.com/4Catalyzer/found-relay/tree/v0.3-dev) branch.**
+
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents** _generated with [DocToc](https://github.com/thlorenz/doctoc)_
