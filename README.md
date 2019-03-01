@@ -17,7 +17,6 @@
     - [`dataFrom`](#datafrom)
     - [`prepareVariables`](#preparevariables)
     - [`render`](#render)
-- [Relay Classic usage](#relay-classic-usage)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -91,7 +90,6 @@ ReactDOM.render(
 
 - [TodoMVC with Relay Modern](/examples/todomvc-modern)
 - [TodoMVC with Relay Modern and server-side rendering](/examples/todomvc-modern-universal)
-- [TodoMVC with Relay Classic](/examples/todomvc-classic)
 
 ## Guide
 
@@ -196,62 +194,6 @@ This behaves identically to `render` in Found, except its render arguments objec
 - `resolving`: a boolean indicating whether the route is rendering as part of router navigation resolution rather than due to a subsequent store update; in general, it is only safe to throw `HttpError` or `RedirectException` instances to trigger navigation when `resolving` is `true`
 
 If `render` returns a truthy value, then the rendered element will also subscribe to Relay store updates.
-
-## Relay Classic usage
-
-Relay Classic support is available in `found-relay/lib/classic`. Use `Resolver` from `found-relay/lib/classic` as with `Resolver` from `found-relay`, but construct it using a Relay Classic environment rather than a Relay Modern environment.
-
-The route query configuration API matches that for [`react-router-relay`](https://github.com/relay-tools/react-router-relay#routes-and-queries).
-
-```js
-import { BrowserProtocol, queryMiddleware } from 'farce';
-import {
-  createFarceRouter,
-  createRender,
-  makeRouteConfig,
-  Route,
-} from 'found';
-import { Resolver } from 'found-relay/lib/classic';
-
-/* ... */
-
-const ViewerQueries = {
-  viewer: () => Relay.QL`query { viewer }`,
-};
-
-const WidgetQueries = {
-  widget: () => Relay.QL`query { widget(name: $name) }`,
-};
-
-const Router = createFarceRouter({
-  historyProtocol: new BrowserProtocol(),
-  historyMiddlewares: [queryMiddleware],
-  routeConfig: makeRouteConfig(
-    <Route path="/" Component={Application} queries={ViewerQueries}>
-      <Route path="widgets">
-        <Route
-          Component={WidgetList}
-          queries={ViewerQueries}
-          prepareVariables={prepareWidgetListVariables}
-        />
-        <Route
-          path=":name"
-          Component={Widget}
-          queries={WidgetQueries}
-          render={({ props }) => (props ? <Widget {...props} /> : <Loading />)}
-        />
-      </Route>
-    </Route>,
-  ),
-
-  render: createRender({}),
-});
-
-ReactDOM.render(
-  <Router resolver={new Resolver(Relay.Store)} />,
-  document.getElementById('root'),
-);
-```
 
 [build-badge]: https://img.shields.io/travis/relay-tools/found-relay/master.svg
 [build]: https://travis-ci.org/relay-tools/found-relay
