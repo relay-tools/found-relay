@@ -9,9 +9,11 @@
   "scripts": {
     "build": "rimraf lib && babel src -d lib",
     "build-fixtures": "npm run update-schema && npm run relay-compiler",
-    "lint": "eslint src test",
+    "format": "eslint --fix . && npm run prettier -- --write",
+    "lint": "eslint . && npm run prettier -- -l",
     "precommit": "lint-staged",
     "prepublish": "npm run build",
+    "prettier": "prettier --ignore-path .eslintignore '**/*.md'",
     "relay-compiler": "relay-compiler --watchman false --src test --schema test/fixtures/schema.graphql",
     "tdd": "jest --watch",
     "test": "npm run build-fixtures && npm run lint && npm run testonly -- --coverage",
@@ -23,12 +25,17 @@
       "matchBase": false
     },
     "linters": {
-      "*.js": [
+      "**/*.js": [
         "eslint --fix",
         "git add"
       ],
+      "**/*.md": [
+        "prettier --write",
+        "git add"
+      ],
       "README.md": [
-        "doctoc"
+        "doctoc",
+        "git add"
       ]
     }
   },

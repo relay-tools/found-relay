@@ -6,6 +6,7 @@
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
 **Table of Contents** _generated with [DocToc](https://github.com/thlorenz/doctoc)_
 
 - [Usage](#usage)
@@ -90,8 +91,8 @@ ReactDOM.render(
 
 ## Examples
 
-- [TodoMVC with Relay Modern](/examples/todomvc-modern)
-- [TodoMVC with Relay Modern and server-side rendering](/examples/todomvc-modern-universal)
+- [TodoMVC](/examples/todomvc)
+- [TodoMVC with server-side rendering](/examples/todomvc-universal)
 
 ## Guide
 
@@ -141,7 +142,7 @@ Note that Found Relay routes ignore `data`, `getData`, and `defer`.
 
 #### `query` or `getQuery`
 
-To inject Relay data into a route, specify `query` or `getQuery` on the route. The value should be a Relay Modern query. In general, `Component` for this route will likely be a fragment container, and the query should compose the fragment or fragments from `Component`.
+To inject Relay data into a route, specify `query` or `getQuery` on the route. The value should be a Relay query. In general, `Component` for this route will likely be a fragment container, and the query should compose the fragment or fragments from `Component`.
 
 By default, the available variables for the query will be the accumulated path parameters for this route and its parents. To customize these variables or inject additional ones from the routing state, use `prepareVariables` as described below.
 
