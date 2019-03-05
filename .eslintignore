@@ -1,0 +1,7 @@
+**/coverage/
+**/lib/
+**/node_modules/
+
+# These examples have their own linting.
+examples/todomvc
+examples/todomvc-universal
