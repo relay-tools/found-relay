@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types';
-import elementType from 'prop-types-extra/lib/elementType';
 import React from 'react';
 import { ReactRelayContext } from 'react-relay';
 import warning from 'warning';
@@ -13,7 +12,7 @@ const propTypes = {
   match: PropTypes.shape({
     route: PropTypes.object.isRequired,
   }).isRequired,
-  Component: elementType,
+  Component: PropTypes.elementType,
   isComponentResolved: PropTypes.bool.isRequired,
   hasComponent: PropTypes.bool.isRequired,
   element: PropTypes.element,
