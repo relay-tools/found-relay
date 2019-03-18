@@ -13,7 +13,7 @@
     "lint": "eslint . && npm run prettier -- -l",
     "prepublish": "npm run build",
     "prettier": "prettier --ignore-path .eslintignore '**/*.md'",
-    "relay-compiler": "relay-compiler --src test --schema test/fixtures/schema.graphql",
+    "relay-compiler": "relay-compiler --watchman false --src test --schema test/fixtures/schema.graphql",
     "tdd": "jest --watch",
     "test": "npm run build-fixtures && npm run lint && npm run testonly -- --coverage",
     "testonly": "jest --runInBand --verbose",
