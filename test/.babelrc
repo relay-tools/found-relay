@@ -6,5 +6,7 @@
     "stage-1",
     "react"
   ],
-  "plugins": ["relay"]
+  "plugins": [
+    "relay"
+  ]
 }
