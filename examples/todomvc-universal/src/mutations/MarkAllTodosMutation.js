@@ -25,7 +25,7 @@ const mutation = graphql`
   }
 `;
 
-function commit(environment, user, todos, complete, status) {
+function commit(environment, user, complete, status) {
   return commitMutation(environment, {
     mutation,
     variables: {
@@ -62,32 +62,15 @@ function commit(environment, user, todos, complete, status) {
       ) {
         connection.setLinkedRecords([], 'edges');
       }
-    },
 
-    optimisticResponse() {
-      const payload = {
-        viewer: {
-          id: user.id,
-        },
-      };
+      connection.getLinkedRecords('edges').forEach(edge => {
+        edge.getLinkedRecord('node').setValue(complete, 'complete');
+      });
 
-      if (todos && todos.edges) {
-        payload.changedTodos = todos.edges
-          .filter(({ node }) => node.complete !== complete)
-          .map(({ node }) => ({ id: node.id, complete }));
-      }
-
-      if (complete) {
-        if (user.numTodos != null) {
-          payload.viewer.numCompletedTodos = user.numTodos;
-        }
-      } else {
-        payload.viewer.numCompletedTodos = 0;
-      }
-
-      return {
-        markAllTodos: payload,
-      };
+      userProxy.setValue(
+        complete ? userProxy.getValue('numTodos') : 0,
+        'numCompletedTodos',
+      );
     },
   });
 }

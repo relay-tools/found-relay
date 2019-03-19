@@ -1,6 +1,10 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { createFragmentContainer, graphql } from 'react-relay';
+import {
+  ReactRelayContext,
+  createFragmentContainer,
+  graphql,
+} from 'react-relay';
 
 import MarkAllTodosMutation from '../mutations/MarkAllTodosMutation';
 import Todo from './Todo';
@@ -10,26 +14,18 @@ const propTypes = {
   relay: PropTypes.object.isRequired,
 };
 
-const contextTypes = {
-  relay: PropTypes.shape({
-    variables: PropTypes.shape({
-      status: PropTypes.string.isRequired,
-    }).isRequired,
-  }).isRequired,
-};
+const contextType = ReactRelayContext;
 
 class TodoList extends React.Component {
   onToggleAllChange = e => {
     const { relay, viewer } = this.props;
-    const { variables } = this.context.relay;
     const complete = e.target.checked;
 
     MarkAllTodosMutation.commit(
       relay.environment,
       viewer,
-      viewer.todos,
       complete,
-      variables.status,
+      this.context.variables.status,
     );
   };
 
@@ -63,7 +59,7 @@ class TodoList extends React.Component {
 }
 
 TodoList.propTypes = propTypes;
-TodoList.contextTypes = contextTypes;
+TodoList.contextType = contextType;
 
 export default createFragmentContainer(
   TodoList,
