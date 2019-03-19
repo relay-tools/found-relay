@@ -15,8 +15,8 @@ const propTypes = {
 };
 
 class Todo extends React.Component {
-  constructor(props, context) {
-    super(props, context);
+  constructor(props) {
+    super(props);
 
     this.state = {
       isEditing: false,
@@ -69,7 +69,7 @@ class Todo extends React.Component {
     const { complete, text } = this.props.todo;
     const { isEditing } = this.state;
 
-    /* eslint-disable jsx-a11y/label-has-for */
+    /* eslint-disable jsx-a11y/label-has-associated-control */
     return (
       <li
         className={classNames({
@@ -85,7 +85,11 @@ class Todo extends React.Component {
             onChange={this.onCompleteChange}
           />
           <label onDoubleClick={this.onLabelDoubleClick}>{text}</label>
-          <button className="destroy" onClick={this.onDestroyClick} />
+          <button
+            type="button"
+            className="destroy"
+            onClick={this.onDestroyClick}
+          />
         </div>
 
         {!!this.state.isEditing && (
@@ -100,7 +104,7 @@ class Todo extends React.Component {
         )}
       </li>
     );
-    /* eslint-enable jsx-a11y/label-has-for */
+    /* eslint-enable jsx-a11y/label-has-associated-control */
   }
 }
 

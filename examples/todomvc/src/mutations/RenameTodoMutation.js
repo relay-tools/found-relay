@@ -18,15 +18,13 @@ function commit(environment, todo, text) {
       input: { id: todo.id, text },
     },
 
-    optimisticResponse() {
-      return {
-        renameTodo: {
-          todo: {
-            id: todo.id,
-            text,
-          },
+    optimisticResponse: {
+      renameTodo: {
+        todo: {
+          id: todo.id,
+          text,
         },
-      };
+      },
     },
   });
 }

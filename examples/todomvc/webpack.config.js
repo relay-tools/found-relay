@@ -3,7 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 
 module.exports = (env, { mode }) => ({
-  entry: ['babel-polyfill', './src/client'],
+  entry: './src/client',
 
   output: {
     path: path.resolve(__dirname, 'build'),
@@ -12,12 +12,6 @@ module.exports = (env, { mode }) => ({
 
   module: {
     rules: [
-      // See https://github.com/aws/aws-amplify/issues/686#issuecomment-387710340.
-      {
-        test: /\.mjs$/,
-        include: /node_modules/,
-        type: 'javascript/auto',
-      },
       { test: /\.js$/, exclude: /node_modules/, use: 'babel-loader' },
       { test: /\.css$/, use: ['style-loader', 'css-loader'] },
     ],
