@@ -38,7 +38,7 @@ function sharedUpdater(store, user, todoEdge) {
 let nextClientMutationId = 0;
 
 function commit(environment, user, text) {
-  const clientMutationId = nextClientMutationId++;
+  const clientMutationId = (nextClientMutationId++).toString();
 
   return commitMutation(environment, {
     mutation,

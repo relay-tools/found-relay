@@ -1,12 +1,11 @@
 {
   "presets": [
-    ["env", {
-      "loose": true
-    }],
-    "stage-2",
-    "react"
+    ["@4c", {
+      "target": "node",
+      "useBuiltIns": "usage"
+    }]
   ],
   "plugins": [
-    ["relay", { "schema": "src/data/schema.graphql" }]
+    "relay"
   ]
 }

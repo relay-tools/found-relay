@@ -24,7 +24,7 @@ app.use('/graphql', graphQLHTTP({ schema }));
 const webpackConfig = {
   mode: 'development',
 
-  entry: ['babel-polyfill', 'isomorphic-fetch', './src/client'],
+  entry: ['isomorphic-fetch', './src/client'],
 
   output: {
     path: '/',
@@ -39,7 +39,25 @@ const webpackConfig = {
         include: /node_modules/,
         type: 'javascript/auto',
       },
-      { test: /\.js$/, exclude: /node_modules/, use: 'babel-loader' },
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: [
+              [
+                '@4c',
+                {
+                  target: 'web-app',
+                  useBuiltIns: 'usage',
+                },
+              ],
+            ],
+            plugins: ['relay'],
+          },
+        },
+      },
     ],
   },
 
