@@ -1,10 +1,6 @@
 {
   "presets": [
-    ["env", {
-      "loose": true
-    }],
-    "stage-1",
-    "react"
+    "@4c"
   ],
   "plugins": [
     "relay"
