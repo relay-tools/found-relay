@@ -2820,9 +2820,9 @@ format@^0.2.2:
   integrity sha1-1hcBB+nv3E7TDJ3DkBbflCtctYs=
 
 found@^0.4.0-alpha.9:
-  version "0.4.0-alpha.9"
-  resolved "https://registry.yarnpkg.com/found/-/found-0.4.0-alpha.9.tgz#3dd73cdb3bd63e2abca71e29ef45d1abe68d6c8d"
-  integrity sha512-Wmx7apjIo9o+hSObeR9HXdfnqEbqHAcxaiff9J/NsdBurW9DYuCb8lznzvRPLPU45WkW71FD93txUz8G9cavQg==
+  version "0.4.0-alpha.10"
+  resolved "https://registry.yarnpkg.com/found/-/found-0.4.0-alpha.10.tgz#ca69d32d4c66f84983e392bd882db7fa06185396"
+  integrity sha512-hQk6nRIo1SAtgrSqUoMSirODynKjWkp0JMrxlzDeRBsg/kI66ncVZNGcWS7ISKwsGrQyeMf6ZPphh0AGFNqVgA==
   dependencies:
     "@babel/runtime-corejs2" "^7.4.0"
     farce "^0.2.8"
