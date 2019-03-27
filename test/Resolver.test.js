@@ -7,6 +7,7 @@ import Route from 'found/lib/Route';
 import React from 'react';
 import ReactTestUtils from 'react-dom/test-utils';
 import { createFragmentContainer, graphql } from 'react-relay';
+import { Environment } from 'relay-runtime';
 
 import { createEnvironment, InstrumentedResolver } from './helpers';
 
@@ -163,7 +164,7 @@ describe('Resolver', () => {
           renderArgs = renderSpy.mock.calls[0][0];
         });
 
-        it('should not have Relay props', () => {
+        it('should not have Relay data props', () => {
           expect(renderArgs.props).toBeNull();
         });
 
@@ -173,7 +174,8 @@ describe('Resolver', () => {
           expect(renderArgs.Component).toBe(WidgetParentContainer);
         });
 
-        it('should have Relay variables', () => {
+        it('should have other Relay props', () => {
+          expect(renderArgs.environment).toEqual(expect.any(Environment));
           expect(renderArgs.variables).toEqual({
             parentName: 'parent-',
           });
@@ -191,7 +193,7 @@ describe('Resolver', () => {
           expect(renderSpy.mock.calls).toHaveLength(2);
         });
 
-        it('should have Relay props', () => {
+        it('should have Relay data props', () => {
           expect(renderArgs.props).toBeDefined();
           expect(renderArgs.props.widget).toBeDefined();
           expect(renderArgs.props).toMatchObject({
@@ -209,7 +211,8 @@ describe('Resolver', () => {
           expect(renderArgs.Component).toBe(WidgetParentContainer);
         });
 
-        it('should have Relay variables', () => {
+        it('should have other Relay props', () => {
+          expect(renderArgs.environment).toEqual(expect.any(Environment));
           expect(renderArgs.variables).toEqual({
             parentName: 'parent-',
           });

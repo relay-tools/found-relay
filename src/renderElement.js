@@ -12,7 +12,7 @@ export default function renderElement({
   /* eslint-enable react/prop-types */
 }) {
   const { route, router } = match;
-  const { readyState, variables } = querySubscription;
+  const { readyState, environment, variables } = querySubscription;
   const { error, props } = readyState;
 
   if (!route.render) {
@@ -38,6 +38,7 @@ export default function renderElement({
     match,
     Component: isComponentResolved ? Component : null,
     props: props && { match, router, ...props },
+    environment,
     variables,
     resolving,
   });
