@@ -72,20 +72,16 @@ describe('navigation', () => {
       constructor(props) {
         super(props);
 
-        this.previousChildren = null;
-      }
-
-      componentWillReceiveProps(nextProps) {
-        if (nextProps.match.location !== this.props.match.location) {
-          this.previousChildren = this.props.children;
-        }
+        this.initialChildren = props.children;
       }
 
       render() {
+        const { children } = this.props;
+
         return (
           <div>
-            {this.previousChildren}
-            {this.props.children}
+            {this.initialChildren !== children ? this.initialChildren : null}
+            {children}
           </div>
         );
       }

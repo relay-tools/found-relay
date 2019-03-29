@@ -27,34 +27,49 @@ class ReadyStateRenderer extends React.Component {
     const { element, querySubscription } = props;
 
     this.state = {
+      isInitialRender: true,
       element,
+      propsElement: element,
+      querySubscription,
+      selectionReference: querySubscription.retain(),
+      onUpdate: this.onUpdate,
     };
-
-    this.selectionReference = querySubscription.retain();
   }
 
   componentDidMount() {
     this.props.querySubscription.subscribe(this.onUpdate);
   }
 
-  componentWillReceiveProps(nextProps) {
-    const { element, querySubscription } = nextProps;
-
-    if (element !== this.props.element) {
-      this.setState({ element });
+  static getDerivedStateFromProps({ element, querySubscription }, state) {
+    if (state.isInitialRender) {
+      return { isInitialRender: false };
     }
 
-    if (querySubscription !== this.props.querySubscription) {
-      this.selectionReference.dispose();
-      this.selectionReference = querySubscription.retain();
+    let nextState = null;
 
-      this.props.querySubscription.unsubscribe(this.onUpdate);
-      querySubscription.subscribe(this.onUpdate);
+    if (element !== state.propsElement) {
+      nextState = {
+        element,
+        propsElement: element,
+      };
     }
+
+    if (querySubscription !== state.querySubscription) {
+      state.selectionReference.dispose();
+      state.querySubscription.unsubscribe(state.onUpdate);
+
+      nextState = nextState || {};
+      nextState.querySubscription = querySubscription;
+      nextState.selectionReference = querySubscription.retain();
+
+      querySubscription.subscribe(state.onUpdate);
+    }
+
+    return nextState;
   }
 
   componentWillUnmount() {
-    this.selectionReference.dispose();
+    this.state.selectionReference.dispose();
     this.props.querySubscription.unsubscribe(this.onUpdate);
   }
 
@@ -109,9 +124,7 @@ class ReadyStateRenderer extends React.Component {
         if (hasOwnProperty.call(ownProps, relayPropName)) {
           warning(
             false,
-            'Ignoring <ReadyStateRenderer> prop `%s` that shadows a Relay ' +
-              'prop from its query `%s`. This is most likely due to its ' +
-              'parent cloning it and adding extraneous Relay props.',
+            'Ignoring <ReadyStateRenderer> prop `%s` that shadows a Relay prop from its query `%s`. This is most likely due to its parent cloning it and adding extraneous Relay props.',
             relayPropName,
             querySubscription.getQueryName(),
           );
