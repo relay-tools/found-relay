@@ -93,7 +93,7 @@
     "babel-eslint": "^10.0.1",
     "babel-jest": "^24.5.0",
     "babel-plugin-add-module-exports": "^1.0.0",
-    "babel-plugin-relay": "^3.0.0",
+    "babel-plugin-relay": "^4.0.0",
     "codecov": "^3.2.0",
     "delay": "^4.1.0",
     "doctoc": "^1.4.0",
