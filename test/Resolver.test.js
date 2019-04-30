@@ -29,14 +29,13 @@ describe('Resolver', () => {
       return <div className={widget.name}>{children}</div>;
     }
 
-    const WidgetParentContainer = createFragmentContainer(
-      WidgetParent,
-      graphql`
+    const WidgetParentContainer = createFragmentContainer(WidgetParent, {
+      widget: graphql`
         fragment Resolver_widget on Widget {
           name
         }
       `,
-    );
+    });
 
     function WidgetChildren({ first, second, third, match }) {
       expect(match.route).toBeTruthy();
@@ -50,22 +49,23 @@ describe('Resolver', () => {
       );
     }
 
-    const WidgetChildrenContainer = createFragmentContainer(
-      WidgetChildren,
-      graphql`
+    const WidgetChildrenContainer = createFragmentContainer(WidgetChildren, {
+      first: graphql`
         fragment Resolver_first on Widget {
           name
         }
-
+      `,
+      second: graphql`
         fragment Resolver_second on Widget {
           name
         }
-
+      `,
+      third: graphql`
         fragment Resolver_third on Widget {
           name
         }
       `,
-    );
+    });
 
     let renderSpy;
     let instance;
