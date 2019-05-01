@@ -814,7 +814,7 @@
     pirates "^4.0.0"
     source-map-support "^0.5.9"
 
-"@babel/runtime-corejs2@^7.4.3", "@babel/runtime-corejs2@^7.4.4":
+"@babel/runtime-corejs2@^7.4.4":
   version "7.4.4"
   resolved "https://registry.yarnpkg.com/@babel/runtime-corejs2/-/runtime-corejs2-7.4.4.tgz#4d4519a4c85e9d98fdff59f5371758a34ae07923"
   integrity sha512-hE7oVwVsRws84u5/nkaWWdN2J4SXEGuXKjrAsP0E4nkYImjSbpdHfGTS2nvFc82aDGIuG6OzhAQMpIzTHuZeKA==
@@ -2844,11 +2844,11 @@ format@^0.2.2:
   integrity sha1-1hcBB+nv3E7TDJ3DkBbflCtctYs=
 
 found@^0.4.0-alpha.9:
-  version "0.4.0-alpha.16"
-  resolved "https://registry.yarnpkg.com/found/-/found-0.4.0-alpha.16.tgz#1c56c0c41ce31c8e03201ceb6f11e3b6ee0e5324"
-  integrity sha512-NCfqdp/m0I1lxWzi4f5HwgFLCOPm7br5RaE+UjQD0XTFBSMsRWudNVgJmel1TcrkTPlDgYeJmcTgNEzFyFtz3Q==
+  version "0.4.0-alpha.17"
+  resolved "https://registry.yarnpkg.com/found/-/found-0.4.0-alpha.17.tgz#2996a6ff997c74dbddb1f124b92ffbd2acd3ff4a"
+  integrity sha512-Q0VpXjcXYel4FS0hHtpLppmZ2zO/SfUICkV1yxfgr2sGzOeWuHnyRCxTpaxZLjWIqcA03VVFgSAT32B4U4TRlw==
   dependencies:
-    "@babel/runtime-corejs2" "^7.4.3"
+    "@babel/runtime-corejs2" "^7.4.4"
     "@restart/context" "^2.1.4"
     farce "^0.2.8"
     invariant "^2.2.4"
@@ -2856,7 +2856,7 @@ found@^0.4.0-alpha.9:
     lodash "^4.17.11"
     path-to-regexp "^1.7.0"
     prop-types "^15.7.2"
-    react-redux "^7.0.1"
+    react-redux "^7.0.0"
     react-static-container "^1.0.2"
     redux "^4.0.1"
     warning "^4.0.3"
@@ -5288,7 +5288,7 @@ react-is@^16.7.0, react-is@^16.8.1, react-is@^16.8.4, react-is@^16.8.6:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.8.6.tgz#5bbc1e2d29141c9fbdfed456343fe2bc430a6a16"
   integrity sha512-aUk3bHfZ2bRSVFFbbeVS4i+lNPZr3/WM5jT2J5omUVV1zzcs1nAaf3l51ctA5FFvCRbhrH0bdAsRRQddFJZPtA==
 
-react-redux@^7.0.1:
+react-redux@^7.0.0:
   version "7.0.3"
   resolved "https://registry.yarnpkg.com/react-redux/-/react-redux-7.0.3.tgz#983c5a6de81cb1e696bd1c090ba826545f9170f1"
   integrity sha512-vYZA7ftOYlDk3NetitsI7fLjryt/widNl1SLXYvFenIpm7vjb4ryK0EeFrgn62usg5fYkyIAWNUPKnwWPevKLg==
