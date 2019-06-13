@@ -1,4 +1,4 @@
-# Relay TodoMVC
+# Relay TodoMVC [![Travis][build-badge]][build]
 Relay TodoMVC with routing.
 
 This repo includes multiple examples on separate branches:
@@ -27,3 +27,6 @@ Then point your browser at [http://localhost:8080/](http://localhost:8080/).
 
 [Found]: https://github.com/4Catalyzer/found
 [Found Relay]: https://github.com/4Catalyzer/found-relay
+
+[build-badge]: https://img.shields.io/travis/taion/relay-todomvc/master.svg
+[build]: https://travis-ci.org/taion/relay-todomvc
