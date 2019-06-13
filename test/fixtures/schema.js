@@ -10,6 +10,13 @@ const Widget = new GraphQLObjectType({
   name: 'Widget',
   fields: {
     name: { type: GraphQLString },
+    argValue: {
+      type: GraphQLString,
+      args: {
+        value: { type: GraphQLNonNull(GraphQLString) },
+      },
+      resolve: (obj, { value }) => value,
+    },
   },
 });
 
@@ -28,9 +35,7 @@ const query = new GraphQLObjectType({
     widgetByArg: {
       type: Widget,
       args: {
-        name: {
-          type: new GraphQLNonNull(GraphQLString),
-        },
+        name: { type: GraphQLNonNull(GraphQLString) },
       },
       resolve: (obj, { name }) => ({ name }),
     },

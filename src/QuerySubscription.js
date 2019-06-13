@@ -55,7 +55,10 @@ export default class QuerySubscription {
         return;
       }
 
-      snapshot = this.environment.lookup(this.operation.fragment);
+      snapshot = this.environment.lookup(
+        this.operation.fragment,
+        this.operation,
+      );
 
       this.onChange(snapshot);
 
