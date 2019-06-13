@@ -7,4 +7,5 @@ type Query {
 
 type Widget {
   name: String
+  argValue(value: String!): String
 }

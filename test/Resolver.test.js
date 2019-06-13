@@ -26,13 +26,16 @@ describe('Resolver', () => {
     function WidgetParent({ widget, extraProp, children }) {
       expect(extraProp).toBe(3);
 
-      return <div className={widget.name}>{children}</div>;
+      return (
+        <div className={`${widget.name} ${widget.argValue}`}>{children}</div>
+      );
     }
 
     const WidgetParentContainer = createFragmentContainer(WidgetParent, {
       widget: graphql`
         fragment Resolver_widget on Widget {
           name
+          argValue(value: $variable)
         }
       `,
     });
@@ -80,7 +83,7 @@ describe('Resolver', () => {
           <Route
             getComponent={() => WidgetParentContainer}
             getQuery={() => graphql`
-              query Resolver_WidgetParent_Query {
+              query Resolver_WidgetParent_Query($variable: String!) {
                 widget {
                   ...Resolver_widget
                 }
@@ -91,7 +94,8 @@ describe('Resolver', () => {
             `}
             prepareVariables={({ parentName, ...params }) => ({
               ...params,
-              parentName: `${parentName}-`,
+              variable: `${parentName}-variable`,
+              parentName: `${parentName}-modified`,
             })}
             render={renderSpy}
           >
@@ -145,7 +149,8 @@ describe('Resolver', () => {
         ['basic use', 'foo'],
         ['path params', 'bar'],
         ['prepared params', 'baz'],
-        ['modified parent params', 'parent-'],
+        ['GraphQL variable in fragments', 'parent-variable'],
+        ['modified parent params', 'parent-modified'],
       ].forEach(([condition, className]) => {
         it(`should support ${condition}`, () => {
           ReactTestUtils.findRenderedDOMComponentWithClass(
@@ -177,7 +182,8 @@ describe('Resolver', () => {
         it('should have other Relay props', () => {
           expect(renderArgs.environment).toEqual(expect.any(Environment));
           expect(renderArgs.variables).toEqual({
-            parentName: 'parent-',
+            parentName: 'parent-modified',
+            variable: 'parent-variable',
           });
         });
       });
@@ -214,7 +220,8 @@ describe('Resolver', () => {
         it('should have other Relay props', () => {
           expect(renderArgs.environment).toEqual(expect.any(Environment));
           expect(renderArgs.variables).toEqual({
-            parentName: 'parent-',
+            parentName: 'parent-modified',
+            variable: 'parent-variable',
           });
         });
       });
