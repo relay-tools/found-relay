@@ -64,9 +64,8 @@ class TodoListFooter extends React.Component {
 
 TodoListFooter.propTypes = propTypes;
 
-export default createFragmentContainer(
-  TodoListFooter,
-  graphql`
+export default createFragmentContainer(TodoListFooter, {
+  viewer: graphql`
     fragment TodoListFooter_viewer on User {
       todos(status: "completed", first: 2147483647) {
         edges {
@@ -81,4 +80,4 @@ export default createFragmentContainer(
       numCompletedTodos
     }
   `,
-);
+});

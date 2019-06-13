@@ -61,9 +61,8 @@ class TodoList extends React.Component {
 TodoList.propTypes = propTypes;
 TodoList.contextType = contextType;
 
-export default createFragmentContainer(
-  TodoList,
-  graphql`
+export default createFragmentContainer(TodoList, {
+  viewer: graphql`
     fragment TodoList_viewer on User {
       todos(status: $status, first: 2147483647)
         @connection(key: "TodoList_todos") {
@@ -81,4 +80,4 @@ export default createFragmentContainer(
       ...Todo_viewer
     }
   `,
-);
+});

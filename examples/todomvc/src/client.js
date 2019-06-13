@@ -11,7 +11,7 @@ import { Environment, RecordSource, Store } from 'relay-runtime';
 import routes from './routes';
 import schema from './data/schema';
 
-import 'todomvc-common/base';
+import 'todomvc-common';
 import 'todomvc-common/base.css';
 import 'todomvc-app-css/index.css';
 
