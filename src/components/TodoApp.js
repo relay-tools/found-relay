@@ -58,12 +58,11 @@ class TodoApp extends React.Component {
 
 TodoApp.propTypes = propTypes;
 
-export default createFragmentContainer(
-  TodoApp,
-  graphql`
+export default createFragmentContainer(TodoApp, {
+  viewer: graphql`
     fragment TodoApp_viewer on User {
       id
       ...TodoListFooter_viewer
     }
   `,
-);
+});
