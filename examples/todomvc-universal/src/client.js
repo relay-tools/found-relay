@@ -8,7 +8,7 @@ import RelayClientSSR from 'react-relay-network-modern-ssr/lib/client';
 import createRelayEnvironment from './createRelayEnvironment';
 import { historyMiddlewares, render, routeConfig } from './router';
 
-import 'todomvc-common/base';
+import 'todomvc-common';
 
 (async () => {
   const resolver = new Resolver(
