@@ -2074,7 +2074,7 @@ del@^3.0.0:
     pify "^3.0.0"
     rimraf "^2.2.8"
 
-delay@^4.2.0:
+delay@^4.3.0:
   version "4.3.0"
   resolved "https://registry.yarnpkg.com/delay/-/delay-4.3.0.tgz#efeebfb8f545579cb396b3a722443ec96d14c50e"
   integrity sha512-Lwaf3zVFDMBop1yDuFZ19F9WyGcZcGacsbdlZtWjQmM50tOcMntm1njF/Nb/Vjij3KaSvCF+sEYGKrrjObu2NA==
@@ -2820,10 +2820,10 @@ format@^0.2.2:
   resolved "https://registry.yarnpkg.com/format/-/format-0.2.2.tgz#d6170107e9efdc4ed30c9dc39016df942b5cb58b"
   integrity sha1-1hcBB+nv3E7TDJ3DkBbflCtctYs=
 
-found@^0.4.0-alpha.17:
-  version "0.4.0-alpha.17"
-  resolved "https://registry.yarnpkg.com/found/-/found-0.4.0-alpha.17.tgz#2996a6ff997c74dbddb1f124b92ffbd2acd3ff4a"
-  integrity sha512-Q0VpXjcXYel4FS0hHtpLppmZ2zO/SfUICkV1yxfgr2sGzOeWuHnyRCxTpaxZLjWIqcA03VVFgSAT32B4U4TRlw==
+found@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/found/-/found-0.4.0.tgz#accfe91b180dacccd1f87151d77987b2e67ecca3"
+  integrity sha512-hBn0bfqIDWBHWmLsmuBrsjvuZwACQgvfDcdTaN0qlSdtUhQ0jxII3h0tQSZd+0rK5G93SwQ0dkPptkkgKEQh+w==
   dependencies:
     "@babel/runtime-corejs2" "^7.4.4"
     "@restart/context" "^2.1.4"
@@ -4170,7 +4170,7 @@ levn@^0.3.0, levn@~0.3.0:
     prelude-ls "~1.1.2"
     type-check "~0.3.2"
 
-lint-staged@^8.2.0:
+lint-staged@^8.2.1:
   version "8.2.1"
   resolved "https://registry.yarnpkg.com/lint-staged/-/lint-staged-8.2.1.tgz#752fcf222d9d28f323a3b80f1e668f3654ff221f"
   integrity sha512-n0tDGR/rTCgQNwXnUf/eWIpPNddGWxC32ANTNYsj2k02iZb7Cz5ox2tytwBu+2r0zDXMEMKw7Y9OD/qsav561A==
