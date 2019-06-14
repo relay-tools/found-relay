@@ -2,8 +2,6 @@
 
 [Relay](http://facebook.github.io/relay/) integration for [Found](https://github.com/4Catalyzer/found).
 
-**This branch tracks the [v0.4 prereleases](https://github.com/4Catalyzer/found-relay/releases), tagged `next` on npm. For the v0.3 releases tagged `latest` on npm, see the [`v0.3-dev`](https://github.com/4Catalyzer/found-relay/tree/v0.3-dev) branch.**
-
 <!-- prettier-ignore-start -->
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -202,5 +200,5 @@ If `render` returns a truthy value, then the rendered element will also subscrib
 
 [build-badge]: https://img.shields.io/travis/relay-tools/found-relay/master.svg
 [build]: https://travis-ci.org/relay-tools/found-relay
-[npm-badge]: https://img.shields.io/npm/v/found-relay/next.svg
+[npm-badge]: https://img.shields.io/npm/v/found-relay.svg
 [npm]: https://www.npmjs.org/package/found-relay
