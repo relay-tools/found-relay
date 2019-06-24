@@ -2823,9 +2823,9 @@ format@^0.2.2:
   integrity sha1-1hcBB+nv3E7TDJ3DkBbflCtctYs=
 
 found@^0.4.0:
-  version "0.4.1"
-  resolved "https://registry.yarnpkg.com/found/-/found-0.4.1.tgz#a69b0169fc02b29424acff0a8a20f6bbaddf45a0"
-  integrity sha512-4/dRli/V8gCK1t2TAUt3Qmh3dBS4a0idn0jsx45TbzVLr6MyfLHRawKqsTJ67XXxmDASUY++6tD2zqTaIUbCRg==
+  version "0.4.2"
+  resolved "https://registry.yarnpkg.com/found/-/found-0.4.2.tgz#a522438c5697a4cba8620aebe7f7865b584efd48"
+  integrity sha512-Qxb5Tk9e3aX9wIhAlRyP0g0VvghaYFa/K7eLmSEH8gXyO9n+rqpFZiYEiz5L89nkofHeSi+UukpXaOQ/FYZOyA==
   dependencies:
     "@babel/runtime-corejs2" "^7.4.4"
     "@restart/context" "^2.1.4"
