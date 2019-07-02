@@ -25,23 +25,18 @@
     }
   },
   "lint-staged": {
-    "globOptions": {
-      "matchBase": false
-    },
-    "linters": {
-      "**/*.js": [
-        "eslint --fix",
-        "git add"
-      ],
-      "**/*.md": [
-        "prettier --write",
-        "git add"
-      ],
-      "README.md": [
-        "doctoc",
-        "git add"
-      ]
-    }
+    "*.js": [
+      "eslint --fix",
+      "git add"
+    ],
+    "*.md": [
+      "prettier --write",
+      "git add"
+    ],
+    "/README.md": [
+      "doctoc",
+      "git add"
+    ]
   },
   "prettier": {
     "printWidth": 79,
