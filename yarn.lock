@@ -816,9 +816,9 @@
     source-map-support "^0.5.9"
 
 "@babel/runtime-corejs2@^7.4.4", "@babel/runtime-corejs2@^7.4.5":
-  version "7.5.2"
-  resolved "https://registry.yarnpkg.com/@babel/runtime-corejs2/-/runtime-corejs2-7.5.2.tgz#e06518c2e7a5cdd029a175034eae23744169cdfc"
-  integrity sha512-4xwS0YtOxkjB+hU/wemZz1feGg88J/BxZ1n/MekrIsQjvTsmO7XWWGyI+R9JGFbPUIwzYRm5cX2rdsz2dScKtw==
+  version "7.5.4"
+  resolved "https://registry.yarnpkg.com/@babel/runtime-corejs2/-/runtime-corejs2-7.5.4.tgz#7111dbb344acce1f7dd601786cff40d516b27a96"
+  integrity sha512-sHv74OzyZ18d6tjHU0HmlVES3+l+lydkOMTiKsJSTGWcTBpIMfXLEgduahlJrQjknW9RCQAqLIEdLOHjBmq/hg==
   dependencies:
     core-js "^2.6.5"
     regenerator-runtime "^0.13.2"
