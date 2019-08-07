@@ -16,6 +16,7 @@ const propTypes = {
   isComponentResolved: PropTypes.bool.isRequired,
   hasComponent: PropTypes.bool.isRequired,
   element: PropTypes.element,
+  routeChildren: PropTypes.any,
   querySubscription: PropTypes.instanceOf(QuerySubscription).isRequired,
   fetched: PropTypes.bool.isRequired,
 };
@@ -106,7 +107,7 @@ class ReadyStateRenderer extends React.Component {
       return element;
     }
 
-    const { querySubscription, ...ownProps } = this.props;
+    const { querySubscription, routeChildren, ...ownProps } = this.props;
 
     delete ownProps.match;
     delete ownProps.Component;
@@ -134,11 +135,19 @@ class ReadyStateRenderer extends React.Component {
       });
     }
 
+    const child =
+      typeof element === 'function'
+        ? React.cloneElement(element(routeChildren), ownProps)
+        : React.cloneElement(element, {
+            ...ownProps,
+            ...(React.isValidElement(routeChildren)
+              ? { children: routeChildren }
+              : routeChildren),
+          });
+
     return (
       <ReactRelayContext.Provider value={querySubscription.relayContext}>
-        {typeof element === 'function'
-          ? element(ownProps)
-          : React.cloneElement(element, ownProps)}
+        {child}
       </ReactRelayContext.Provider>
     );
   }
