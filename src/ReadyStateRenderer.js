@@ -136,7 +136,9 @@ class ReadyStateRenderer extends React.Component {
 
     return (
       <ReactRelayContext.Provider value={querySubscription.relayContext}>
-        {React.cloneElement(element, ownProps)}
+        {typeof element === 'function'
+          ? element(ownProps)
+          : React.cloneElement(element, ownProps)}
       </ReactRelayContext.Provider>
     );
   }
