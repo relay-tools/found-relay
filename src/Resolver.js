@@ -186,13 +186,14 @@ export default class Resolver {
         return element;
       }
 
-      return (
+      return routeChildren => (
         <ReadyStateRenderer
           match={match}
           Component={resolvedComponent}
           isComponentResolved={isComponentResolved}
           hasComponent={hasComponent}
           element={element}
+          routeChildren={routeChildren}
           querySubscription={querySubscription}
           fetched={fetched}
         />
