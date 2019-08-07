@@ -15,8 +15,8 @@ const propTypes = {
   Component: PropTypes.elementType,
   isComponentResolved: PropTypes.bool.isRequired,
   hasComponent: PropTypes.bool.isRequired,
-  element: PropTypes.element,
-  routeChildren: PropTypes.any,
+  element: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
+  routeChildren: PropTypes.oneOfType([PropTypes.object, PropTypes.element]),
   querySubscription: PropTypes.instanceOf(QuerySubscription).isRequired,
   fetched: PropTypes.bool.isRequired,
 };
@@ -107,14 +107,17 @@ class ReadyStateRenderer extends React.Component {
       return element;
     }
 
-    const { querySubscription, routeChildren, ...ownProps } = this.props;
-
-    delete ownProps.match;
-    delete ownProps.Component;
-    delete ownProps.isComponentResolved;
-    delete ownProps.hasComponent;
-    delete ownProps.element;
-    delete ownProps.fetched;
+    const {
+      match: _m,
+      Component: _C,
+      isComponentResolved: _iCR,
+      hasComponent: _hC,
+      element: _e,
+      routeChildren,
+      querySubscription,
+      fetched: _f,
+      ...ownProps
+    } = this.props;
 
     const { props: relayProps } = querySubscription.readyState;
 
@@ -135,19 +138,16 @@ class ReadyStateRenderer extends React.Component {
       });
     }
 
-    const child =
-      typeof element === 'function'
-        ? React.cloneElement(element(routeChildren), ownProps)
-        : React.cloneElement(element, {
-            ...ownProps,
-            ...(React.isValidElement(routeChildren)
-              ? { children: routeChildren }
-              : routeChildren),
-          });
-
     return (
       <ReactRelayContext.Provider value={querySubscription.relayContext}>
-        {child}
+        {typeof element === 'function'
+          ? React.cloneElement(element(routeChildren), ownProps)
+          : React.cloneElement(element, {
+              ...(React.isValidElement(routeChildren)
+                ? { children: routeChildren }
+                : routeChildren),
+              ...ownProps,
+            })}
       </ReactRelayContext.Provider>
     );
   }
