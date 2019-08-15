@@ -115,6 +115,6 @@
     "relay-compiler": "^5.0.0",
     "relay-local-schema": "^0.8.0",
     "relay-runtime": "^5.0.0",
-    "rimraf": "^2.6.3"
+    "rimraf": "^3.0.0"
   }
 }
