@@ -2,7 +2,7 @@
   "presets": [
     ["@4c", {
       "runtime": true,
-      "corejs": 2,
+      "corejs": 3,
       "targets": {}
     }]
   ],
