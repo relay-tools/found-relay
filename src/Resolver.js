@@ -139,7 +139,7 @@ export default class Resolver {
       }
     });
 
-    this.lastQuerySubscriptions = querySubscriptions;
+    this.lastQuerySubscriptions = [...querySubscriptions];
 
     return querySubscriptions;
   }
