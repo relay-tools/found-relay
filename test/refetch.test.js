@@ -1,4 +1,3 @@
-import createRender from 'found/lib/createRender';
 import getFarceResult from 'found/lib/server/getFarceResult';
 import { graphql } from 'react-relay';
 
@@ -45,14 +44,13 @@ describe('refetch behavior', () => {
     ];
 
     const resolver = new Resolver(environment);
-    const render = createRender({});
 
     expect(fetchSpy.mock.calls).toHaveLength(0);
 
-    await getFarceResult({ url: '/foo', routeConfig, resolver, render });
+    await getFarceResult({ url: '/foo', routeConfig, resolver });
     expect(fetchSpy.mock.calls).toHaveLength(2);
 
-    await getFarceResult({ url: '/bar', routeConfig, resolver, render });
+    await getFarceResult({ url: '/bar', routeConfig, resolver });
     expect(fetchSpy.mock.calls).toHaveLength(3);
   });
 });

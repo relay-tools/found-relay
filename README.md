@@ -15,7 +15,7 @@
   - [Route configuration](#route-configuration)
     - [`query` or `getQuery`](#query-or-getquery)
     - [`cacheConfig` or `getCacheConfig`](#cacheconfig-or-getcacheconfig)
-    - [`dataFrom`](#datafrom)
+    - [`fetchPolicy`](#fetchpolicy)
     - [`prepareVariables`](#preparevariables)
     - [`render`](#render)
 
@@ -133,7 +133,7 @@ Route configuration works similarly to that in Found, but instead of `data` or `
 
 - `query` or `getQuery`: the Relay query for the route, or a method that returns the Relay query for the route
 - `cacheConfig` or `getCacheConfig`: the cache configuration for the route, or a method that returns the cache configuration for the route
-- `dataFrom` or `getDataFrom`: the source of the Relay data for the route, or a method that returns the source of the Relay data for the route; `NETWORK_ONLY` (the default), `STORE_THEN_NETWORK`, or `STORE_OR_NETWORK`
+- `fetchPolicy` or `getFetchPolicy`: the fetch policy for the Relay data for the route, or a method that returns the fetch policy for the Relay data for the route; `network-only` (the default), `store-and-network`, or `store-or-network`
 - `prepareVariables`: a method to apply additional transformations to the route variables
 - `render`: as on Found, a method that returns the element for the route, but with additional properties
 
@@ -151,9 +151,9 @@ As with `<QueryRenderer>`, upon routing, the route will not refetch its data if 
 
 As on `<QueryRenderer>`, this value will be forwarded directly to the network layer.
 
-#### `dataFrom`
+#### `fetchPolicy`
 
-As on `<QueryRenderer>`, this controls the data source for the route. In addition to `NETWORK_ONLY` and `STORE_THEN_NETWORK` as on `<QueryRenderer>`, this can also take the value `STORE_OR_NETWORK`, which bypasses the network fetch entirely when the data are available in the store.
+As on `<QueryRenderer>`, this controls the fetch policy for data for the route. In addition to `network-only` and `store-and-network` as on `<QueryRenderer>`, this can also take the value `store-or-network`, which bypasses the network fetch entirely when the data are available in the store.
 
 #### `prepareVariables`
 

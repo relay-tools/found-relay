@@ -1,7 +1,6 @@
 import queryMiddleware from 'farce/lib/queryMiddleware';
 import ServerProtocol from 'farce/lib/ServerProtocol';
 import createFarceRouter from 'found/lib/createFarceRouter';
-import createRender from 'found/lib/createRender';
 import makeRouteConfig from 'found/lib/makeRouteConfig';
 import Route from 'found/lib/Route';
 import React from 'react';
@@ -132,8 +131,6 @@ describe('Resolver', () => {
         historyProtocol: new ServerProtocol('/parent/bar?name=baz'),
         historyMiddlewares: [queryMiddleware],
         routeConfig: routes,
-
-        render: createRender({}),
       });
 
       const resolver = new InstrumentedResolver(environment);

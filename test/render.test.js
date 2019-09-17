@@ -1,10 +1,10 @@
 import ServerProtocol from 'farce/lib/ServerProtocol';
 import createFarceRouter from 'found/lib/createFarceRouter';
-import createRender from 'found/lib/createRender';
 import HttpError from 'found/lib/HttpError';
 import RedirectException from 'found/lib/RedirectException';
 import getFarceResult from 'found/lib/server/getFarceResult';
 import React from 'react';
+import ReactDOMServer from 'react-dom/server';
 import ReactTestUtils from 'react-dom/test-utils';
 import { graphql } from 'react-relay';
 
@@ -81,9 +81,7 @@ describe('render', () => {
         },
       ],
 
-      render: createRender({
-        renderPending: () => <div className="pending" />,
-      }),
+      renderPending: () => <div className="pending" />,
     });
 
     const resolver = new InstrumentedResolver(environment);
@@ -126,17 +124,17 @@ describe('render', () => {
         },
       ],
       resolver: new Resolver(environment),
-      render: createRender({
-        renderError: ({ error }) => (
-          <div className={`error-${error.data.widget.name}`} />
-        ),
-      }),
+
+      renderError: ({ error }) => (
+        <div className={`error-${error.data.widget.name}`} />
+      ),
     });
 
     expect(status).toBe(400);
 
-    const instance = ReactTestUtils.renderIntoDocument(element);
-    ReactTestUtils.findRenderedDOMComponentWithClass(instance, 'error-foo');
+    expect(ReactDOMServer.renderToString(element)).toMatchInlineSnapshot(
+      `"<div class=\\"error-foo\\"></div>"`,
+    );
   });
 
   it('should support redirecting based on query data', async () => {
@@ -162,7 +160,6 @@ describe('render', () => {
         },
       ],
       resolver: new Resolver(environment),
-      render: createRender({}),
     });
 
     expect(redirect).toEqual({

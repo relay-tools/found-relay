@@ -1,7 +1,6 @@
 import delay from 'delay';
 import ServerProtocol from 'farce/lib/ServerProtocol';
 import createFarceRouter from 'found/lib/createFarceRouter';
-import createRender from 'found/lib/createRender';
 import pDefer from 'p-defer';
 import React from 'react';
 import ReactTestUtils from 'react-dom/test-utils';
@@ -47,8 +46,6 @@ describe('retry', () => {
           render: renderSpy,
         },
       ],
-
-      render: createRender({}),
     });
 
     resolver = new InstrumentedResolver(createEnvironment(fetchSpy));

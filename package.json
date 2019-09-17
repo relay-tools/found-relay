@@ -33,7 +33,7 @@
       "prettier --write",
       "git add"
     ],
-    "/README.md": [
+    "./README.md": [
       "doctoc",
       "git add"
     ]
@@ -69,7 +69,7 @@
   },
   "homepage": "https://github.com/relay-tools/found-relay#readme",
   "dependencies": {
-    "@babel/runtime-corejs3": "^7.5.5",
+    "@babel/runtime-corejs3": "^7.6.0",
     "is-promise": "^2.1.0",
     "lodash": "^4.17.15",
     "prop-types": "^15.7.2",
@@ -77,47 +77,45 @@
   },
   "peerDependencies": {
     "found": ">=0.3.21",
-    "react": ">=16.5.0",
-    "react-relay": ">=2.0.0"
+    "react": ">=16.9.0",
+    "react-relay": ">=6.0.0",
+    "relay-runtime": ">=6.0.0"
   },
   "devDependencies": {
     "@4c/babel-preset": "^7.0.0",
-    "@babel/cli": "^7.5.5",
-    "@babel/core": "^7.5.5",
-    "@babel/node": "^7.5.5",
-    "babel-jest": "^24.8.0",
+    "@babel/cli": "^7.6.0",
+    "@babel/core": "^7.6.0",
+    "@babel/node": "^7.6.1",
+    "babel-jest": "^24.9.0",
     "babel-plugin-add-module-exports": "^1.0.2",
-    "babel-plugin-relay": "^5.0.0",
+    "babel-plugin-relay": "^6.0.0",
     "codecov": "^3.5.0",
     "delay": "^4.3.0",
     "doctoc": "^1.4.0",
-    "eslint": "^6.1.0",
-    "eslint-config-4catalyzer-jest": "^2.0.0",
+    "eslint": "^6.4.0",
+    "eslint-config-4catalyzer-jest": "^2.0.1",
     "eslint-config-4catalyzer-react": "^1.0.0",
-    "eslint-config-prettier": "^6.0.0",
+    "eslint-config-prettier": "^6.3.0",
     "eslint-plugin-import": "^2.18.2",
-    "eslint-plugin-jest": "^22.15.1",
+    "eslint-plugin-jest": "^22.17.0",
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-prettier": "^3.1.0",
     "eslint-plugin-react": "^7.14.3",
     "eslint-plugin-react-hooks": "^1.7.0",
     "farce": "^0.2.8",
     "found": "^0.4.7",
-    "graphql": "^14.4.2",
-    "husky": "^3.0.3",
-    "jest": "^24.8.0",
-    "lint-staged": "^9.2.1",
+    "graphql": "^14.5.6",
+    "husky": "^3.0.5",
+    "jest": "^24.9.0",
+    "lint-staged": "^9.2.5",
     "p-defer": "^3.0.0",
     "prettier": "^1.18.2",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
-    "react-relay": "^5.0.0",
-    "relay-compiler": "^5.0.0",
+    "react-relay": "^6.0.0",
+    "relay-compiler": "^6.0.0",
     "relay-local-schema": "^0.8.0",
-    "relay-runtime": "^5.0.0",
+    "relay-runtime": "^6.0.0",
     "rimraf": "^3.0.0"
-  },
-  "resolutions": {
-    "relay-compiler/core-js": "2.6.9"
   }
 }

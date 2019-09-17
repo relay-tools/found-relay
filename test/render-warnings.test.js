@@ -1,6 +1,5 @@
 jest.mock('warning');
 
-import createRender from 'found/lib/createRender';
 import getFarceResult from 'found/lib/server/getFarceResult';
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
@@ -36,7 +35,6 @@ describe('render warnings', () => {
         },
       ],
       resolver: new Resolver(environment),
-      render: createRender({}),
     });
 
     expect(warning).toHaveBeenCalledWith(
@@ -56,7 +54,6 @@ describe('render warnings', () => {
         },
       ],
       resolver: new Resolver(environment),
-      render: createRender({}),
     });
 
     expect(warning).toHaveBeenCalledWith(
@@ -90,7 +87,6 @@ describe('render warnings', () => {
         },
       ],
       resolver: new Resolver(environment),
-      render: createRender({}),
     });
 
     const name = ReactDOMServer.renderToStaticMarkup(element);
@@ -131,7 +127,6 @@ describe('render warnings', () => {
         },
       ],
       resolver: new Resolver(environment),
-      render: createRender({}),
     });
 
     const name = ReactDOMServer.renderToStaticMarkup(element);
@@ -146,5 +141,30 @@ describe('render warnings', () => {
     );
 
     expect(name).toEqual('foo');
+  });
+
+  it('should warn on removed dataFrom and getDataFrom', async () => {
+    await getFarceResult({
+      url: '/',
+      routeConfig: [
+        {
+          path: '/',
+          Component: () => <div />,
+          query,
+          dataFrom: 'STORE_THEN_NETWORK',
+          getDataFrom: () => 'STORE_THEN_NETWORK',
+        },
+      ],
+      resolver: new Resolver(environment),
+    });
+
+    expect(warning).toHaveBeenCalledWith(
+      false,
+      '`dataFrom` on routes no longer has any effect; use `fetchPolicy` instead.',
+    );
+    expect(warning).toHaveBeenCalledWith(
+      false,
+      '`getDataFrom` on routes no longer has any effect; use `getFetchPolicy` instead.',
+    );
   });
 });
