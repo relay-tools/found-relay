@@ -1,5 +1,4 @@
 import queryMiddleware from 'farce/lib/queryMiddleware';
-import createRender from 'found/lib/createRender';
 import makeRouteConfig from 'found/lib/makeRouteConfig';
 import Route from 'found/lib/Route';
 import React from 'react';
@@ -38,5 +37,3 @@ export const routeConfig = makeRouteConfig(
     <Route path=":status" Component={TodoList} query={TodoListQuery} />
   </Route>,
 );
-
-export const render = createRender({});
