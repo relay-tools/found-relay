@@ -2,7 +2,8 @@
   "presets": [
     ["@4c", {
       "target": "web-app",
-      "useBuiltIns": "usage"
+      "useBuiltIns": "usage",
+      "envCorejs": 3
     }]
   ],
   "plugins": [
