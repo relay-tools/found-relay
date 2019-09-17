@@ -1,8 +1,10 @@
 language: node_js
 node_js:
-  - stable
+  - node
 
-cache: yarn
+cache:
+  yarn: true
+  npm: true
 
 script:
   - yarn build

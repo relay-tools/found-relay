@@ -1,7 +1,6 @@
 import HashProtocol from 'farce/lib/HashProtocol';
 import queryMiddleware from 'farce/lib/queryMiddleware';
 import createFarceRouter from 'found/lib/createFarceRouter';
-import createRender from 'found/lib/createRender';
 import { Resolver } from 'found-relay';
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -24,8 +23,6 @@ const Router = createFarceRouter({
   historyProtocol: new HashProtocol(),
   historyMiddlewares: [queryMiddleware],
   routeConfig: routes,
-
-  render: createRender({}),
 });
 
 const mountNode = document.createElement('div');
