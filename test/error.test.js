@@ -1,6 +1,5 @@
 import ServerProtocol from 'farce/lib/ServerProtocol';
 import createFarceRouter from 'found/lib/createFarceRouter';
-import createRender from 'found/lib/createRender';
 import React from 'react';
 import ReactTestUtils from 'react-dom/test-utils';
 import { graphql } from 'react-relay';
@@ -41,8 +40,6 @@ describe('error', () => {
           render,
         },
       ],
-
-      render: createRender({}),
     });
 
     const resolver = new InstrumentedResolver(environment);

@@ -1,6 +1,5 @@
 import ServerProtocol from 'farce/lib/ServerProtocol';
 import createFarceRouter from 'found/lib/createFarceRouter';
-import createRender from 'found/lib/createRender';
 import React from 'react';
 import ReactTestUtils from 'react-dom/test-utils';
 import { graphql } from 'react-relay';
@@ -31,8 +30,6 @@ describe('reset', () => {
             props && <div className={props.widget.name} />,
         },
       ],
-
-      render: createRender({}),
     });
 
     class ResettableRouter extends React.Component {

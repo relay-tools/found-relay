@@ -9,6 +9,7 @@ import {
 import isPromise from 'is-promise';
 import isEqual from 'lodash/isEqual';
 import React from 'react';
+import warning from 'warning';
 
 import QuerySubscription from './QuerySubscription';
 import ReadyStateRenderer from './ReadyStateRenderer';
@@ -35,10 +36,19 @@ export default class Resolver {
       route => route.getCacheConfig,
       route => route.cacheConfig,
     );
-    const dataFroms = getRouteValues(
+    const fetchPolicies = getRouteValues(
       routeMatches,
-      route => route.getDataFrom,
-      route => route.dataFrom,
+      route => route.getFetchPolicy,
+      route => route.fetchPolicy,
+    );
+
+    warning(
+      !routeMatches.some(({ route }) => route.dataFrom),
+      '`dataFrom` on routes no longer has any effect; use `fetchPolicy` instead.',
+    );
+    warning(
+      !routeMatches.some(({ route }) => route.getDataFrom),
+      '`getDataFrom` on routes no longer has any effect; use `getFetchPolicy` instead.',
     );
 
     const routeVariables = this.getRouteVariables(match, routeMatches);
@@ -46,7 +56,7 @@ export default class Resolver {
       queries,
       routeVariables,
       cacheConfigs,
-      dataFroms,
+      fetchPolicies,
     );
 
     const fetches = querySubscriptions.map(
@@ -105,7 +115,12 @@ export default class Resolver {
     );
   }
 
-  updateQuerySubscriptions(queries, routeVariables, cacheConfigs, dataFroms) {
+  updateQuerySubscriptions(
+    queries,
+    routeVariables,
+    cacheConfigs,
+    fetchPolicies,
+  ) {
     const querySubscriptions = queries.map((query, i) => {
       if (!query) {
         return null;
@@ -129,7 +144,7 @@ export default class Resolver {
         query,
         variables,
         cacheConfig: cacheConfigs[i],
-        dataFrom: dataFroms[i],
+        fetchPolicy: fetchPolicies[i],
       });
     });
 

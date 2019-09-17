@@ -1,7 +1,6 @@
 import delay from 'delay';
 import ServerProtocol from 'farce/lib/ServerProtocol';
 import createFarceRouter from 'found/lib/createFarceRouter';
-import createRender from 'found/lib/createRender';
 import pDefer from 'p-defer';
 import React from 'react';
 import ReactTestUtils from 'react-dom/test-utils';
@@ -14,7 +13,7 @@ import {
 } from './helpers';
 
 const query = graphql`
-  query dataFrom_default_Query {
+  query fetchPolicy_default_Query {
     widget {
       name
     }
@@ -36,7 +35,7 @@ function createRecords() {
   };
 }
 
-describe('dataFrom', () => {
+describe('fetchPolicy', () => {
   let fetchSpy;
   let renderSpy;
 
@@ -48,7 +47,7 @@ describe('dataFrom', () => {
     ));
   });
 
-  describe('default (NETWORK_ONLY)', () => {
+  describe('default (network-only)', () => {
     let Router;
 
     beforeEach(() => {
@@ -61,8 +60,6 @@ describe('dataFrom', () => {
             render: renderSpy,
           },
         ],
-
-        render: createRender({}),
       });
     });
 
@@ -100,7 +97,7 @@ describe('dataFrom', () => {
     });
   });
 
-  describe('STORE_THEN_NETWORK', () => {
+  describe('store-and-network', () => {
     let Router;
 
     beforeEach(() => {
@@ -111,11 +108,9 @@ describe('dataFrom', () => {
             path: '/',
             query,
             render: renderSpy,
-            dataFrom: 'STORE_THEN_NETWORK',
+            fetchPolicy: 'store-and-network',
           },
         ],
-
-        render: createRender({}),
       });
     });
 
@@ -209,7 +204,7 @@ describe('dataFrom', () => {
     });
   });
 
-  describe('STORE_OR_NETWORK', () => {
+  describe('store-or-network', () => {
     let Router;
 
     beforeEach(() => {
@@ -220,11 +215,9 @@ describe('dataFrom', () => {
             path: '/',
             query,
             render: renderSpy,
-            dataFrom: 'STORE_OR_NETWORK',
+            fetchPolicy: 'store-or-network',
           },
         ],
-
-        render: createRender({}),
       });
     });
 

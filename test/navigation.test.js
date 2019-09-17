@@ -1,7 +1,6 @@
 import FarceActions from 'farce/lib/Actions';
 import MemoryProtocol from 'farce/lib/MemoryProtocol';
 import createFarceRouter from 'found/lib/createFarceRouter';
-import createRender from 'found/lib/createRender';
 import React from 'react';
 import ReactTestUtils from 'react-dom/test-utils';
 import { graphql } from 'react-relay';
@@ -32,8 +31,6 @@ describe('navigation', () => {
             props && <div className={props.widget.name} />,
         },
       ],
-
-      render: createRender({}),
     });
 
     const resolver = new InstrumentedResolver(environment);
@@ -123,8 +120,6 @@ describe('navigation', () => {
           ],
         },
       ],
-
-      render: createRender({}),
     });
 
     const resolver = new InstrumentedResolver(environment);

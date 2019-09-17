@@ -1,15 +1,12 @@
+import { createOperationDescriptor, getRequest } from 'relay-runtime';
+
 export default class QuerySubscription {
-  constructor({ environment, query, variables, cacheConfig, dataFrom }) {
+  constructor({ environment, query, variables, cacheConfig, fetchPolicy }) {
     this.environment = environment;
     this.query = query;
     this.variables = variables;
     this.cacheConfig = cacheConfig;
-    this.dataFrom = dataFrom;
-
-    const {
-      createOperationDescriptor,
-      getRequest,
-    } = this.environment.unstable_internal;
+    this.fetchPolicy = fetchPolicy;
 
     this.operation = createOperationDescriptor(getRequest(query), variables);
 
@@ -31,7 +28,7 @@ export default class QuerySubscription {
 
     this.relayContext = {
       environment: this.environment,
-      variables: this.operation.variables,
+      variables: this.operation.request.variables,
     };
   }
 
@@ -82,11 +79,11 @@ export default class QuerySubscription {
 
     const useStoreSnapshot =
       !this.retrying &&
-      (this.dataFrom === 'STORE_THEN_NETWORK' ||
-        this.dataFrom === 'STORE_OR_NETWORK') &&
+      (this.fetchPolicy === 'store-and-network' ||
+        this.fetchPolicy === 'store-or-network') &&
       this.environment.check(this.operation.root);
 
-    if (!(this.dataFrom === 'STORE_OR_NETWORK' && useStoreSnapshot)) {
+    if (!(this.fetchPolicy === 'store-or-network' && useStoreSnapshot)) {
       try {
         this.pendingRequest = this.environment
           .execute({
