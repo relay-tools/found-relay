@@ -6,7 +6,7 @@ import ReactDOM from 'react-dom';
 import RelayClientSSR from 'react-relay-network-modern-ssr/lib/client';
 
 import createRelayEnvironment from './createRelayEnvironment';
-import { historyMiddlewares, render, routeConfig } from './router';
+import { historyMiddlewares, routeConfig } from './router';
 
 import 'todomvc-common';
 
@@ -24,7 +24,6 @@ import 'todomvc-common';
     historyMiddlewares,
     routeConfig,
     resolver,
-    render,
   });
 
   ReactDOM.hydrate(
