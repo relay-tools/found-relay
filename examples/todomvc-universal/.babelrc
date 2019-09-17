@@ -2,7 +2,8 @@
   "presets": [
     ["@4c", {
       "target": "node",
-      "useBuiltIns": "usage"
+      "useBuiltIns": "usage",
+      "envCorejs": 2
     }]
   ],
   "plugins": [

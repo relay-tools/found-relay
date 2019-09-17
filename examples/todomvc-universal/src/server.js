@@ -12,7 +12,7 @@ import webpack from 'webpack';
 import webpackMiddleware from 'webpack-dev-middleware';
 
 import createRelayEnvironment from './createRelayEnvironment';
-import { historyMiddlewares, render, routeConfig } from './router';
+import { historyMiddlewares, routeConfig } from './router';
 import schema from './data/schema';
 
 const PORT = 8080;
@@ -51,6 +51,7 @@ const webpackConfig = {
                 {
                   target: 'web-app',
                   useBuiltIns: 'usage',
+                  envCorejs: 2,
                 },
               ],
             ],
@@ -88,7 +89,6 @@ app.use(async (req, res) => {
     resolver: new Resolver(
       createRelayEnvironment(relaySsr, `http://localhost:${PORT}/graphql`),
     ),
-    render,
   });
 
   if (redirect) {
