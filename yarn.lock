@@ -819,7 +819,7 @@
     pirates "^4.0.0"
     source-map-support "^0.5.9"
 
-"@babel/runtime-corejs3@^7.4.5", "@babel/runtime-corejs3@^7.6.0":
+"@babel/runtime-corejs3@^7.5.5", "@babel/runtime-corejs3@^7.6.0":
   version "7.6.2"
   resolved "https://registry.yarnpkg.com/@babel/runtime-corejs3/-/runtime-corejs3-7.6.2.tgz#032d0ca5107747751bb31cbce2302f9a73bd824c"
   integrity sha512-FX1ddj2gf7psgslvkkKeyxftnslUFDY9OHGnp+wJ+4JIKSEABB1fKVZiE7/2n+C9RVTPfPwpOqGmFf5TGvg0Bw==
@@ -2991,21 +2991,21 @@ format@^0.2.2:
   integrity sha1-1hcBB+nv3E7TDJ3DkBbflCtctYs=
 
 found@^0.4.7:
-  version "0.4.7"
-  resolved "https://registry.yarnpkg.com/found/-/found-0.4.7.tgz#9c5d2712ee1a1f1bfda37f82b2512e9368a3a362"
-  integrity sha512-Pmncc6wHxT+HYdrKBuwLF4M7cOj/Skfd+pSW5503hMLsRIh80SBxKaNKn8rpksyy6/qHK6FyIYx1DSlTiFC6HA==
+  version "0.4.9"
+  resolved "https://registry.yarnpkg.com/found/-/found-0.4.9.tgz#016f69026afa29290c09fb909f198b923a2878f3"
+  integrity sha512-6MEtaqmkkvcX92S3HxSZnoHhEOntNAh+sQglrfsYLbqIhyibUy9Udgbitw8oujGd445spPgCyKkPO3mSTdVAfQ==
   dependencies:
-    "@babel/runtime-corejs3" "^7.4.5"
+    "@babel/runtime-corejs3" "^7.5.5"
     "@restart/context" "^2.1.4"
     farce "^0.2.8"
     invariant "^2.2.4"
     is-promise "^2.1.0"
-    lodash "^4.17.11"
+    lodash "^4.17.15"
     path-to-regexp "^1.7.0"
     prop-types "^15.7.2"
     react-redux "^7.0.0"
     react-static-container "^1.0.2"
-    redux "^4.0.1"
+    redux "^4.0.4"
     warning "^4.0.3"
 
 fragment-cache@^0.2.1:
@@ -5572,7 +5572,7 @@ realpath-native@^1.1.0:
   dependencies:
     util.promisify "^1.0.0"
 
-redux@^4.0.1:
+redux@^4.0.1, redux@^4.0.4:
   version "4.0.4"
   resolved "https://registry.yarnpkg.com/redux/-/redux-4.0.4.tgz#4ee1aeb164b63d6a1bcc57ae4aa0b6e6fa7a3796"
   integrity sha512-vKv4WdiJxOWKxK0yRoaK3Y4pxxB0ilzVx6dszU2W8wLxlb2yikRph4iV/ymtdJ6ZxpBLFbyrxklnT5yBbQSl3Q==
