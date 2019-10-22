@@ -88,7 +88,7 @@
     "@babel/node": "^7.6.1",
     "babel-jest": "^24.9.0",
     "babel-plugin-add-module-exports": "^1.0.2",
-    "babel-plugin-relay": "^6.0.0",
+    "babel-plugin-relay": "^7.0.0",
     "codecov": "^3.5.0",
     "delay": "^4.3.0",
     "doctoc": "^1.4.0",
