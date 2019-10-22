@@ -115,7 +115,7 @@
     "react-relay": "^6.0.0",
     "relay-compiler": "^6.0.0",
     "relay-local-schema": "^0.8.0",
-    "relay-runtime": "^6.0.0",
+    "relay-runtime": "^7.0.0",
     "rimraf": "^3.0.0"
   }
 }
