@@ -5731,10 +5731,18 @@ relay-local-schema@^0.8.0:
   resolved "https://registry.yarnpkg.com/relay-local-schema/-/relay-local-schema-0.8.0.tgz#3ec303048fb495fc9b87a37ad3d1590402f2fb89"
   integrity sha512-jT2DsWHEdVVSA+ulNx96TAd4FCVmTlXn9S9ZiPaoqhTHWzEt6BE4xoYUtPrni2JD4m1XPL2hWzsbUq1aoq4kaA==
 
-relay-runtime@7.0.0, relay-runtime@^7.0.0:
+relay-runtime@7.0.0:
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/relay-runtime/-/relay-runtime-7.0.0.tgz#49642c0e16096cd4e5f435fcbdd63ffd8da54090"
   integrity sha512-w0TPq5xvL6dlxD8+tBR19gGep3kFsx0fJ2Xr4hsxpDFKskH2oOmsMSp6gNVsUd2T1zf/DYll5eJqjoiQc5nB1A==
+  dependencies:
+    "@babel/runtime" "^7.0.0"
+    fbjs "^1.0.0"
+
+relay-runtime@^7.0.0:
+  version "7.1.0"
+  resolved "https://registry.yarnpkg.com/relay-runtime/-/relay-runtime-7.1.0.tgz#3a1b38cb55fae7ab2fbb404f7db7a5b900ef963f"
+  integrity sha512-19WV0dC4rcbXnVBKEA4ZL41ccfJRUZ7/KKfQsgc9SwjqCi2g3+yYIR9wJ4KoC+rEfG2yN3W1vWBEqr+igH/rzA==
   dependencies:
     "@babel/runtime" "^7.0.0"
     fbjs "^1.0.0"
