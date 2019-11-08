@@ -1585,9 +1585,9 @@ babel-plugin-react-intl@^4.1.12:
     intl-messageformat-parser "^3.2.1"
 
 babel-plugin-relay@^7.0.0:
-  version "7.0.0"
-  resolved "https://registry.yarnpkg.com/babel-plugin-relay/-/babel-plugin-relay-7.0.0.tgz#4d8923e0e629effe679764403db61aea9af78aae"
-  integrity sha512-lF9ExqnKeeLZ35GMi33rlbvFiKizHvE0u1A17p6mBsSeg+RfdUqF392vhWIMmMP6Xcsosd9G2wUavA3DOTF7CA==
+  version "7.1.0"
+  resolved "https://registry.yarnpkg.com/babel-plugin-relay/-/babel-plugin-relay-7.1.0.tgz#adf5e5dff9f5631d7a6547c460b1a4e9f501713a"
+  integrity sha512-KshZBzjOIovWrdlBjbR+ARvPN5UUJa30KWLyNuxf32WrJij+tOiQTWE1ieN2MHeVpJZUhzBKx7S49Xrm8ALwyA==
   dependencies:
     babel-plugin-macros "^2.0.0"
 
