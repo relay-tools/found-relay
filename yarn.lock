@@ -5530,14 +5530,14 @@ react-redux@^7.0.0:
     react-is "^16.9.0"
 
 react-relay@^7.0.0:
-  version "7.0.0"
-  resolved "https://registry.yarnpkg.com/react-relay/-/react-relay-7.0.0.tgz#c8839c2781edc51d9ac3155b66e1b22aafadcf95"
-  integrity sha512-ozN7T09wXXzf+VigDK98SW6lMGly9oJsgPGk4jxremMl6WSPX4bAa6A4NMvsFoV9GVLKB2EpaFs1YirIjWywYw==
+  version "7.1.0"
+  resolved "https://registry.yarnpkg.com/react-relay/-/react-relay-7.1.0.tgz#8a97357914d079f7a537f757782ed126b041a7ac"
+  integrity sha512-O0MTyeVnrnG990rLdEQcFqGf0f7VBT2Y+mRYEC6nTPAxN+M/DB2U6VGPHNjrfoW8PQ2BUyp2ddNGM9b2PtnEwg==
   dependencies:
     "@babel/runtime" "^7.0.0"
     fbjs "^1.0.0"
     nullthrows "^1.1.1"
-    relay-runtime "7.0.0"
+    relay-runtime "7.1.0"
 
 react-static-container@^1.0.2:
   version "1.0.2"
