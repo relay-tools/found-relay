@@ -101,7 +101,7 @@
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-prettier": "^3.1.2",
     "eslint-plugin-react": "^7.17.0",
-    "eslint-plugin-react-hooks": "^1.7.0",
+    "eslint-plugin-react-hooks": "^2.3.0",
     "farce": "^0.2.8",
     "found": "^0.4.9",
     "graphql": "^14.5.8",
