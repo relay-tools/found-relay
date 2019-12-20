@@ -81,7 +81,7 @@ export default class QuerySubscription {
       !this.retrying &&
       (this.fetchPolicy === 'store-and-network' ||
         this.fetchPolicy === 'store-or-network') &&
-      this.environment.check(this.operation.root);
+      this.environment.check(this.operation) === 'available';
 
     if (!(this.fetchPolicy === 'store-or-network' && useStoreSnapshot)) {
       try {
@@ -151,7 +151,7 @@ export default class QuerySubscription {
   };
 
   retain() {
-    return this.environment.retain(this.operation.root);
+    return this.environment.retain(this.operation);
   }
 
   dispose() {
