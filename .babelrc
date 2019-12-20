@@ -1,0 +1,12 @@
+{
+  "presets": [
+    ["@4c", {
+      "target": "node",
+      "useBuiltIns": "usage",
+      "envCorejs": 2
+    }]
+  ],
+  "plugins": [
+    "relay"
+  ]
+}
