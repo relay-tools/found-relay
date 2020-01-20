@@ -25,18 +25,9 @@
     }
   },
   "lint-staged": {
-    "*.js": [
-      "eslint --fix",
-      "git add"
-    ],
-    "*.md": [
-      "prettier --write",
-      "git add"
-    ],
-    "./README.md": [
-      "doctoc",
-      "git add"
-    ]
+    "*.js": "eslint --fix",
+    "*.md": "prettier --write",
+    "./README.md": "doctoc"
   },
   "prettier": {
     "printWidth": 79,
@@ -107,7 +98,7 @@
     "graphql": "^14.5.8",
     "husky": "^4.0.7",
     "jest": "^24.9.0",
-    "lint-staged": "^9.5.0",
+    "lint-staged": "^10.0.0",
     "p-defer": "^3.0.0",
     "prettier": "^1.19.1",
     "react": "^16.12.0",
