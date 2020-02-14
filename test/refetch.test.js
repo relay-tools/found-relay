@@ -19,7 +19,7 @@ describe('refetch behavior', () => {
       {
         path: '/',
         query: graphql`
-          query refetch_parent_Query {
+          query refetchTest_parent_Query {
             widget {
               name
             }
@@ -31,7 +31,7 @@ describe('refetch behavior', () => {
           {
             path: ':name',
             query: graphql`
-              query refetch_child_Query($name: String!) {
+              query refetchTest_child_Query($name: String!) {
                 widgetByArg(name: $name) {
                   name
                 }

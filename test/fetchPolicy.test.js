@@ -13,7 +13,7 @@ import {
 } from './helpers';
 
 const query = graphql`
-  query fetchPolicy_default_Query {
+  query fetchPolicyTest_default_Query {
     widget {
       name
     }

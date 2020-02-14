@@ -11,7 +11,7 @@ import { Resolver } from '../src';
 import { createEnvironment } from './helpers';
 
 const query = graphql`
-  query renderWarnings_Query {
+  query renderWarningsTest_Query {
     widget {
       name
     }

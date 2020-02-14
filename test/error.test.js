@@ -33,7 +33,7 @@ describe('error', () => {
         {
           path: '/',
           query: graphql`
-            query error_test_Query {
+            query errorTest_Query {
               error
             }
           `,

@@ -21,7 +21,7 @@ describe('navigation', () => {
         {
           path: '/:name',
           query: graphql`
-            query navigation_name_Query($name: String!) {
+            query navigationTest_name_Query($name: String!) {
               widget: widgetByArg(name: $name) {
                 name
               }
@@ -99,7 +99,7 @@ describe('navigation', () => {
               path: 'foo',
               Component: Widget,
               query: graphql`
-                query navigation_foo_Query {
+                query navigationTest_foo_Query {
                   widget: widgetByArg(name: "foo") {
                     name
                   }
@@ -110,7 +110,7 @@ describe('navigation', () => {
               path: 'bar',
               Component: Widget,
               query: graphql`
-                query navigation_bar_Query {
+                query navigationTest_bar_Query {
                   widget: widgetByArg(name: "bar") {
                     name
                   }
