@@ -32,7 +32,7 @@ describe('Resolver', () => {
 
     const WidgetParentContainer = createFragmentContainer(WidgetParent, {
       widget: graphql`
-        fragment Resolver_widget on Widget {
+        fragment ResolverTest_widget on Widget {
           name
           argValue(value: $variable)
         }
@@ -53,17 +53,17 @@ describe('Resolver', () => {
 
     const WidgetChildrenContainer = createFragmentContainer(WidgetChildren, {
       first: graphql`
-        fragment Resolver_first on Widget {
+        fragment ResolverTest_first on Widget {
           name
         }
       `,
       second: graphql`
-        fragment Resolver_second on Widget {
+        fragment ResolverTest_second on Widget {
           name
         }
       `,
       third: graphql`
-        fragment Resolver_third on Widget {
+        fragment ResolverTest_third on Widget {
           name
         }
       `,
@@ -82,9 +82,9 @@ describe('Resolver', () => {
           <Route
             getComponent={() => WidgetParentContainer}
             getQuery={() => graphql`
-              query Resolver_WidgetParent_Query($variable: String!) {
+              query ResolverTest_WidgetParent_Query($variable: String!) {
                 widget {
-                  ...Resolver_widget
+                  ...ResolverTest_widget
                 }
                 extra: widgetByArg(name: "extra") {
                   name
@@ -102,19 +102,19 @@ describe('Resolver', () => {
               path=":pathName"
               Component={WidgetChildrenContainer}
               query={graphql`
-                query Resolver_WidgetChildren_Query(
+                query ResolverTest_WidgetChildren_Query(
                   $pathName: String!
                   $queryName: String!
                   $parentName: String!
                 ) {
                   first: widgetByArg(name: $pathName) {
-                    ...Resolver_first
+                    ...ResolverTest_first
                   }
                   second: widgetByArg(name: $queryName) {
-                    ...Resolver_second
+                    ...ResolverTest_second
                   }
                   third: widgetByArg(name: $parentName) {
-                    ...Resolver_third
+                    ...ResolverTest_third
                   }
                 }
               `}

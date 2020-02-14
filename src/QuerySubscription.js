@@ -81,7 +81,7 @@ export default class QuerySubscription {
       !this.retrying &&
       (this.fetchPolicy === 'store-and-network' ||
         this.fetchPolicy === 'store-or-network') &&
-      this.environment.check(this.operation) === 'available';
+      this.environment.check(this.operation).status === 'available';
 
     if (!(this.fetchPolicy === 'store-or-network' && useStoreSnapshot)) {
       try {

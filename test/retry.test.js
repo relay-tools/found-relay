@@ -37,7 +37,7 @@ describe('retry', () => {
         {
           path: '/',
           query: graphql`
-            query retry_Query {
+            query retryTest_Query {
               widget {
                 name
               }

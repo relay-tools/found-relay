@@ -40,7 +40,7 @@ describe('render', () => {
           path: '/',
           Component: Parent,
           query: graphql`
-            query render_named_child_routes_root_Query {
+            query renderTest_named_child_routes_root_Query {
               widget: widgetByArg(name: "root") {
                 name
               }
@@ -55,7 +55,7 @@ describe('render', () => {
                     path: '(.*)?',
                     Component: Widget,
                     query: graphql`
-                      query render_named_child_routes_foo_nav_Query {
+                      query renderTest_named_child_routes_foo_nav_Query {
                         widget: widgetByArg(name: "foo-nav") {
                           name
                         }
@@ -67,7 +67,7 @@ describe('render', () => {
                   {
                     Component: Widget,
                     query: graphql`
-                      query render_named_child_routes_foo_main_Query {
+                      query renderTest_named_child_routes_foo_main_Query {
                         widget: widgetByArg(name: "foo-main") {
                           name
                         }
@@ -108,7 +108,7 @@ describe('render', () => {
         {
           path: '/',
           query: graphql`
-            query render_error_Query {
+            query renderTest_error_Query {
               widget {
                 name
               }
@@ -144,7 +144,7 @@ describe('render', () => {
         {
           path: '/',
           query: graphql`
-            query render_redirect_Query {
+            query renderTest_redirect_Query {
               widget {
                 name
               }

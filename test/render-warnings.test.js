@@ -11,7 +11,7 @@ import { Resolver } from '../src';
 import { createEnvironment } from './helpers';
 
 const query = graphql`
-  query renderWarnings_Query {
+  query renderWarningsTest_Query {
     widget {
       name
     }
@@ -40,7 +40,7 @@ describe('render warnings', () => {
     expect(warning).toHaveBeenCalledWith(
       false,
       'Route with query `%s` has no render method or component.',
-      'renderWarnings_Query',
+      'renderWarningsTest_Query',
     );
   });
 
@@ -59,7 +59,7 @@ describe('render warnings', () => {
     expect(warning).toHaveBeenCalledWith(
       false,
       'Route with query `%s` has no render method or component.',
-      'renderWarnings_Query',
+      'renderWarningsTest_Query',
     );
   });
 
@@ -97,7 +97,7 @@ describe('render warnings', () => {
         'prop `%s` that shadows a Relay prop from its query `%s`',
       ),
       'widget',
-      'renderWarnings_Query',
+      'renderWarningsTest_Query',
     );
 
     expect(name).toEqual('foo');
@@ -137,7 +137,7 @@ describe('render warnings', () => {
         'prop `%s` that shadows a Relay prop from its query `%s`',
       ),
       'widget',
-      'renderWarnings_Query',
+      'renderWarningsTest_Query',
     );
 
     expect(name).toEqual('foo');
