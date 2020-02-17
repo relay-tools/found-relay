@@ -1,7 +1,7 @@
 import ServerProtocol from 'farce/lib/ServerProtocol';
-import createFarceRouter from 'found/lib/createFarceRouter';
 import HttpError from 'found/lib/HttpError';
 import RedirectException from 'found/lib/RedirectException';
+import createFarceRouter from 'found/lib/createFarceRouter';
 import getFarceResult from 'found/lib/server/getFarceResult';
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
@@ -9,8 +9,7 @@ import ReactTestUtils from 'react-dom/test-utils';
 import { graphql } from 'react-relay';
 
 import { Resolver } from '../src';
-
-import { createEnvironment, InstrumentedResolver, timeout } from './helpers';
+import { InstrumentedResolver, createEnvironment, timeout } from './helpers';
 
 describe('render', () => {
   let environment;

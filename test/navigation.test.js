@@ -5,7 +5,7 @@ import React from 'react';
 import ReactTestUtils from 'react-dom/test-utils';
 import { graphql } from 'react-relay';
 
-import { createEnvironment, InstrumentedResolver } from './helpers';
+import { InstrumentedResolver, createEnvironment } from './helpers';
 
 describe('navigation', () => {
   let environment;
