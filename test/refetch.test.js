@@ -2,7 +2,6 @@ import getFarceResult from 'found/lib/server/getFarceResult';
 import { graphql } from 'react-relay';
 
 import { Resolver } from '../src';
-
 import { createEnvironment, createFakeFetch } from './helpers';
 
 describe('refetch behavior', () => {

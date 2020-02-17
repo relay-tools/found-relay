@@ -5,9 +5,9 @@ import ReactTestUtils from 'react-dom/test-utils';
 import { graphql } from 'react-relay';
 
 import {
+  InstrumentedResolver,
   createEnvironment,
   createFakeFetch,
-  InstrumentedResolver,
 } from './helpers';
 
 describe('reset', () => {

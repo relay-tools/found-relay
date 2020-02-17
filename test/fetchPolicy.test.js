@@ -7,9 +7,9 @@ import ReactTestUtils from 'react-dom/test-utils';
 import { graphql } from 'react-relay';
 
 import {
+  InstrumentedResolver,
   createEnvironment,
   createSyncEnvironment,
-  InstrumentedResolver,
 } from './helpers';
 
 const query = graphql`

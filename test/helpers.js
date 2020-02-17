@@ -2,7 +2,6 @@ import { createFetch } from 'relay-local-schema';
 import { Environment, Network, RecordSource, Store } from 'relay-runtime';
 
 import { Resolver } from '../src';
-
 import schema from './fixtures/schema';
 
 export function createFakeFetch() {

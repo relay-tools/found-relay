@@ -7,7 +7,6 @@ import { graphql } from 'react-relay';
 import warning from 'warning';
 
 import { Resolver } from '../src';
-
 import { createEnvironment } from './helpers';
 
 const query = graphql`

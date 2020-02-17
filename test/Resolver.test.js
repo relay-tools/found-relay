@@ -1,14 +1,14 @@
-import queryMiddleware from 'farce/lib/queryMiddleware';
 import ServerProtocol from 'farce/lib/ServerProtocol';
+import queryMiddleware from 'farce/lib/queryMiddleware';
+import Route from 'found/lib/Route';
 import createFarceRouter from 'found/lib/createFarceRouter';
 import makeRouteConfig from 'found/lib/makeRouteConfig';
-import Route from 'found/lib/Route';
 import React from 'react';
 import ReactTestUtils from 'react-dom/test-utils';
 import { createFragmentContainer, graphql } from 'react-relay';
 import { Environment } from 'relay-runtime';
 
-import { createEnvironment, InstrumentedResolver } from './helpers';
+import { InstrumentedResolver, createEnvironment } from './helpers';
 
 describe('Resolver', () => {
   let environment;
