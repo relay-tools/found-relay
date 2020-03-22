@@ -9,7 +9,7 @@ export function createFakeFetch() {
 }
 
 export function timeout(delay) {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     setTimeout(resolve, delay);
   });
 }
@@ -41,7 +41,7 @@ export class InstrumentedResolver extends Resolver {
   // eslint-disable-next-line require-await
   async *resolveElements(match) {
     let resolveDone;
-    this.done = new Promise(resolve => {
+    this.done = new Promise((resolve) => {
       resolveDone = resolve;
     });
 

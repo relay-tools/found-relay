@@ -122,7 +122,7 @@ class ReadyStateRenderer extends React.Component {
     const { props: relayProps } = querySubscription.readyState;
 
     if (relayProps) {
-      Object.keys(relayProps).forEach(relayPropName => {
+      Object.keys(relayProps).forEach((relayPropName) => {
         // At least on Node v8.x, it's slightly faster to guard the delete here
         // with this hasOwnProperty check.
         if (hasOwnProperty.call(ownProps, relayPropName)) {

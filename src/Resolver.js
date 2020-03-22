@@ -28,18 +28,18 @@ export default class Resolver {
     const Components = getComponents(routeMatches);
     const queries = getRouteValues(
       routeMatches,
-      route => route.getQuery,
-      route => route.query,
+      (route) => route.getQuery,
+      (route) => route.query,
     );
     const cacheConfigs = getRouteValues(
       routeMatches,
-      route => route.getCacheConfig,
-      route => route.cacheConfig,
+      (route) => route.getCacheConfig,
+      (route) => route.cacheConfig,
     );
     const fetchPolicies = getRouteValues(
       routeMatches,
-      route => route.getFetchPolicy,
-      route => route.fetchPolicy,
+      (route) => route.getFetchPolicy,
+      (route) => route.fetchPolicy,
     );
 
     warning(
@@ -60,7 +60,7 @@ export default class Resolver {
     );
 
     const fetches = querySubscriptions.map(
-      querySubscription => querySubscription && querySubscription.fetch(),
+      (querySubscription) => querySubscription && querySubscription.fetch(),
     );
 
     const earlyComponents = Components.some(isPromise)
@@ -78,7 +78,7 @@ export default class Resolver {
         false,
       );
 
-      yield pendingElements.every(element => element !== undefined)
+      yield pendingElements.every((element) => element !== undefined)
         ? pendingElements
         : undefined;
 
@@ -148,7 +148,7 @@ export default class Resolver {
       });
     });
 
-    this.lastQuerySubscriptions.forEach(querySubscription => {
+    this.lastQuerySubscriptions.forEach((querySubscription) => {
       if (querySubscription) {
         querySubscription.dispose();
       }
@@ -201,7 +201,7 @@ export default class Resolver {
         return element;
       }
 
-      return routeChildren => (
+      return (routeChildren) => (
         <ReadyStateRenderer
           match={match}
           Component={resolvedComponent}
