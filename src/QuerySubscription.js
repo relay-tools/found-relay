@@ -34,7 +34,7 @@ export default class QuerySubscription {
 
   fetch() {
     if (!this.fetchPromise) {
-      this.fetchPromise = new Promise(resolve => {
+      this.fetchPromise = new Promise((resolve) => {
         this.execute(resolve);
       });
     }
@@ -67,7 +67,7 @@ export default class QuerySubscription {
       resolve();
     };
 
-    const onError = error => {
+    const onError = (error) => {
       this.updateReadyState({
         error,
         props: null,
@@ -121,12 +121,12 @@ export default class QuerySubscription {
   updateReadyState(readyState) {
     this.readyState = readyState;
 
-    this.listeners.forEach(listener => {
+    this.listeners.forEach((listener) => {
       listener();
     });
   }
 
-  onChange = snapshot => {
+  onChange = (snapshot) => {
     this.updateReadyState({
       error: null,
       props: snapshot.data,
@@ -139,7 +139,7 @@ export default class QuerySubscription {
   }
 
   unsubscribe(listener) {
-    this.listeners = this.listeners.filter(item => item !== listener);
+    this.listeners = this.listeners.filter((item) => item !== listener);
   }
 
   retry = () => {
