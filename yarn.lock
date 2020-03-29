@@ -900,7 +900,7 @@
     pirates "^4.0.0"
     source-map-support "^0.5.16"
 
-"@babel/runtime-corejs3@^7.5.5", "@babel/runtime-corejs3@^7.6.3", "@babel/runtime-corejs3@^7.7.4", "@babel/runtime-corejs3@^7.8.3":
+"@babel/runtime-corejs3@^7.6.2", "@babel/runtime-corejs3@^7.6.3", "@babel/runtime-corejs3@^7.7.4", "@babel/runtime-corejs3@^7.8.3":
   version "7.9.2"
   resolved "https://registry.yarnpkg.com/@babel/runtime-corejs3/-/runtime-corejs3-7.9.2.tgz#26fe4aa77e9f1ecef9b776559bbb8e84d34284b7"
   integrity sha512-HHxmgxbIzOfFlZ+tdeRKtaxWOMUoCG5Mu3wKeUmOxjYrwb3AAHgnmtCUbPPK11/raIWLIBK250t8E2BPO0p7jA==
@@ -2856,6 +2856,17 @@ farce@^0.2.8:
     redux "^4.0.1"
     warning "^4.0.3"
 
+farce@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/farce/-/farce-0.3.0.tgz#8b289986ca78135467ab603e6a765ecfa38a7c30"
+  integrity sha512-PGLUvEImEJ60ogk8/90gAuHiuF15bHJRTzuBie68/1CuEZF/JTo1wsx18m0JdMBdNmV1t6wtAtjsAc2EjD2fmA==
+  dependencies:
+    invariant "^2.2.4"
+    is-promise "^2.1.0"
+    query-string "^5.1.1"
+    redux "^4.0.4"
+    warning "^4.0.3"
+
 fast-deep-equal@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/fast-deep-equal/-/fast-deep-equal-2.0.1.tgz#7b05218ddf9667bf7f370bf7fdb2cb15fdd0aa49"
@@ -3048,14 +3059,14 @@ format@^0.2.2:
   resolved "https://registry.yarnpkg.com/format/-/format-0.2.2.tgz#d6170107e9efdc4ed30c9dc39016df942b5cb58b"
   integrity sha1-1hcBB+nv3E7TDJ3DkBbflCtctYs=
 
-found@^0.4.9:
-  version "0.4.9"
-  resolved "https://registry.yarnpkg.com/found/-/found-0.4.9.tgz#016f69026afa29290c09fb909f198b923a2878f3"
-  integrity sha512-6MEtaqmkkvcX92S3HxSZnoHhEOntNAh+sQglrfsYLbqIhyibUy9Udgbitw8oujGd445spPgCyKkPO3mSTdVAfQ==
+found@^0.4.10:
+  version "0.4.10"
+  resolved "https://registry.yarnpkg.com/found/-/found-0.4.10.tgz#20d587c73059971ac61fd3f20e5b6992ac0c324b"
+  integrity sha512-AlZVFd8Y7wWTVp8y6Bf2naseEVXuB44UQhUVRXeWVvuPBv5cnOFA8xddqa/oOYwBBuBN2iVxweMcwTYiGJRFjQ==
   dependencies:
-    "@babel/runtime-corejs3" "^7.5.5"
+    "@babel/runtime-corejs3" "^7.6.2"
     "@restart/context" "^2.1.4"
-    farce "^0.2.8"
+    farce "^0.3.0"
     invariant "^2.2.4"
     is-promise "^2.1.0"
     lodash "^4.17.15"
