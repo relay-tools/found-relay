@@ -93,7 +93,7 @@
     "eslint-plugin-prettier": "^3.1.2",
     "eslint-plugin-react": "^7.19.0",
     "eslint-plugin-react-hooks": "^3.0.0",
-    "farce": "^0.2.8",
+    "farce": "^0.4.1",
     "found": "^0.4.10",
     "graphql": "^14.6.0",
     "husky": "^4.2.3",
