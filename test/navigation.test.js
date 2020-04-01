@@ -1,6 +1,6 @@
-import FarceActions from 'farce/lib/Actions';
-import MemoryProtocol from 'farce/lib/MemoryProtocol';
-import createFarceRouter from 'found/lib/createFarceRouter';
+import FarceActions from 'farce/Actions';
+import MemoryProtocol from 'farce/MemoryProtocol';
+import createFarceRouter from 'found/createFarceRouter';
 import React from 'react';
 import ReactTestUtils from 'react-dom/test-utils';
 import { graphql } from 'react-relay';

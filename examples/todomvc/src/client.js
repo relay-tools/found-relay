@@ -1,6 +1,6 @@
-import HashProtocol from 'farce/lib/HashProtocol';
-import queryMiddleware from 'farce/lib/queryMiddleware';
-import createFarceRouter from 'found/lib/createFarceRouter';
+import HashProtocol from 'farce/HashProtocol';
+import queryMiddleware from 'farce/queryMiddleware';
+import createFarceRouter from 'found/createFarceRouter';
 import { Resolver } from 'found-relay';
 import React from 'react';
 import ReactDOM from 'react-dom';

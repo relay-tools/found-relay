@@ -1,5 +1,5 @@
-import ServerProtocol from 'farce/lib/ServerProtocol';
-import createFarceRouter from 'found/lib/createFarceRouter';
+import ServerProtocol from 'farce/ServerProtocol';
+import createFarceRouter from 'found/createFarceRouter';
 import React from 'react';
 import ReactTestUtils from 'react-dom/test-utils';
 import { graphql } from 'react-relay';

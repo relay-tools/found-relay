@@ -1,8 +1,8 @@
-import ServerProtocol from 'farce/lib/ServerProtocol';
-import HttpError from 'found/lib/HttpError';
-import RedirectException from 'found/lib/RedirectException';
-import createFarceRouter from 'found/lib/createFarceRouter';
-import getFarceResult from 'found/lib/server/getFarceResult';
+import ServerProtocol from 'farce/ServerProtocol';
+import HttpError from 'found/HttpError';
+import RedirectException from 'found/RedirectException';
+import createFarceRouter from 'found/createFarceRouter';
+import { getFarceResult } from 'found/server';
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 import ReactTestUtils from 'react-dom/test-utils';

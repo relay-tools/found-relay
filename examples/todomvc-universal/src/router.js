@@ -1,6 +1,6 @@
-import queryMiddleware from 'farce/lib/queryMiddleware';
-import makeRouteConfig from 'found/lib/makeRouteConfig';
-import Route from 'found/lib/Route';
+import queryMiddleware from 'farce/queryMiddleware';
+import makeRouteConfig from 'found/makeRouteConfig';
+import Route from 'found/Route';
 import React from 'react';
 import { graphql } from 'react-relay';
 
