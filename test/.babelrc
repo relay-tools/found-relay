@@ -1,8 +1,0 @@
-{
-  "presets": [
-    "@4c"
-  ],
-  "plugins": [
-    "relay"
-  ]
-}
