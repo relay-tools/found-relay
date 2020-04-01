@@ -5,7 +5,7 @@ import {
   getRouteMatches,
   getRouteValues,
   isResolved,
-} from 'found/lib/ResolverUtils';
+} from 'found/ResolverUtils';
 import isPromise from 'is-promise';
 import isEqual from 'lodash/isEqual';
 import React from 'react';

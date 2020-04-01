@@ -1,4 +1,4 @@
-import getFarceResult from 'found/lib/server/getFarceResult';
+import { getFarceResult } from 'found/server';
 import { graphql } from 'react-relay';
 
 import { Resolver } from '../src';

@@ -1,5 +1,5 @@
-import BrowserProtocol from 'farce/lib/BrowserProtocol';
-import createInitialFarceRouter from 'found/lib/createInitialFarceRouter';
+import BrowserProtocol from 'farce/BrowserProtocol';
+import createInitialFarceRouter from 'found/createInitialFarceRouter';
 import { Resolver } from 'found-relay';
 import React from 'react';
 import ReactDOM from 'react-dom';

@@ -1,8 +1,8 @@
-import ServerProtocol from 'farce/lib/ServerProtocol';
-import queryMiddleware from 'farce/lib/queryMiddleware';
-import Route from 'found/lib/Route';
-import createFarceRouter from 'found/lib/createFarceRouter';
-import makeRouteConfig from 'found/lib/makeRouteConfig';
+import ServerProtocol from 'farce/ServerProtocol';
+import queryMiddleware from 'farce/queryMiddleware';
+import Route from 'found/Route';
+import createFarceRouter from 'found/createFarceRouter';
+import makeRouteConfig from 'found/makeRouteConfig';
 import React from 'react';
 import ReactTestUtils from 'react-dom/test-utils';
 import { createFragmentContainer, graphql } from 'react-relay';

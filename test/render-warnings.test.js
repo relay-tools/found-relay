@@ -1,6 +1,6 @@
 jest.mock('warning');
 
-import getFarceResult from 'found/lib/server/getFarceResult';
+import { getFarceResult } from 'found/server';
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 import { graphql } from 'react-relay';

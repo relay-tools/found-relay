@@ -3,7 +3,7 @@ import 'isomorphic-fetch';
 import CopyWebpackPlugin from 'copy-webpack-plugin';
 import express from 'express';
 import graphQLHTTP from 'express-graphql';
-import { getFarceResult } from 'found/lib/server';
+import { getFarceResult } from 'found/server';
 import { Resolver } from 'found-relay';
 import ReactDOMServer from 'react-dom/server';
 import RelayServerSSR from 'react-relay-network-modern-ssr/lib/server';
