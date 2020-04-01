@@ -3,11 +3,15 @@
   "version": "0.7.0",
   "description": "Relay integration for found",
   "files": [
-    "lib"
+    "lib",
+    "es"
   ],
   "main": "lib/index.js",
+  "module": "es/index.js",
   "scripts": {
-    "build": "rimraf lib && babel src -d lib",
+    "build": "npm run build:cjs && npm run build:esm",
+    "build:cjs": "babel -d lib --delete-dir-on-start src",
+    "build:esm": "babel --env-name esm -d es --delete-dir-on-start src",
     "build-fixtures": "npm run update-schema && npm run relay-compiler",
     "format": "eslint --fix . && npm run prettier -- --write",
     "lint": "eslint . && npm run prettier -- -l",
@@ -106,7 +110,6 @@
     "react-relay": "^9.0.0",
     "relay-compiler": "^9.0.0",
     "relay-local-schema": "^0.8.0",
-    "relay-runtime": "^9.0.0",
-    "rimraf": "^3.0.2"
+    "relay-runtime": "^9.0.0"
   }
 }

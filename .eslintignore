@@ -1,5 +1,9 @@
+!.babelrc.js
+!.eslintrc.js
+
 **/coverage/
 **/lib/
+**/es/
 **/node_modules/
 
 # These examples have their own linting.
