@@ -13,7 +13,7 @@ const propTypes = {
 };
 
 class TodoApp extends React.Component {
-  onNewTodoSave = text => {
+  onNewTodoSave = (text) => {
     const { relay, viewer } = this.props;
 
     AddTodoMutation.commit(relay.environment, viewer, text);

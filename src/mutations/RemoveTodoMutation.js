@@ -16,7 +16,7 @@ const mutation = graphql`
 function sharedUpdater(store, user, deletedId) {
   const userProxy = store.get(user.id);
 
-  ['any', 'active', 'completed'].forEach(status => {
+  ['any', 'active', 'completed'].forEach((status) => {
     const connection = ConnectionHandler.getConnection(
       userProxy,
       'TodoList_todos',
