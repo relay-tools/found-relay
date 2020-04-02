@@ -17,7 +17,7 @@ const propTypes = {
 const contextType = ReactRelayContext;
 
 class TodoList extends React.Component {
-  onToggleAllChange = e => {
+  onToggleAllChange = (e) => {
     const { relay, viewer } = this.props;
     const complete = e.target.checked;
 

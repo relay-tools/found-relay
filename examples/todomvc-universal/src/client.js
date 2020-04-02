@@ -1,6 +1,6 @@
 import BrowserProtocol from 'farce/BrowserProtocol';
-import createInitialFarceRouter from 'found/createInitialFarceRouter';
 import { Resolver } from 'found-relay';
+import createInitialFarceRouter from 'found/createInitialFarceRouter';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import RelayClientSSR from 'react-relay-network-modern-ssr/lib/client';

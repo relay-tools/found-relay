@@ -1,3 +1,5 @@
+/* eslint-disable max-classes-per-file */
+
 export class Todo extends Object {}
 export class User extends Object {}
 
@@ -45,12 +47,12 @@ export function changeTodoStatus(id, complete) {
 }
 
 export function getTodos(status = 'any') {
-  const todos = todoIdsByUser[VIEWER_ID].map(id => todosById[id]);
+  const todos = todoIdsByUser[VIEWER_ID].map((id) => todosById[id]);
   if (status === 'any') {
     return todos;
   }
 
-  return todos.filter(todo => todo.complete === (status === 'completed'));
+  return todos.filter((todo) => todo.complete === (status === 'completed'));
 }
 
 export function getUser() {
@@ -63,7 +65,7 @@ export function getViewer() {
 
 export function markAllTodos(complete) {
   const changedTodos = [];
-  getTodos().forEach(todo => {
+  getTodos().forEach((todo) => {
     if (todo.complete !== complete) {
       /* eslint-disable no-param-reassign */
       todo.complete = complete;
@@ -71,7 +73,7 @@ export function markAllTodos(complete) {
       changedTodos.push(todo);
     }
   });
-  return changedTodos.map(todo => todo.id);
+  return changedTodos.map((todo) => todo.id);
 }
 
 export function removeTodo(id) {
@@ -83,9 +85,9 @@ export function removeTodo(id) {
 }
 
 export function removeCompletedTodos() {
-  const todosToRemove = getTodos().filter(todo => todo.complete);
-  todosToRemove.forEach(todo => removeTodo(todo.id));
-  return todosToRemove.map(todo => todo.id);
+  const todosToRemove = getTodos().filter((todo) => todo.complete);
+  todosToRemove.forEach((todo) => removeTodo(todo.id));
+  return todosToRemove.map((todo) => todo.id);
 }
 
 export function renameTodo(id, text) {

@@ -23,7 +23,7 @@ const mutation = graphql`
 function sharedUpdater(store, user, todoEdge) {
   const userProxy = store.get(user.id);
 
-  ['any', 'active'].forEach(status => {
+  ['any', 'active'].forEach((status) => {
     const connection = ConnectionHandler.getConnection(
       userProxy,
       'TodoList_todos',

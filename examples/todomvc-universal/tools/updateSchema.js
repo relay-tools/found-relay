@@ -1,6 +1,7 @@
 import fs from 'fs';
-import { printSchema } from 'graphql/utilities';
 import path from 'path';
+
+import { printSchema } from 'graphql/utilities';
 
 import schema from '../src/data/schema';
 
