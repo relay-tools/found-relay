@@ -38,7 +38,7 @@ import {
 /* eslint-disable no-use-before-define */
 
 const { nodeInterface, nodeField } = nodeDefinitions(
-  globalId => {
+  (globalId) => {
     const { type, id } = fromGlobalId(globalId);
     if (type === 'Todo') {
       return getTodo(id);
@@ -48,7 +48,7 @@ const { nodeInterface, nodeField } = nodeDefinitions(
     }
     return null;
   },
-  obj => {
+  (obj) => {
     if (obj instanceof Todo) {
       return GraphQLTodo;
     }

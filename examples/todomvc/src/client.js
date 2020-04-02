@@ -1,14 +1,14 @@
 import HashProtocol from 'farce/HashProtocol';
 import queryMiddleware from 'farce/queryMiddleware';
-import createFarceRouter from 'found/createFarceRouter';
 import { Resolver } from 'found-relay';
+import createFarceRouter from 'found/createFarceRouter';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Network } from 'relay-local-schema';
 import { Environment, RecordSource, Store } from 'relay-runtime';
 
-import routes from './routes';
 import schema from './data/schema';
+import routes from './routes';
 
 import 'todomvc-common';
 import 'todomvc-common/base.css';

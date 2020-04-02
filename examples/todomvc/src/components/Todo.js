@@ -23,7 +23,7 @@ class Todo extends React.Component {
     };
   }
 
-  onCompleteChange = e => {
+  onCompleteChange = (e) => {
     const { relay, viewer, todo } = this.props;
     const complete = e.target.checked;
 
@@ -47,7 +47,7 @@ class Todo extends React.Component {
     this.removeTodo();
   };
 
-  onTextInputSave = text => {
+  onTextInputSave = (text) => {
     const { relay, todo } = this.props;
 
     this.setEditMode(false);
@@ -69,7 +69,7 @@ class Todo extends React.Component {
     const { complete, text } = this.props.todo;
     const { isEditing } = this.state;
 
-    /* eslint-disable jsx-a11y/label-has-associated-control */
+    /* eslint-disable jsx-a11y/control-has-associated-label, jsx-a11y/label-has-associated-control */
     return (
       <li
         className={classNames({
@@ -104,7 +104,7 @@ class Todo extends React.Component {
         )}
       </li>
     );
-    /* eslint-enable jsx-a11y/label-has-associated-control */
+    /* eslint-disable jsx-a11y/control-has-associated-label, jsx-a11y/label-has-associated-control */
   }
 }
 
