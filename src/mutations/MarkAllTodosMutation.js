@@ -63,7 +63,7 @@ function commit(environment, user, complete, status) {
         connection.setLinkedRecords([], 'edges');
       }
 
-      connection.getLinkedRecords('edges').forEach(edge => {
+      connection.getLinkedRecords('edges').forEach((edge) => {
         edge.getLinkedRecord('node').setValue(complete, 'complete');
       });
 

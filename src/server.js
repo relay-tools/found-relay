@@ -3,8 +3,8 @@ import 'isomorphic-fetch';
 import CopyWebpackPlugin from 'copy-webpack-plugin';
 import express from 'express';
 import graphQLHTTP from 'express-graphql';
-import { getFarceResult } from 'found/lib/server';
 import { Resolver } from 'found-relay';
+import { getFarceResult } from 'found/server';
 import ReactDOMServer from 'react-dom/server';
 import RelayServerSSR from 'react-relay-network-modern-ssr/lib/server';
 import serialize from 'serialize-javascript';
@@ -12,8 +12,8 @@ import webpack from 'webpack';
 import webpackMiddleware from 'webpack-dev-middleware';
 
 import createRelayEnvironment from './createRelayEnvironment';
-import { historyMiddlewares, routeConfig } from './router';
 import schema from './data/schema';
+import { historyMiddlewares, routeConfig } from './router';
 
 const PORT = 8080;
 

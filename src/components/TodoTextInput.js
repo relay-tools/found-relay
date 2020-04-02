@@ -25,7 +25,7 @@ class TodoTextInput extends React.Component {
     };
   }
 
-  onKeyDown = e => {
+  onKeyDown = (e) => {
     if (this.props.onCancel && e.keyCode === keycode.codes.esc) {
       this.props.onCancel();
     } else if (e.keyCode === keycode.codes.enter) {
@@ -33,7 +33,7 @@ class TodoTextInput extends React.Component {
     }
   };
 
-  onChange = e => {
+  onChange = (e) => {
     this.setState({ text: e.target.value });
   };
 
