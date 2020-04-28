@@ -65,7 +65,7 @@
   "homepage": "https://github.com/relay-tools/found-relay#readme",
   "dependencies": {
     "@babel/runtime-corejs3": "^7.6.3",
-    "is-promise": "^3.0.0",
+    "is-promise": "^4.0.0",
     "lodash": "^4.17.15",
     "prop-types": "^15.7.2",
     "warning": "^4.0.3"
