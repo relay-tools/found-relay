@@ -20,7 +20,7 @@ describe('reset', () => {
         {
           path: '/',
           query: graphql`
-            query resetTest_Query {
+            query reset_Query {
               widget {
                 name
               }

@@ -1,6 +1,6 @@
 # Found Relay [![Travis][build-badge]][build] [![npm][npm-badge]][npm]
 
-[Relay](http://facebook.github.io/relay/) integration for [Found](https://github.com/4Catalyzer/found).
+[Relay](https://relay.dev/) integration for [Found](https://github.com/4Catalyzer/found).
 
 <!-- prettier-ignore-start -->
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
