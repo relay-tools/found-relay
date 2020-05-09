@@ -87,7 +87,7 @@
     "codecov": "^3.6.5",
     "delay": "^4.3.0",
     "doctoc": "^1.4.0",
-    "eslint": "^6.8.0",
+    "eslint": "^7.0.0",
     "eslint-config-4catalyzer-jest": "^2.0.6",
     "eslint-config-4catalyzer-react": "^1.0.6",
     "eslint-config-prettier": "^6.11.0",
