@@ -83,7 +83,7 @@
     "@babel/node": "^7.10.4",
     "babel-jest": "^26.1.0",
     "babel-plugin-add-module-exports": "^1.0.2",
-    "babel-plugin-relay": "^9.1.0",
+    "babel-plugin-relay": "^10.0.0",
     "codecov": "^3.7.0",
     "delay": "^4.3.0",
     "doctoc": "^1.4.0",
@@ -107,9 +107,9 @@
     "prettier": "^2.0.5",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-relay": "^9.1.0",
-    "relay-compiler": "^9.1.0",
+    "react-relay": "^10.0.0",
+    "relay-compiler": "^10.0.0",
     "relay-local-schema": "^0.8.0",
-    "relay-runtime": "^9.1.0"
+    "relay-runtime": "^10.0.0"
   }
 }
