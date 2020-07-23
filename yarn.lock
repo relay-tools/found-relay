@@ -3097,17 +3097,17 @@ format@^0.2.0:
   resolved "https://registry.yarnpkg.com/format/-/format-0.2.2.tgz#d6170107e9efdc4ed30c9dc39016df942b5cb58b"
   integrity sha1-1hcBB+nv3E7TDJ3DkBbflCtctYs=
 
-found@^0.5.3:
-  version "0.5.3"
-  resolved "https://registry.yarnpkg.com/found/-/found-0.5.3.tgz#0e6cace4c7b6c1eea9352dfd434191493f68ac1f"
-  integrity sha512-oKchHkk1pjFVBiZyzvMCqGCOqsGpcHhz+V3lxe3phaDwX76pTwCqg65efDASUkt02o6Rnyu1th5wbC4a0IZpbA==
+found@^0.5.4:
+  version "0.5.4"
+  resolved "https://registry.yarnpkg.com/found/-/found-0.5.4.tgz#eaed007346525c4b8bffb16ffa2d59f2412722a2"
+  integrity sha512-kYP17sid+l3AbEDq4ZsXRRdWnnPxnu6lQ2n0DSYZwKJTJcLZQD/Z/uRM0lJjOs/E0NQhaJLs2kcbZqfNerkZyg==
   dependencies:
     "@babel/runtime-corejs3" "^7.6.2"
     "@restart/context" "^2.1.4"
     "@types/react" "^16.9.31"
     farce "^0.4.1"
     invariant "^2.2.4"
-    is-promise "^2.1.0"
+    is-promise "^4.0.0"
     lodash "^4.17.15"
     path-to-regexp "^1.7.0"
     prop-types "^15.7.2"
