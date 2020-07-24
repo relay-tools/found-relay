@@ -1,6 +1,6 @@
 {
   "name": "found-relay",
-  "version": "0.8.1",
+  "version": "0.8.2",
   "description": "Relay integration for found",
   "files": [
     "lib",
