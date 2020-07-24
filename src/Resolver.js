@@ -127,6 +127,9 @@ export default class Resolver {
       }
 
       const variables = routeVariables[i];
+      const cacheConfig = cacheConfigs[i];
+      const fetchPolicy = fetchPolicies[i];
+
       const lastQuerySubscription = this.lastQuerySubscriptions[i];
 
       // Match the logic in <QueryRenderer> for not refetching.
@@ -136,6 +139,10 @@ export default class Resolver {
         isEqual(lastQuerySubscription.variables, variables)
       ) {
         this.lastQuerySubscriptions[i] = null;
+
+        lastQuerySubscription.cacheConfig = cacheConfig;
+        lastQuerySubscription.fetchPolicy = fetchPolicy;
+
         return lastQuerySubscription;
       }
 
@@ -143,8 +150,8 @@ export default class Resolver {
         environment: this.environment,
         query,
         variables,
-        cacheConfig: cacheConfigs[i],
-        fetchPolicy: fetchPolicies[i],
+        cacheConfig,
+        fetchPolicy,
       });
     });
 
