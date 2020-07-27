@@ -1749,10 +1749,10 @@ babel-plugin-react-intl@^7.0.0:
     intl-messageformat-parser "^5.0.8"
     schema-utils "^2.6.6"
 
-babel-plugin-relay@^10.0.0:
-  version "10.0.0"
-  resolved "https://registry.yarnpkg.com/babel-plugin-relay/-/babel-plugin-relay-10.0.0.tgz#b9b08e1f2d6e7a4ffa9774839152f8311c2f1f6a"
-  integrity sha512-ttHL+NCbMywz6Mbygt2qyMz0+nd/my7ePl8/d/YvvMHASaOCNrnYNKGXEI0nM9lCU4xmLV1ZOliGPDtXknkpGA==
+babel-plugin-relay@^10.0.1:
+  version "10.0.1"
+  resolved "https://registry.yarnpkg.com/babel-plugin-relay/-/babel-plugin-relay-10.0.1.tgz#7e0e12768018ed48f22c623cc1db456989c92647"
+  integrity sha512-0tNZFLVitUbNIHb/PuLYCqW3IvxQK8m5MomrOd5fRy4ljG86fV0KLARjedUQhwRQf32ELU7ODgXFazLza4yZYQ==
   dependencies:
     babel-plugin-macros "^2.0.0"
 
@@ -2075,10 +2075,10 @@ co@^4.6.0:
   resolved "https://registry.yarnpkg.com/co/-/co-4.6.0.tgz#6ea6bdf3d853ae54ccb8e47bfa0bf3f9031fb184"
   integrity sha1-bqa989hTrlTMuOR7+gvz+QMfsYQ=
 
-codecov@^3.7.1:
-  version "3.7.1"
-  resolved "https://registry.yarnpkg.com/codecov/-/codecov-3.7.1.tgz#434cb8d55f18ef01672e5739d3d266696bebc202"
-  integrity sha512-JHWxyPTkMLLJn9SmKJnwAnvY09kg2Os2+Ux+GG7LwZ9g8gzDDISpIN5wAsH1UBaafA/yGcd3KofMaorE8qd6Lw==
+codecov@^3.7.2:
+  version "3.7.2"
+  resolved "https://registry.yarnpkg.com/codecov/-/codecov-3.7.2.tgz#998e68c8c1ef4b55cfcf11cd456866d35e13d693"
+  integrity sha512-fmCjAkTese29DUX3GMIi4EaKGflHa4K51EoMc29g8fBHawdk/+KEq5CWOeXLdd9+AT7o1wO4DIpp/Z1KCqCz1g==
   dependencies:
     argv "0.0.2"
     ignore-walk "3.0.3"
@@ -2656,10 +2656,10 @@ eslint-plugin-import@^2.22.0:
     resolve "^1.17.0"
     tsconfig-paths "^3.9.0"
 
-eslint-plugin-jest@^23.18.0:
-  version "23.18.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-jest/-/eslint-plugin-jest-23.18.0.tgz#4813eacb181820ed13c5505f400956d176b25af8"
-  integrity sha512-wLPM/Rm1SGhxrFQ2TKM/BYsYPhn7ch6ZEK92S2o/vGkAAnDXM0I4nTIo745RIX+VlCRMFgBuJEax6XfTHMdeKg==
+eslint-plugin-jest@^23.18.2:
+  version "23.18.2"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-jest/-/eslint-plugin-jest-23.18.2.tgz#9cebb2c93729ccabc1d01cf45c59e9ee6afec80d"
+  integrity sha512-afVOE47F0PENnRlnePUHgrDbv1tsDlTAVrjL051oUETB2ImzBwa5GfmUAUhDjAEuxH+xkE6DsmEpZ8obXzUMqQ==
   dependencies:
     "@typescript-eslint/experimental-utils" "^2.5.0"
 
@@ -5260,15 +5260,15 @@ react-redux@^7.0.0:
     prop-types "^15.7.2"
     react-is "^16.9.0"
 
-react-relay@^10.0.0:
-  version "10.0.0"
-  resolved "https://registry.yarnpkg.com/react-relay/-/react-relay-10.0.0.tgz#bbc537491f28f9d6b1d7f711535b69e981edba04"
-  integrity sha512-Odq5GQN8UDOC6lWyAdFEs2Usc9CQrPP70K2vVdiwaFg3oVVaSLJG9wI2tVDHjlb/rdOmVl26SRJTOREYssvB+Q==
+react-relay@^10.0.1:
+  version "10.0.1"
+  resolved "https://registry.yarnpkg.com/react-relay/-/react-relay-10.0.1.tgz#7b7bf7dd9752165ab99ae0302db4b3e56c143970"
+  integrity sha512-zgafqWphSGFPSJ/h23zPpFGZ4tzKyj8eQPLTeZEwdbtmqAFsAIjPS0zSCo2DcsaeylEgSrQDShttpKYyEUtRAg==
   dependencies:
     "@babel/runtime" "^7.0.0"
     fbjs "^1.0.0"
     nullthrows "^1.1.1"
-    relay-runtime "10.0.0"
+    relay-runtime "10.0.1"
 
 react-static-container@^1.0.2:
   version "1.0.2"
@@ -5420,10 +5420,10 @@ regjsparser@^0.6.4:
   dependencies:
     jsesc "~0.5.0"
 
-relay-compiler@^10.0.0:
-  version "10.0.0"
-  resolved "https://registry.yarnpkg.com/relay-compiler/-/relay-compiler-10.0.0.tgz#04d50d8ec53e3f683bc379b756cf0542a76105af"
-  integrity sha512-EVBMcMCiP+waOPR2930cNCCsac1sNhfQayzS+bOEMz2Lls5Bx7grhaadkBZLTEdCHQ1kf7lrsmcMDqj9mxABFw==
+relay-compiler@^10.0.1:
+  version "10.0.1"
+  resolved "https://registry.yarnpkg.com/relay-compiler/-/relay-compiler-10.0.1.tgz#d3029a5121cad52e1e55073210365b827cee5f3b"
+  integrity sha512-hrTqh81XXxPB4EgvxPmvojICr0wJnRoumxOsMZnS9dmhDHSqcBAT7+C3+rdGm5sSdNH8mbMcZM7YSPDh8ABxQw==
   dependencies:
     "@babel/core" "^7.0.0"
     "@babel/generator" "^7.5.0"
@@ -5438,7 +5438,7 @@ relay-compiler@^10.0.0:
     glob "^7.1.1"
     immutable "~3.7.6"
     nullthrows "^1.1.1"
-    relay-runtime "10.0.0"
+    relay-runtime "10.0.1"
     signedsource "^1.0.0"
     yargs "^15.3.1"
 
@@ -5447,10 +5447,10 @@ relay-local-schema@^0.8.0:
   resolved "https://registry.yarnpkg.com/relay-local-schema/-/relay-local-schema-0.8.0.tgz#3ec303048fb495fc9b87a37ad3d1590402f2fb89"
   integrity sha512-jT2DsWHEdVVSA+ulNx96TAd4FCVmTlXn9S9ZiPaoqhTHWzEt6BE4xoYUtPrni2JD4m1XPL2hWzsbUq1aoq4kaA==
 
-relay-runtime@10.0.0, relay-runtime@^10.0.0:
-  version "10.0.0"
-  resolved "https://registry.yarnpkg.com/relay-runtime/-/relay-runtime-10.0.0.tgz#cfceb0f8453b39a385d63093f2dbf1702ddc02b3"
-  integrity sha512-QEpFwEjvGgWgQ0MPJyrZKggaCoGMKwxPQx7NwYl4FcMmxZcicc8wk6vI1iTxl0tsPKgW/YG8FgueQR+X7ZtZqw==
+relay-runtime@10.0.1, relay-runtime@^10.0.1:
+  version "10.0.1"
+  resolved "https://registry.yarnpkg.com/relay-runtime/-/relay-runtime-10.0.1.tgz#c83bd7e6e37234ece2a62a254e37dd199a4f74f9"
+  integrity sha512-sPYiuosq+5gQ7zXs2EKg2O8qRSsF8vmMYo6SIHEi4juBLg1HrdTEvqcaNztc2ZFmUc4vYZpTbbS4j/TZCtHuyA==
   dependencies:
     "@babel/runtime" "^7.0.0"
     fbjs "^1.0.0"
