@@ -2931,10 +2931,10 @@ extsprintf@^1.2.0:
   resolved "https://registry.yarnpkg.com/extsprintf/-/extsprintf-1.4.0.tgz#e2689f8f356fad62cca65a3a91c5df5f9551692f"
   integrity sha1-4mifjzVvrWLMplo6kcXfX5VRaS8=
 
-farce@^0.4.3, farce@^0.4.4:
-  version "0.4.4"
-  resolved "https://registry.yarnpkg.com/farce/-/farce-0.4.4.tgz#083ebdebe987bd08969c6f40ab78ec8bee5b79c4"
-  integrity sha512-sZiRNPTYU2EyY9UvqkzLWHD1nXqnS96WuJWX993a5NAPKxqf1RjMPf83kfNfY8lx2+ndms36DjWbzKpvDZMdSw==
+farce@^0.4.3, farce@^0.4.5:
+  version "0.4.5"
+  resolved "https://registry.yarnpkg.com/farce/-/farce-0.4.5.tgz#610cefaaa76d57dbd723d2d6df30a72e3ea5d842"
+  integrity sha512-PK3eWFYBicrelTh/ZAM8KCto3c2hwo+9PKxtkSS5EhmLP3Y+m2l5r56MF8+m/htlojQpY2uHwmMDtdb0cNWrSw==
   dependencies:
     invariant "^2.2.4"
     is-promise "^4.0.0"
