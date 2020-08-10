@@ -79,7 +79,7 @@
   "devDependencies": {
     "@4c/babel-preset": "^7.3.6",
     "@babel/cli": "^7.10.5",
-    "@babel/core": "^7.11.0",
+    "@babel/core": "^7.11.1",
     "@babel/node": "^7.10.5",
     "babel-jest": "^26.2.2",
     "babel-plugin-add-module-exports": "^1.0.2",
