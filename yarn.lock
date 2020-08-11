@@ -3107,10 +3107,10 @@ format@^0.2.0:
   resolved "https://registry.yarnpkg.com/format/-/format-0.2.2.tgz#d6170107e9efdc4ed30c9dc39016df942b5cb58b"
   integrity sha1-1hcBB+nv3E7TDJ3DkBbflCtctYs=
 
-found@^0.5.8:
-  version "0.5.8"
-  resolved "https://registry.yarnpkg.com/found/-/found-0.5.8.tgz#0a9bc96d1104a060f12c233f0ba8dd1d291493cf"
-  integrity sha512-yDgBYJbqfPpuJdFUld7SQ94ZwNSVmUGzmAki1fogcZZJ8KLuD8ykKnXKWi70H19Tk+WsvoFEfWh5En1uarkRyQ==
+found@^0.5.9:
+  version "0.5.9"
+  resolved "https://registry.yarnpkg.com/found/-/found-0.5.9.tgz#78949cd3a65795ed6411b43ddd32b900fbfc35e6"
+  integrity sha512-rUNTnqml6G6NpRQVKndSisabfepz53vbyH9rln6mk+mVfRXSMSOGU8m6kI4jKXOMJ7hd0S/SgWUOuySOtF5fLw==
   dependencies:
     "@babel/runtime-corejs3" "^7.6.2"
     "@restart/context" "^2.1.4"
