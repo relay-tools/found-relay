@@ -16,8 +16,9 @@ import ReadyStateRenderer from './ReadyStateRenderer';
 import renderElement from './renderElement';
 
 export default class Resolver {
-  constructor(environment) {
+  constructor(environment, context) {
     this.environment = environment;
+    this.context = context;
 
     this.lastQuerySubscriptions = [];
   }
@@ -106,7 +107,7 @@ export default class Resolver {
         // We need to always run this to make sure we don't miss route params.
         let nextVariables = { ...variables, ...routeParams };
         if (route.prepareVariables) {
-          nextVariables = route.prepareVariables(nextVariables, routeMatch);
+          nextVariables = route.prepareVariables(nextVariables, routeMatch, this.context);
         }
 
         return nextVariables;
