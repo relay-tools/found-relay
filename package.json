@@ -77,7 +77,7 @@
     "relay-runtime": ">=9.0.0"
   },
   "devDependencies": {
-    "@4c/babel-preset": "^7.4.1",
+    "@4c/babel-preset": "^8.0.3",
     "@babel/cli": "^7.13.0",
     "@babel/core": "^7.13.8",
     "@babel/node": "^7.13.0",
