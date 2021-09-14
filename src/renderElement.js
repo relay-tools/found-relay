@@ -30,7 +30,7 @@ export default function renderElement({
       return null;
     }
 
-    return <Component match={match} router={router} {...props} />;
+    return <Component match={match} router={router} resolving={resolving} {...props} />;
   }
 
   return route.render({
