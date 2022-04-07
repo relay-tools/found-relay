@@ -141,11 +141,11 @@ export default class Resolver {
       if (
         lastQuerySubscription &&
         lastQuerySubscription.query === query &&
-        dequal(lastQuerySubscription.variables, variables)
+        dequal(lastQuerySubscription.variables, variables) &&
+        dequal(lastQuerySubscription.cacheConfig, cacheConfig)
       ) {
         this.lastQuerySubscriptions[i] = null;
 
-        lastQuerySubscription.cacheConfig = cacheConfig;
         lastQuerySubscription.fetchPolicy = fetchPolicy;
 
         return lastQuerySubscription;

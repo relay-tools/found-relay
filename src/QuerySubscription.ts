@@ -69,7 +69,11 @@ export default class QuerySubscription {
     this.cacheConfig = cacheConfig;
     this.fetchPolicy = fetchPolicy;
 
-    this.operation = createOperationDescriptor(getRequest(query), variables);
+    this.operation = createOperationDescriptor(
+      getRequest(query),
+      variables,
+      cacheConfig,
+    );
 
     this.fetchPromise = null;
     this.selectionReference = null;
@@ -91,6 +95,17 @@ export default class QuerySubscription {
       environment: this.environment,
       variables: this.operation.request.variables,
     };
+  }
+
+  updateCacheConfig(nextCacheConfig: CacheConfig | null | undefined) {
+    if (this.cacheConfig !== nextCacheConfig) {
+      this.cacheConfig = nextCacheConfig;
+      this.operation = createOperationDescriptor(
+        getRequest(this.query),
+        this.variables,
+        this.cacheConfig,
+      );
+    }
   }
 
   fetch() {
