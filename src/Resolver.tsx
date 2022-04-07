@@ -1,3 +1,5 @@
+import { dequal } from 'dequal';
+import type { Match } from 'found';
 import {
   accumulateRouteValues,
   checkResolved,
@@ -5,50 +7,51 @@ import {
   getRouteMatches,
   getRouteValues,
   isResolved,
+  // @ts-expect-error
 } from 'found/ResolverUtils';
 import isPromise from 'is-promise';
-import isEqual from 'lodash/isEqual';
-import React from 'react';
-import warning from 'warning';
+import React, { ReactElement } from 'react';
+import type {
+  CacheConfig,
+  Environment,
+  FetchPolicy,
+  GraphQLTaggedNode,
+  Variables,
+} from 'relay-runtime';
 
 import QuerySubscription from './QuerySubscription';
 import ReadyStateRenderer from './ReadyStateRenderer';
 import renderElement from './renderElement';
 
 export default class Resolver {
-  constructor(environment) {
+  private lastQuerySubscriptions: (QuerySubscription | null)[];
+
+  environment: Environment;
+
+  constructor(environment: Environment) {
     this.environment = environment;
 
     this.lastQuerySubscriptions = [];
   }
 
-  async *resolveElements(match) {
+  async *resolveElements(match: Match) {
     const routeMatches = getRouteMatches(match);
 
     const Components = getComponents(routeMatches);
     const queries = getRouteValues(
       routeMatches,
-      (route) => route.getQuery,
-      (route) => route.query,
+      (route: any) => route.getQuery,
+      (route: any) => route.query,
     );
     const cacheConfigs = getRouteValues(
       routeMatches,
-      (route) => route.getCacheConfig,
-      (route) => route.cacheConfig,
+      (route: any) => route.getCacheConfig,
+      (route: any) => route.cacheConfig,
     );
     const fetchPolicies = getRouteValues(
       routeMatches,
-      (route) => route.getFetchPolicy,
-      (route) => route.fetchPolicy,
-    );
-
-    warning(
-      !routeMatches.some(({ route }) => route.dataFrom),
-      '`dataFrom` on routes no longer has any effect; use `fetchPolicy` instead.',
-    );
-    warning(
-      !routeMatches.some(({ route }) => route.getDataFrom),
-      '`getDataFrom` on routes no longer has any effect; use `getFetchPolicy` instead.',
+      (route: any) => route.getFetchPolicy,
+      (route: any) => route.fetchPolicy,
     );
 
     const routeVariables = this.getRouteVariables(match, routeMatches);
@@ -78,7 +81,9 @@ export default class Resolver {
         false,
       );
 
-      yield pendingElements.every((element) => element !== undefined)
+      yield pendingElements.every(
+        (element: ReactElement) => element !== undefined,
+      )
         ? pendingElements
         : undefined;
 
@@ -96,11 +101,11 @@ export default class Resolver {
     );
   }
 
-  getRouteVariables(match, routeMatches) {
+  getRouteVariables(match: Match, routeMatches: any[]) {
     return accumulateRouteValues(
       routeMatches,
       match.routeIndices,
-      (variables, routeMatch) => {
+      (variables: Variables, routeMatch: any) => {
         const { route, routeParams } = routeMatch;
 
         // We need to always run this to make sure we don't miss route params.
@@ -116,19 +121,19 @@ export default class Resolver {
   }
 
   updateQuerySubscriptions(
-    queries,
-    routeVariables,
-    cacheConfigs,
-    fetchPolicies,
+    queries: Array<GraphQLTaggedNode | null | undefined>,
+    routeVariables: Array<Variables | null | undefined>,
+    cacheConfigs: Array<CacheConfig | null | undefined>,
+    fetchPolicies: Array<FetchPolicy | null | undefined>,
   ) {
     const querySubscriptions = queries.map((query, i) => {
       if (!query) {
         return null;
       }
 
-      const variables = routeVariables[i];
-      const cacheConfig = cacheConfigs[i];
-      const fetchPolicy = fetchPolicies[i];
+      const variables = routeVariables[i]!;
+      const cacheConfig = cacheConfigs[i]!;
+      const fetchPolicy = fetchPolicies[i]!;
 
       const lastQuerySubscription = this.lastQuerySubscriptions[i];
 
@@ -136,7 +141,7 @@ export default class Resolver {
       if (
         lastQuerySubscription &&
         lastQuerySubscription.query === query &&
-        isEqual(lastQuerySubscription.variables, variables)
+        dequal(lastQuerySubscription.variables, variables)
       ) {
         this.lastQuerySubscriptions[i] = null;
 
@@ -166,7 +171,12 @@ export default class Resolver {
     return querySubscriptions;
   }
 
-  createElements(routeMatches, Components, querySubscriptions, fetched) {
+  createElements(
+    routeMatches: any[],
+    Components: any[],
+    querySubscriptions: Array<QuerySubscription | null>,
+    fetched: boolean,
+  ) {
     return routeMatches.map((match, i) => {
       const { route, router } = match;
 
@@ -208,7 +218,7 @@ export default class Resolver {
         return element;
       }
 
-      return (routeChildren) => (
+      return (routeChildren: React.ReactElement) => (
         <ReadyStateRenderer
           match={match}
           Component={resolvedComponent}

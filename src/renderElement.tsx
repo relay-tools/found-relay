@@ -1,5 +1,16 @@
+import { type Match } from 'found';
 import React from 'react';
-import warning from 'warning';
+
+import QuerySubscription from './QuerySubscription';
+
+interface Props {
+  match: Match & { route: any };
+  Component: React.ElementType | null | undefined;
+  isComponentResolved: boolean;
+  hasComponent: boolean;
+  querySubscription: QuerySubscription;
+  resolving: boolean;
+}
 
 export default function renderElement({
   /* eslint-disable react/prop-types */
@@ -9,8 +20,8 @@ export default function renderElement({
   hasComponent,
   querySubscription,
   resolving, // Whether it's safe to throw a RedirectException or an HttpError.
-  /* eslint-enable react/prop-types */
-}) {
+}: /* eslint-enable react/prop-types */
+Props) {
   const { route, router } = match;
   const { readyState, environment, variables } = querySubscription;
   const { error, props } = readyState;
@@ -21,15 +32,14 @@ export default function renderElement({
     }
 
     if (!props || !hasComponent) {
-      warning(
-        hasComponent,
-        'Route with query `%s` has no render method or component.',
-        querySubscription.getQueryName(),
-      );
+      if (process.env.NODE_ENV !== 'production')
+        console.error(
+          `Route with query \`${querySubscription.getQueryName()}\` has no render method or component.`,
+        );
 
       return null;
     }
-
+    // @ts-ignore
     return <Component match={match} router={router} {...props} />;
   }
 

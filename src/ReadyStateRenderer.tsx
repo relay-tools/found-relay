@@ -1,28 +1,41 @@
-import PropTypes from 'prop-types';
+/* eslint-disable @typescript-eslint/ban-types */
+import type { Match } from 'found';
 import React from 'react';
 import { ReactRelayContext } from 'react-relay';
-import warning from 'warning';
+import type { Disposable } from 'relay-runtime';
 
 import QuerySubscription from './QuerySubscription';
 import renderElement from './renderElement';
 
 const { hasOwnProperty } = Object.prototype;
 
-const propTypes = {
-  match: PropTypes.shape({
-    route: PropTypes.object.isRequired,
-  }).isRequired,
-  Component: PropTypes.elementType,
-  isComponentResolved: PropTypes.bool.isRequired,
-  hasComponent: PropTypes.bool.isRequired,
-  element: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
-  routeChildren: PropTypes.oneOfType([PropTypes.object, PropTypes.element]),
-  querySubscription: PropTypes.instanceOf(QuerySubscription).isRequired,
-  fetched: PropTypes.bool.isRequired,
-};
+type RouteElement =
+  | React.ReactElement
+  | ((routes: React.ReactElement | {}) => React.ReactElement);
 
-class ReadyStateRenderer extends React.Component {
-  constructor(props) {
+interface Props {
+  match: Match & { route: Record<string, any> };
+  Component: React.ElementType | null;
+  isComponentResolved: boolean;
+  hasComponent: boolean;
+  element: RouteElement;
+  routeChildren: React.ReactElement | {};
+  querySubscription: QuerySubscription;
+  fetched: boolean;
+
+  [other: string]: any;
+}
+
+interface State {
+  isInitialRender: true;
+  element: RouteElement;
+  propsElement: RouteElement;
+  querySubscription: QuerySubscription;
+  selectionReference: Disposable;
+  onUpdate: () => void;
+}
+class ReadyStateRenderer extends React.Component<Props, State> {
+  constructor(props: Props) {
     super(props);
 
     const { element, querySubscription } = props;
@@ -41,12 +54,15 @@ class ReadyStateRenderer extends React.Component {
     this.props.querySubscription.subscribe(this.onUpdate);
   }
 
-  static getDerivedStateFromProps({ element, querySubscription }, state) {
+  static getDerivedStateFromProps(
+    { element, querySubscription }: Props,
+    state: State,
+  ) {
     if (state.isInitialRender) {
       return { isInitialRender: false };
     }
 
-    let nextState = null;
+    let nextState: Partial<State> | null = null;
 
     if (element !== state.propsElement) {
       nextState = {
@@ -126,13 +142,12 @@ class ReadyStateRenderer extends React.Component {
         // At least on Node v8.x, it's slightly faster to guard the delete here
         // with this hasOwnProperty check.
         if (hasOwnProperty.call(ownProps, relayPropName)) {
-          warning(
-            false,
-            'Ignoring <ReadyStateRenderer> prop `%s` that shadows a Relay prop from its query `%s`. This is most likely due to its parent cloning it and adding extraneous Relay props.',
-            relayPropName,
-            querySubscription.getQueryName(),
-          );
-
+          if (process.env.NODE_ENV !== 'production') {
+            console.error(
+              `Ignoring <ReadyStateRenderer> prop \`${relayPropName}\` that shadows a Relay prop from its query \`${querySubscription.getQueryName()}\`. This is most likely due to its parent cloning it and adding extraneous Relay props.`,
+            );
+          }
+          // @ts-ignore
           delete ownProps[relayPropName];
         }
       });
@@ -152,7 +167,5 @@ class ReadyStateRenderer extends React.Component {
     );
   }
 }
-
-ReadyStateRenderer.propTypes = propTypes;
 
 export default ReadyStateRenderer;

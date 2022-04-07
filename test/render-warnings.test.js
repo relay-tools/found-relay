@@ -1,10 +1,7 @@
-jest.mock('warning');
-
 import { getFarceResult } from 'found/server';
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 import { graphql } from 'react-relay';
-import warning from 'warning';
 
 import { Resolver } from '../src';
 import { createEnvironment } from './helpers';
@@ -19,9 +16,15 @@ const query = graphql`
 
 describe('render warnings', () => {
   let environment;
+  let warning;
 
   beforeEach(() => {
     environment = createEnvironment();
+    warning = jest.spyOn(console, 'error').mockImplementation();
+  });
+
+  afterEach(() => {
+    warning?.mockRestore();
   });
 
   it('should warn on missing component', async () => {
@@ -37,9 +40,7 @@ describe('render warnings', () => {
     });
 
     expect(warning).toHaveBeenCalledWith(
-      false,
-      'Route with query `%s` has no render method or component.',
-      'renderWarnings_Query',
+      'Route with query `renderWarnings_Query` has no render method or component.',
     );
   });
 
@@ -56,9 +57,7 @@ describe('render warnings', () => {
     });
 
     expect(warning).toHaveBeenCalledWith(
-      false,
-      'Route with query `%s` has no render method or component.',
-      'renderWarnings_Query',
+      'Route with query `renderWarnings_Query` has no render method or component.',
     );
   });
 
@@ -91,12 +90,9 @@ describe('render warnings', () => {
     const name = ReactDOMServer.renderToStaticMarkup(element);
 
     expect(warning).toHaveBeenCalledWith(
-      false,
       expect.stringContaining(
-        'prop `%s` that shadows a Relay prop from its query `%s`',
+        'prop `widget` that shadows a Relay prop from its query `renderWarnings_Query`',
       ),
-      'widget',
-      'renderWarnings_Query',
     );
 
     expect(name).toEqual('foo');
@@ -131,39 +127,11 @@ describe('render warnings', () => {
     const name = ReactDOMServer.renderToStaticMarkup(element);
 
     expect(warning).toHaveBeenCalledWith(
-      false,
       expect.stringContaining(
-        'prop `%s` that shadows a Relay prop from its query `%s`',
+        'prop `widget` that shadows a Relay prop from its query `renderWarnings_Query`',
       ),
-      'widget',
-      'renderWarnings_Query',
     );
 
     expect(name).toEqual('foo');
-  });
-
-  it('should warn on removed dataFrom and getDataFrom', async () => {
-    await getFarceResult({
-      url: '/',
-      routeConfig: [
-        {
-          path: '/',
-          Component: () => <div />,
-          query,
-          dataFrom: 'STORE_THEN_NETWORK',
-          getDataFrom: () => 'STORE_THEN_NETWORK',
-        },
-      ],
-      resolver: new Resolver(environment),
-    });
-
-    expect(warning).toHaveBeenCalledWith(
-      false,
-      '`dataFrom` on routes no longer has any effect; use `fetchPolicy` instead.',
-    );
-    expect(warning).toHaveBeenCalledWith(
-      false,
-      '`getDataFrom` on routes no longer has any effect; use `getFetchPolicy` instead.',
-    );
   });
 });
