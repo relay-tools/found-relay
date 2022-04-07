@@ -19,7 +19,9 @@ import type {
   Variables,
 } from 'relay-runtime';
 
-import QuerySubscription from './QuerySubscription';
+import QuerySubscription, {
+  QuerySubscriptionOptions,
+} from './QuerySubscription';
 import ReadyStateRenderer from './ReadyStateRenderer';
 import renderElement from './renderElement';
 
@@ -30,8 +32,11 @@ export default class Resolver {
 
   constructor(environment: Environment) {
     this.environment = environment;
-
     this.lastQuerySubscriptions = [];
+  }
+
+  protected createQuerySubscription(options: QuerySubscriptionOptions) {
+    return new QuerySubscription(options);
   }
 
   async *resolveElements(match: Match) {
@@ -62,8 +67,8 @@ export default class Resolver {
       fetchPolicies,
     );
 
-    const fetches = querySubscriptions.map(
-      (querySubscription) => querySubscription && querySubscription.fetch(),
+    const fetches = querySubscriptions.map((querySubscription) =>
+      querySubscription?.fetch(),
     );
 
     const earlyComponents = Components.some(isPromise)
@@ -151,7 +156,7 @@ export default class Resolver {
         return lastQuerySubscription;
       }
 
-      return new QuerySubscription({
+      return this.createQuerySubscription({
         environment: this.environment,
         query,
         variables,
