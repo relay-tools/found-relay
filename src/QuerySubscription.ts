@@ -1,7 +1,68 @@
-import { createOperationDescriptor, getRequest } from 'relay-runtime';
+import {
+  CacheConfig,
+  Disposable,
+  Environment,
+  FetchPolicy,
+  GraphQLTaggedNode,
+  SelectorData,
+  Snapshot,
+  Subscription,
+  Variables,
+  createOperationDescriptor,
+  getRequest,
+} from 'relay-runtime';
 
+export interface QuerySubscriptionOptions {
+  environment: Environment;
+  query: GraphQLTaggedNode;
+  variables: Variables;
+  cacheConfig?: CacheConfig;
+  fetchPolicy?: FetchPolicy;
+}
+
+export interface ReadyState {
+  error: Error | null;
+  props: SelectorData | null;
+  retry: (() => void) | null;
+}
 export default class QuerySubscription {
-  constructor({ environment, query, variables, cacheConfig, fetchPolicy }) {
+  environment: Environment;
+
+  query: GraphQLTaggedNode;
+
+  variables: Variables;
+
+  cacheConfig: CacheConfig | null | undefined;
+
+  fetchPolicy: FetchPolicy | null | undefined;
+
+  operation: any;
+
+  fetchPromise: Promise<void> | null;
+
+  selectionReference: Disposable | null;
+
+  pendingRequest: Subscription | null;
+
+  rootSubscription: Disposable | null;
+
+  retrying: boolean;
+
+  retryingAfterError: boolean;
+
+  readyState: ReadyState;
+
+  listeners: (() => void)[];
+
+  relayContext: { environment: any; variables: any };
+
+  constructor({
+    environment,
+    query,
+    variables,
+    cacheConfig,
+    fetchPolicy,
+  }: QuerySubscriptionOptions) {
     this.environment = environment;
     this.query = query;
     this.variables = variables;
@@ -42,8 +103,8 @@ export default class QuerySubscription {
     return this.fetchPromise;
   }
 
-  execute(resolve) {
-    let snapshot;
+  execute(resolve: () => void) {
+    let snapshot: Snapshot | undefined;
 
     this.selectionReference = this.retain();
 
@@ -52,10 +113,7 @@ export default class QuerySubscription {
         return;
       }
 
-      snapshot = this.environment.lookup(
-        this.operation.fragment,
-        this.operation,
-      );
+      snapshot = this.environment.lookup(this.operation.fragment);
 
       this.onChange(snapshot);
 
@@ -67,7 +125,7 @@ export default class QuerySubscription {
       resolve();
     };
 
-    const onError = (error) => {
+    const onError = (error: Error) => {
       this.updateReadyState({
         error,
         props: null,
@@ -88,7 +146,6 @@ export default class QuerySubscription {
         this.pendingRequest = this.environment
           .execute({
             operation: this.operation,
-            cacheConfig: this.cacheConfig,
           })
           .finally(() => {
             this.pendingRequest = null;
@@ -97,7 +154,7 @@ export default class QuerySubscription {
             next: onSnapshot,
             error: onError,
           });
-      } catch (error) {
+      } catch (error: any) {
         onError(error);
         return;
       }
@@ -118,7 +175,7 @@ export default class QuerySubscription {
     }
   }
 
-  updateReadyState(readyState) {
+  updateReadyState(readyState: ReadyState) {
     this.readyState = readyState;
 
     this.listeners.forEach((listener) => {
@@ -126,7 +183,7 @@ export default class QuerySubscription {
     });
   }
 
-  onChange = (snapshot) => {
+  onChange = (snapshot: Snapshot) => {
     this.updateReadyState({
       error: null,
       props: snapshot.data,
@@ -134,11 +191,11 @@ export default class QuerySubscription {
     });
   };
 
-  subscribe(listener) {
+  subscribe(listener: () => void) {
     this.listeners.push(listener);
   }
 
-  unsubscribe(listener) {
+  unsubscribe(listener: () => void) {
     this.listeners = this.listeners.filter((item) => item !== listener);
   }
 
@@ -147,6 +204,7 @@ export default class QuerySubscription {
     this.retryingAfterError = !!this.readyState.error;
 
     this.dispose();
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
     this.execute(() => {});
   };
 

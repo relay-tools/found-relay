@@ -8,6 +8,7 @@ module.exports = (api) => ({
         includePolyfills: 'usage-pure',
       },
     ],
+    '@babel/typescript',
   ],
   plugins: [api.env() !== 'esm' && 'add-module-exports'].filter(Boolean),
 });
