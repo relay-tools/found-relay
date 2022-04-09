@@ -62,7 +62,7 @@
   "homepage": "https://github.com/relay-tools/found-relay#readme",
   "dependencies": {
     "@babel/runtime": "^7.17.9",
-    "@types/react-relay": "^11.0.1",
+    "@types/react-relay": "^13.0.2",
     "@types/relay-runtime": "^12.0.0",
     "dequal": "^2.0.2",
     "is-promise": "^4.0.0",
