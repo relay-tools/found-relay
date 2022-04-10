@@ -63,7 +63,7 @@
   "dependencies": {
     "@babel/runtime": "^7.17.9",
     "@types/react-relay": "^11.0.1",
-    "@types/relay-runtime": "^12.0.0",
+    "@types/relay-runtime": "^13.0.3",
     "dequal": "^2.0.2",
     "is-promise": "^4.0.0",
     "prop-types": "^15.7.2",
