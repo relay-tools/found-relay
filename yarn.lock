@@ -2089,9 +2089,9 @@
     "@types/relay-runtime" "*"
 
 "@types/react@*":
-  version "17.0.43"
-  resolved "https://registry.yarnpkg.com/@types/react/-/react-17.0.43.tgz#4adc142887dd4a2601ce730bc56c3436fdb07a55"
-  integrity sha512-8Q+LNpdxf057brvPu1lMtC5Vn7J119xrP1aq4qiaefNioQUYANF/CYeK4NsKorSZyUGJ66g0IM+4bbjwx45o2A==
+  version "18.0.17"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-18.0.17.tgz#4583d9c322d67efe4b39a935d223edcc7050ccf4"
+  integrity sha512-38ETy4tL+rn4uQQi7mB81G7V1g0u2ryquNmsVIOKUAEIDK+3CUjZ6rSRpdvS99dNBnkLFL83qfmtLacGOTIhwQ==
   dependencies:
     "@types/prop-types" "*"
     "@types/scheduler" "*"
@@ -2106,9 +2106,9 @@
     csstype "^3.0.2"
 
 "@types/relay-runtime@*":
-  version "13.0.3"
-  resolved "https://registry.yarnpkg.com/@types/relay-runtime/-/relay-runtime-13.0.3.tgz#0139a02d24fd527c844af3063e943692fd181854"
-  integrity sha512-LZr9fiWspAtiFIMDcj/6LarYFqxd3jh3ASXULtWL5Tl5CHoDe48Il2nIAF66XKLLCG3QvDgHR8yLX6ZVWKjkkw==
+  version "14.1.2"
+  resolved "https://registry.yarnpkg.com/@types/relay-runtime/-/relay-runtime-14.1.2.tgz#252313e977f5b4d5a71d623fb8147c7815efbc9d"
+  integrity sha512-HeXlKlkGakGZtnViOk5lRn5ljjYqR+EvbJodt0hmwAp5YrWZ5kdXqzMWvAhlAUpGJtP7NkKwMMAsduy46S7UjA==
 
 "@types/relay-runtime@^12.0.0":
   version "12.0.2"

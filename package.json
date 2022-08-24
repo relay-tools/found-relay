@@ -62,8 +62,6 @@
   "homepage": "https://github.com/relay-tools/found-relay#readme",
   "dependencies": {
     "@babel/runtime": "^7.17.9",
-    "@types/react-relay": "^11.0.1",
-    "@types/relay-runtime": "^12.0.0",
     "dequal": "^2.0.2",
     "is-promise": "^4.0.0",
     "prop-types": "^15.7.2",
@@ -73,7 +71,17 @@
     "found": ">=0.5.1",
     "react": ">=16.9.0",
     "react-relay": ">=12.0.0",
-    "relay-runtime": ">=12.0.0"
+    "relay-runtime": ">=12.0.0",
+    "@types/react-relay": ">=11.0.1",
+    "@types/relay-runtime": ">=12.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@types/react-relay": {
+      "optional": true
+    },
+    "@types/relay-runtime": {
+      "optional": true
+    }
   },
   "devDependencies": {
     "@4c/babel-preset": "^8.1.1",
@@ -85,6 +93,8 @@
     "@babel/preset-typescript": "^7.16.7",
     "@typescript-eslint/eslint-plugin": "^5.18.0",
     "@typescript-eslint/parser": "^5.18.0",
+    "@types/react-relay": "^11.0.1",
+    "@types/relay-runtime": "^12.0.0",
     "babel-jest": "^26.6.3",
     "babel-plugin-add-module-exports": "^1.0.4",
     "babel-plugin-relay": "^10.1.3",
