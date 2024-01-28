@@ -31,6 +31,15 @@ Props) {
       return undefined;
     }
 
+    if (!props && error) {
+      if (process.env.NODE_ENV !== 'production')
+        console.error(
+          `Fatal error with query \`${querySubscription.getQueryName()}\`: ${error}.`,
+        );
+
+      return null;
+    }
+
     if (!props || !hasComponent) {
       if (process.env.NODE_ENV !== 'production')
         console.error(
